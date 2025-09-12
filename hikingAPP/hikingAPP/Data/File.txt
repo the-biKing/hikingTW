@@ -1,0 +1,28 @@
+{
+  "segments": [
+    {
+      "id": "seg_ntust_tr_ib",
+      "startNodeId": "ntust_tr",
+      "endNodeId": "ntust_ib",
+      "points": [
+        { "latitude": 25.0149, "longitude": 121.5429, "elevation": 0 },
+        { "latitude": 25.0140, "longitude": 121.5415, "elevation": 2 },
+        { "latitude": 25.0130, "longitude": 121.5402, "elevation": 3 }
+      ],
+      "distance": 200,
+      "elevationGain": 3
+    },
+    {
+      "id": "seg_ntust_ib_ee",
+      "startNodeId": "ntust_ib",
+      "endNodeId": "ntust_ee",
+      "points": [
+        { "latitude": 25.0130, "longitude": 121.5402, "elevation": 3 },
+        { "latitude": 25.0126, "longitude": 121.5410, "elevation": 1 },
+        { "latitude": 25.0122, "longitude": 121.5416, "elevation": 0 }
+      ],
+      "distance": 150,
+      "elevationGain": 0
+    }
+  ]
+}
