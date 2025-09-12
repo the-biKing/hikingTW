@@ -1,0 +1,28 @@
+{
+    "台科大線": [
+        {
+            "id": "ntust_tr",
+            "name": "研揚大樓",
+            "latitude": 25.0149,
+            "longitude": 121.5429,
+            "elevation": 0,
+            "isCustom": false
+        },
+        {
+            "id": "ntust_ib",
+            "name": "國際大樓",
+            "latitude":  25.0130,
+            "longitude": 121.5402,
+            "elevation": 0,
+            "isCustom": false
+        },
+        {
+            "id": "ntust_ee",
+            "name": "電資大樓",
+            "latitude": 25.0122,
+            "longitude": 121.5416,
+            "elevation": 0,
+            "isCustom": false
+        }
+    ]
+}

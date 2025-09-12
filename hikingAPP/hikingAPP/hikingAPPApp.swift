@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct hikingAPPApp: App {
+    @StateObject var navigationViewModel = NavigationViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(navigationViewModel)
         }
     }
 }

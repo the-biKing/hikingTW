@@ -13,3 +13,4 @@ struct Node: Identifiable, Codable {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
+
