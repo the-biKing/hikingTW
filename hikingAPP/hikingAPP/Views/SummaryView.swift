@@ -1,4 +1,4 @@
-import SwiftUI
+/*import SwiftUI
 
 struct SummaryView: View {
     let nodes: [Node]
@@ -31,4 +31,4 @@ struct SummaryView: View {
         .padding()
     }
 }
-
+*/

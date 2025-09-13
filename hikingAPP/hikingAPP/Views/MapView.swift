@@ -5,12 +5,17 @@ struct MapView: View {
     var body: some View {
         
             if navModel.planState == .active {
-                //show map
+                routeView()
             }
             else{
                 Color.black.opacity(1)
             }
         
+    }
+}
+struct routeView: View {
+    var body: some View {
+        Text("map")
     }
 }
 

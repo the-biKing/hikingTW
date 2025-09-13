@@ -14,6 +14,15 @@ enum PlanState {
     case changeOfPlan
 }
 
+
+
 class NavigationViewModel: ObservableObject {
     @Published var planState: PlanState = .idle
+    @Published var currentPlan: [String] = []
+    
+    init() {
+            // preload test plan
+            currentPlan = ["ntust_tr", "ntust_ib"]
+            planState = .active
+        }
 }

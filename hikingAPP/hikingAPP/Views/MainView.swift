@@ -212,9 +212,13 @@ struct RadarView: View {
     var elevation: Double? = nil
     var coordinate: CLLocationCoordinate2D? = nil
     
+    @StateObject private var locationManager = LocationManager()
+    
     var body: some View {
         ZStack {
             MapView()
+                .environmentObject(LocationManager())  // pass it as environment object
+                .environmentObject(NavigationViewModel())
                 .clipShape(Circle())
                 .overlay(
                     ZStack {
