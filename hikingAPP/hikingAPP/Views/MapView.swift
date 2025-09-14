@@ -8,6 +8,7 @@ struct MapView: View {
         
             if navModel.planState == .active {
                 routeView()
+                    .environmentObject(LocationManager())
             }
             else{
                 Color.black.opacity(1)
@@ -18,7 +19,7 @@ struct MapView: View {
 }
 struct routeView: View {
     @EnvironmentObject var navModel: NavigationViewModel
-    @StateObject var locationManager = LocationManager()
+    @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var compassManager: CompassManager
     @State private var lastValidHeading: Double = 0
 

@@ -10,7 +10,8 @@ import SwiftUI
 @main
 struct hikingAPPApp: App {
     @StateObject var navigationViewModel = NavigationViewModel()
-    @StateObject private var locationManager = LocationManager()
+    @StateObject var locationManager = LocationManager()
+    @StateObject var compass = CompassManager()
     
     var body: some Scene {
         WindowGroup {
@@ -19,6 +20,7 @@ struct hikingAPPApp: App {
                 MainView()
                     .environmentObject(navigationViewModel)
                     .environmentObject(locationManager)
+                    .environmentObject(compass)
             }
         }
     }

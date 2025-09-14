@@ -7,7 +7,7 @@ import Foundation
 
 struct MainView: View {
     @EnvironmentObject var locationManager: LocationManager
-    @StateObject private var compass = CompassManager()
+    @EnvironmentObject var compass: CompassManager
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -65,8 +65,7 @@ struct MainView: View {
                     )
                     .shadow(radius: 5)
             }
-            .padding(.leading, 130)
-            .padding(.trailing, 30)
+            .offset(x:140)
             //.offset(x: 130, y: -20) // Adjust to match your design
         }
     }
@@ -198,7 +197,7 @@ struct RadarPulse: View {
 
 
 struct RadarView: View {
-    @StateObject private var locationManager = LocationManager()
+    @EnvironmentObject private var locationManager: LocationManager
     
     private var elevationText: String {
         let elevation = locationManager.elevation ?? 1000
@@ -215,8 +214,6 @@ struct RadarView: View {
     var body: some View {
         ZStack {
             MapView()
-                .environmentObject(NavigationViewModel())
-                .environmentObject(CompassManager())
                 .frame(width: 380, height: 300) // match outer circle
                 .clipShape(Circle())
                 .overlay(
@@ -421,8 +418,10 @@ func formattedCoordinates(from coord: CLLocationCoordinate2D) -> String {
 
 
 #Preview {
-    MainView()
-        .environmentObject(LocationManager())
-        .environmentObject(NavigationViewModel())
-        .environmentObject(CompassManager())
+    NavigationStack {
+        MainView()
+            .environmentObject(LocationManager())
+            .environmentObject(NavigationViewModel())
+            .environmentObject(CompassManager())
+    }
 }
