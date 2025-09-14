@@ -8,26 +8,26 @@ import Foundation
 struct MainView: View {
     @EnvironmentObject var locationManager: LocationManager
     @StateObject private var compass = CompassManager()
-   
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             Color.black.ignoresSafeArea().opacity(0.9)
-            
-            
+
             VStack {
-                Text("ETA : 15 mins").font(.largeTitle).foregroundColor(Color.white)
+                Text("ETA : 15 mins")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
                     .padding(.bottom, 20)
-                    .offset(y:110)
+                    .offset(y: 110)
                     .fontWeight(.bold)
-                
+
                 let displayHeading = compass.heading?.magneticHeading ?? 0
-                
+
                 ZStack {
                     CompassWheel(heading: displayHeading)
                     RadarView()
                         .offset(y: 150)
-                        .frame(width: 200, height:200)
+                        .frame(width: 200, height: 200)
                     WheelScalePreview()
                         .offset(y: 150)
                 }
@@ -41,39 +41,37 @@ struct MainView: View {
                     distance: "1200M",
                     elevation: "230M"
                 )
-
-                
-
             }
-        }
-        .overlay(alignment: .topLeading) {
-            Button(action: {
-                print("Add plan tapped")
-            }) {
+
+            // ✅ Place NavigationLink here — top-left overlay position
+            NavigationLink(destination: PlanView()) {
                 Image(systemName: "plus")
                     .font(.title)
                     .foregroundColor(.white)
-                    .frame(width: 40, height: 40) // fixed tappable size
-                    .background(Capsule().stroke(
-                        AngularGradient(
-                            gradient: Gradient(colors: [
-                                Color.white.opacity(0.3),
-                                Color.gray.opacity(0.2),
-                                Color.white.opacity(0.3)
-                            ]),
-                            center: .center
-                        ),
-                        lineWidth: 20
+                    .frame(width: 40, height: 40)
+                    .background(
+                        Capsule().stroke(
+                            AngularGradient(
+                                gradient: Gradient(colors: [
+                                    Color.white.opacity(0.3),
+                                    Color.gray.opacity(0.2),
+                                    Color.white.opacity(0.3)
+                                ]),
+                                center: .center
+                            ),
+                            lineWidth: 20
+                        )
+                        .frame(width: 60, height: 16)
                     )
-                    .frame(width: 60, height: 16))
                     .shadow(radius: 5)
-                    .offset(x:140, y:-20)
             }
-            .padding() // ← padding around the whole button
+            .padding(.leading, 130)
+            .padding(.trailing, 30)
+            //.offset(x: 130, y: -20) // Adjust to match your design
         }
     }
-
 }
+
 
 struct CompassWheel: View {
     var heading: CLLocationDirection

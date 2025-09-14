@@ -14,9 +14,12 @@ struct hikingAPPApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
-                .environmentObject(navigationViewModel)
-                .environmentObject(locationManager)
+            NavigationStack
+            {
+                MainView()
+                    .environmentObject(navigationViewModel)
+                    .environmentObject(locationManager)
+            }
         }
     }
 }
