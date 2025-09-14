@@ -12,6 +12,7 @@ class CompassManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var locationManager = CLLocationManager()
 
     @Published var heading: CLHeading?
+    
 
     override init() {
         super.init()

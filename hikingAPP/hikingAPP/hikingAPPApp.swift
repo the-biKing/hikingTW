@@ -10,10 +10,14 @@ import SwiftUI
 @main
 struct hikingAPPApp: App {
     @StateObject var navigationViewModel = NavigationViewModel()
+    @StateObject private var locationManager = LocationManager()
+    
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environmentObject(navigationViewModel)
+                .environmentObject(locationManager)
         }
     }
 }
+

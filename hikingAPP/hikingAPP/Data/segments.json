@@ -1,28 +1,42 @@
 {
   "segments": [
     {
-      "id": "seg_ntust_tr_ib",
-      "startNodeId": "ntust_tr",
-      "endNodeId": "ntust_ib",
+      "id": "ntust_tr_ntust_ib",
+      "standardTime": 10,
       "points": [
-        { "latitude": 25.0149, "longitude": 121.5429, "elevation": 0 },
-        { "latitude": 25.0140, "longitude": 121.5415, "elevation": 2 },
-        { "latitude": 25.0130, "longitude": 121.5402, "elevation": 3 }
-      ],
-      "distance": 200,
-      "elevationGain": 3
+        { "latitude": 25.01495, "longitude": 121.54294, "elevation": 0 },
+        { "latitude": 25.01405, "longitude": 121.54157, "elevation": 2 },
+        { "latitude": 25.01306, "longitude": 121.54023, "elevation": 3 }
+      ]
     },
     {
-      "id": "seg_ntust_ib_ee",
-      "startNodeId": "ntust_ib",
-      "endNodeId": "ntust_ee",
+      "id": "ntust_ib_ntust_ee",
+      "standardTime": 20,
       "points": [
-        { "latitude": 25.0130, "longitude": 121.5402, "elevation": 3 },
-        { "latitude": 25.0126, "longitude": 121.5410, "elevation": 1 },
-        { "latitude": 25.0122, "longitude": 121.5416, "elevation": 0 }
-      ],
-      "distance": 150,
-      "elevationGain": 0
+        { "latitude": 25.01303, "longitude": 121.54024, "elevation": 3 },
+        { "latitude": 25.01264, "longitude": 121.54103, "elevation": 1 },
+        { "latitude": 25.01226, "longitude": 121.54163, "elevation": 0 }
+      ]
+    },
+    {
+      "id": "node1_node2",
+      "standardTime": 5,
+      "points": [
+        { "latitude": 25.091324, "longitude": 121.464402, "elevation": 5 },
+        { "latitude": 25.09147, "longitude": 121.46485, "elevation": 6 },
+        { "latitude": 25.09165, "longitude": 121.4653, "elevation": 7 },
+        { "latitude": 25.091796, "longitude": 121.465734, "elevation": 6 }
+      ]
+    },
+    {
+      "id": "node2_node3",
+      "standardTime": 15,
+      "points": [
+        { "latitude": 25.091796, "longitude": 121.465734, "elevation": 6 },
+        { "latitude": 25.092, "longitude": 121.4652, "elevation": 7 },
+        { "latitude": 25.09218, "longitude": 121.4648, "elevation": 6 },
+        { "latitude": 25.092224, "longitude": 121.46464, "elevation": 5 }
+      ]
     }
   ]
 }

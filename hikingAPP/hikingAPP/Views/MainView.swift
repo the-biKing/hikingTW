@@ -6,17 +6,15 @@ import Foundation
 
 
 struct MainView: View {
+    @EnvironmentObject var locationManager: LocationManager
     @StateObject private var compass = CompassManager()
-    @StateObject private var locationManager = LocationManager()
-
+   
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea().opacity(0.9)
             
             
-            
-
             VStack {
                 Text("ETA : 15 mins").font(.largeTitle).foregroundColor(Color.white)
                     .padding(.bottom, 20)
@@ -27,11 +25,7 @@ struct MainView: View {
                 
                 ZStack {
                     CompassWheel(heading: displayHeading)
-                    RadarView(
-                        elevation: locationManager.elevation,
-                        coordinate: locationManager.coordinate
-                    )
-
+                    RadarView()
                         .offset(y: 150)
                         .frame(width: 200, height:200)
                     WheelScalePreview()
@@ -80,9 +74,6 @@ struct MainView: View {
     }
 
 }
-
-import SwiftUI
-import CoreLocation
 
 struct CompassWheel: View {
     var heading: CLLocationDirection
@@ -209,16 +200,26 @@ struct RadarPulse: View {
 
 
 struct RadarView: View {
-    var elevation: Double? = nil
-    var coordinate: CLLocationCoordinate2D? = nil
-    
     @StateObject private var locationManager = LocationManager()
     
+    private var elevationText: String {
+        let elevation = locationManager.elevation ?? 1000
+        return "\(Int(elevation)) M"
+    }
+    
+    private var coordinateText: String {
+        guard let coord = locationManager.coordinate else {
+            return "W0000.0 • N0000.0"
+        }
+        return formattedCoordinates(from: coord)
+    }
+
     var body: some View {
         ZStack {
             MapView()
-                .environmentObject(LocationManager())  // pass it as environment object
                 .environmentObject(NavigationViewModel())
+                .environmentObject(CompassManager())
+                .frame(width: 380, height: 300) // match outer circle
                 .clipShape(Circle())
                 .overlay(
                     ZStack {
@@ -236,27 +237,19 @@ struct RadarView: View {
                             )
                             .frame(width: 320, height: 320)
                         
-                        // Top text (elevation)
-                        CurvedText(text: elevation != nil ? "\(Int(elevation!)) M" : "1000M", radius: 160, centerAngle: 0)
+                        CurvedText(text: elevationText, radius: 160, centerAngle: 0)
                             .font(.caption)
-                            //.fontWeight(.black)
+                            .foregroundColor(.white)
 
-                        CurvedText(
-                            text: coordinate != nil
-                                ? formattedCoordinates(from: coordinate!)
-                            : "W0000.0 • N0000.0",
-                            radius: 160,
-                            centerAngle: 180
-                        )
-
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .font(.caption)
+                        CurvedText(text: coordinateText, radius: 160, centerAngle: 180)
+                            .font(.caption)
+                            .foregroundColor(.white)
                     }
                 )
                 .frame(width: 300, height: 300)
             
             RadarPulse()
+            
             Circle()
                 .fill(Color.red)
                 .frame(width: 12, height: 12)
@@ -411,32 +404,7 @@ struct WheelScalePreview: View {
     }
 }
 
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    private var manager = CLLocationManager()
 
-    @Published var coordinate: CLLocationCoordinate2D?
-    @Published var elevation: Double?
-
-    override init() {
-        super.init()
-        manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let latest = locations.last else { return }
-        coordinate = latest.coordinate
-        elevation = latest.altitude
-    }
-
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if manager.authorizationStatus == .authorizedWhenInUse {
-            manager.startUpdatingLocation()
-        }
-    }
-}
 
 func formattedCoordinates(from coord: CLLocationCoordinate2D) -> String {
     let lat = abs(coord.latitude)
@@ -456,5 +424,7 @@ func formattedCoordinates(from coord: CLLocationCoordinate2D) -> String {
 
 #Preview {
     MainView()
+        .environmentObject(LocationManager())
         .environmentObject(NavigationViewModel())
+        .environmentObject(CompassManager())
 }
