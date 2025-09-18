@@ -35,12 +35,7 @@ struct MainView: View {
 
                 Spacer()
 
-                NodeInfoPanel(
-                    nextNodeName: "Campground A",
-                    prevNodeName: "Trailhead",
-                    distance: "1200M",
-                    elevation: "230M"
-                )
+                NodeInfoPanel()
             }
 
             // ✅ Place NavigationLink here — top-left overlay position
@@ -66,7 +61,6 @@ struct MainView: View {
                     .shadow(radius: 5)
             }
             .offset(x:140)
-            //.offset(x: 130, y: -20) // Adjust to match your design
         }
     }
 }
@@ -298,53 +292,6 @@ struct CurvedText: View {
 }
 
 
-struct NodeInfoPanel: View {
-    var nextNodeName: String
-    var prevNodeName: String
-    var distance: String
-    var elevation: String
-
-    var body: some View {
-        VStack(spacing: 8) {
-            // Next Node capsule
-            Text(nextNodeName)
-                .font(.caption)
-                .padding(.horizontal, 30)
-                .padding(.vertical, 6)
-                .background(Capsule().fill(Color.gray.opacity(0.2)))
-                .foregroundColor(.white)
-
-            HStack(alignment: .center, spacing: 16) {
-                // Arrow
-                Image(systemName: "chevron.up")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.red)
-                    .offset(x:5)
-
-                // Distance & Elevation
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("DIST: \(distance)")
-                        .font(.caption)
-                        .foregroundColor(.white)
-                    Text("ELEV: \(elevation)")
-                        .font(.caption)
-                        .foregroundColor(.white)
-                }
-            }
-
-            // Previous Node capsule
-            Text(prevNodeName)
-                .font(.caption)
-                .padding(.horizontal, 30)
-                .padding(.vertical, 6)
-                .background(Capsule().fill(Color.gray.opacity(0.2)))
-                .foregroundColor(.white)
-        }
-        .padding(.bottom, 20)
-        .scaleEffect(1.5)
-    }
-}
 
 struct WheelScalePreview: View {
     let minValue: Double = 0.13

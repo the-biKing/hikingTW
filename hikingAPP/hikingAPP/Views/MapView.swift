@@ -24,8 +24,7 @@ struct routeView: View {
     @State private var lastValidHeading: Double = 0
 
     var body: some View {
-        let segments = loadSegments()
-        let points = extractRoutePoints(from: segments, plan: navModel.currentPlan)
+        let points = extractRoutePoints(from: loadSegments(), plan: navModel.currentPlan)
 
        
             GeometryReader { geo in
@@ -76,32 +75,8 @@ struct routeView: View {
 
 
 
-func node2seg(_ node1: String, _ node2: String) -> String {
-    return "\(node1)_\(node2)"
-}
 
-func extractRoutePoints(from segments: [Segment], plan: [String]) -> [Point] {
-    guard plan.count >= 2 else { return [] }
 
-    let segmentDict = Dictionary(uniqueKeysWithValues: segments.map { ($0.id, $0) })
-
-    var routePoints: [Point] = []
-
-    for i in 0..<(plan.count - 1) {
-        let nodeA = plan[i]
-        let nodeB = plan[i + 1]
-        let segId = node2seg(nodeA, nodeB)
-
-        if let segment = segmentDict[segId] {
-            // ✅ Just append all points every time
-            routePoints.append(contentsOf: segment.points)
-        } else {
-            print("⚠️ Segment not found for ID: \(segId)")
-        }
-    }
-
-    return routePoints
-}
 
 func convertPointsToCG(points: [Point], canvasSize: CGSize, center: CLLocationCoordinate2D, zoomScale: CGFloat) -> [CGPoint] {
     guard !points.isEmpty else { return [] }
@@ -122,24 +97,6 @@ func convertPointsToCG(points: [Point], canvasSize: CGSize, center: CLLocationCo
     }
 }
 
-
-
-
-func loadSegments() -> [Segment] {
-    guard let url = Bundle.main.url(forResource: "segments", withExtension: "json") else {
-        print("❌ segments.json not found in bundle.")
-        return []
-    }
-
-    do {
-        let data = try Data(contentsOf: url)
-        let segmentCollection = try JSONDecoder().decode(SegmentCollection.self, from: data)
-        return segmentCollection.segments
-    } catch {
-        print("❌ Failed to decode segments.json: \(error)")
-        return []
-    }
-}
 
 
 

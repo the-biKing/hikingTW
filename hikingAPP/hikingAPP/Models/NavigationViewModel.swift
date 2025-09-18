@@ -10,8 +10,7 @@ import Foundation
 enum PlanState {
     case idle
     case active
-    case evacuate
-    case changeOfPlan
+    case offRoute
 }
 
 
@@ -22,7 +21,7 @@ class NavigationViewModel: ObservableObject {
     
     init() {
             // preload test plan
-            currentPlan = ["node1", "node2","node3"]
+            currentPlan = ["ntust_tr", "ntust_ib","ntust_ee"]
             planState = .active
         }
 }
