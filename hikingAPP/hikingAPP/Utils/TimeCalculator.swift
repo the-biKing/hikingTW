@@ -47,16 +47,31 @@ struct NodeInfoPanel: View {
                     guard planIndex >= 0, planIndex + 1 < plan.count else { return "" }
 
                     let nodes = loadNodes()
-                    let nodeA = nodes.first(where: { $0.id == plan[planIndex] })
-                    let nodeB = nodes.first(where: { $0.id == plan[planIndex+1] })
+                    let nodeAName = plan[planIndex]
+                    let nodeBName = plan[planIndex+1]
+                    let nodeA = nodes.first(where: { $0.id == nodeAName })
+                    let nodeB = nodes.first(where: { $0.id == nodeBName })
                     guard let nodeACoord = nodeA.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }),
                           let nodeBCoord = nodeB.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) else { return "" }
+
+                    // Determine stored segment direction (+1 for nodeA_nodeB, -1 for nodeB_nodeA)
+                    let segId = node2seg(nodeAName, nodeBName)
+                    let revSegId = node2seg(nodeBName, nodeAName)
+                    let segmentIds = segments.map { $0.id }
+                    let storedDirection: Int
+                    if segmentIds.contains(segId) {
+                        storedDirection = +1
+                    } else if segmentIds.contains(revSegId) {
+                        storedDirection = -1
+                    } else {
+                        storedDirection = +1 // fallback
+                    }
 
                     let dir = detectDirection(
                         userLocations: locationManager.locationHistory + [userLocation],
                         nodeA: nodeACoord,
                         nodeB: nodeBCoord
-                    )
+                    ) * storedDirection
 
                     return dir == +1 ? plan[planIndex+1] : plan[planIndex]
                 }
@@ -80,16 +95,31 @@ struct NodeInfoPanel: View {
                     guard planIndex >= 0, planIndex + 1 < plan.count else { return "" }
 
                     let nodes = loadNodes()
-                    let nodeA = nodes.first(where: { $0.id == plan[planIndex] })
-                    let nodeB = nodes.first(where: { $0.id == plan[planIndex+1] })
+                    let nodeAName = plan[planIndex]
+                    let nodeBName = plan[planIndex+1]
+                    let nodeA = nodes.first(where: { $0.id == nodeAName })
+                    let nodeB = nodes.first(where: { $0.id == nodeBName })
                     guard let nodeACoord = nodeA.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }),
                           let nodeBCoord = nodeB.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) else { return "" }
+
+                    // Determine stored segment direction (+1 for nodeA_nodeB, -1 for nodeB_nodeA)
+                    let segId = node2seg(nodeAName, nodeBName)
+                    let revSegId = node2seg(nodeBName, nodeAName)
+                    let segmentIds = segments.map { $0.id }
+                    let storedDirection: Int
+                    if segmentIds.contains(segId) {
+                        storedDirection = +1
+                    } else if segmentIds.contains(revSegId) {
+                        storedDirection = -1
+                    } else {
+                        storedDirection = +1 // fallback
+                    }
 
                     let dir = detectDirection(
                         userLocations: locationManager.locationHistory + [userLocation],
                         nodeA: nodeACoord,
                         nodeB: nodeBCoord
-                    )
+                    ) * storedDirection
 
                     return dir == +1 ? plan[planIndex] : plan[planIndex+1]
                 }
@@ -149,12 +179,24 @@ struct NodeInfoPanel: View {
             }
             let nodeACoord = CLLocationCoordinate2D(latitude: nodeA.latitude, longitude: nodeA.longitude)
             let nodeBCoord = CLLocationCoordinate2D(latitude: nodeB.latitude, longitude: nodeB.longitude)
-            // Detect direction
+            // Determine stored segment direction (+1 for nodeA_nodeB, -1 for nodeB_nodeA)
+            let segId = node2seg(nodeAName, nodeBName)
+            let revSegId = node2seg(nodeBName, nodeAName)
+            let segmentIds = segments.map { $0.id }
+            let storedDirection: Int
+            if segmentIds.contains(segId) {
+                storedDirection = +1
+            } else if segmentIds.contains(revSegId) {
+                storedDirection = -1
+            } else {
+                storedDirection = +1 // fallback
+            }
+            // Detect direction, adjusting by stored segment direction
             let direction = detectDirection(
                 userLocations: locationManager.locationHistory + [userLocation],
                 nodeA: nodeACoord,
                 nodeB: nodeBCoord
-            )
+            ) * storedDirection
             // Distance to next node
             let dist = distanceToNextNode(closest: closest, segments: segments, direction: direction)
             return String(format: "%.0f", dist)
