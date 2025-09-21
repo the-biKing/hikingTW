@@ -3,24 +3,24 @@
         {
             "id": "ntust_tr",
             "name": "研揚大樓",
-            "latitude": 25.0149,
-            "longitude": 121.5429,
+            "latitude": 25.01495,
+            "longitude": 121.54294,
             "elevation": 0,
             "isCustom": false
         },
         {
             "id": "ntust_ib",
             "name": "國際大樓",
-            "latitude":  25.0130,
-            "longitude": 121.5402,
+            "latitude":  25.01303,
+            "longitude": 121.54024,
             "elevation": 0,
             "isCustom": false
         },
         {
             "id": "ntust_ee",
             "name": "電資大樓",
-            "latitude": 25.0122,
-            "longitude": 121.5416,
+            "latitude": 25.01226,
+            "longitude": 121.54163,
             "elevation": 0,
             "isCustom": false
         }
