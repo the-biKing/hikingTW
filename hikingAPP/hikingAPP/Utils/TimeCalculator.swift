@@ -32,103 +32,96 @@ struct NodeInfoPanel: View {
     @EnvironmentObject var navModel: NavigationViewModel
     @EnvironmentObject var locationManager: LocationManager
 
-    var nextNodeName: String {
+    // Helper to compute closest point info for the current state
+    private func computeClosest() -> ClosestPointResult? {
+        guard let userLocation = locationManager.coordinate else { return nil }
+        let segments = loadSegments()
+        return closestPointOnPlan(
+            plan: navModel.currentPlan,
+            segments: segments,
+            user: userLocation,
+            userLocations: locationManager.locationHistory + [userLocation]
+        )
+    }
+
+    // Helper for next node name
+    private func nextNodeName(for closest: ClosestPointResult?, segments: [Segment]) -> String {
         switch navModel.planState {
         case .idle:
             return navModel.currentPlan.first ?? ""
         case .active, .offRoute:
-            if let userLocation = locationManager.coordinate {
-                let segments = loadSegments()
-                if let closest = closestPointOnPlan(plan: navModel.currentPlan,
-                                                    segments: segments,
-                                                    user: userLocation) {
-                    let plan = navModel.currentPlan
-                    let planIndex = closest.planIndex
-                    guard planIndex >= 0, planIndex + 1 < plan.count else { return "" }
-
-                    let nodes = loadNodes()
-                    let nodeAName = plan[planIndex]
-                    let nodeBName = plan[planIndex+1]
-                    let nodeA = nodes.first(where: { $0.id == nodeAName })
-                    let nodeB = nodes.first(where: { $0.id == nodeBName })
-                    guard let nodeACoord = nodeA.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }),
-                          let nodeBCoord = nodeB.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) else { return "" }
-
-                    // Determine stored segment direction (+1 for nodeA_nodeB, -1 for nodeB_nodeA)
-                    let segId = node2seg(nodeAName, nodeBName)
-                    let revSegId = node2seg(nodeBName, nodeAName)
-                    let segmentIds = segments.map { $0.id }
-                    let storedDirection: Int
-                    if segmentIds.contains(segId) {
-                        storedDirection = +1
-                    } else if segmentIds.contains(revSegId) {
-                        storedDirection = -1
-                    } else {
-                        storedDirection = +1 // fallback
-                    }
-
-                    let dir = detectDirection(
-                        userLocations: locationManager.locationHistory + [userLocation],
-                        nodeA: nodeACoord,
-                        nodeB: nodeBCoord
-                    ) * storedDirection
-
-                    return dir == +1 ? plan[planIndex+1] : plan[planIndex]
-                }
+            guard let closest = closest else { return "" }
+            let plan = navModel.currentPlan
+            let planIndex = closest.planIndex
+            guard planIndex >= 0, planIndex + 1 < plan.count else { return "" }
+            let nodes = loadNodes()
+            let nodeAName = plan[planIndex]
+            let nodeBName = plan[planIndex+1]
+            let nodeA = nodes.first(where: { $0.id == nodeAName })
+            let nodeB = nodes.first(where: { $0.id == nodeBName })
+            guard let nodeACoord = nodeA.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }),
+                  let nodeBCoord = nodeB.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) else { return "" }
+            // Determine stored segment direction (+1 for nodeA_nodeB, -1 for nodeB_nodeA)
+            let segId = node2seg(nodeAName, nodeBName)
+            let revSegId = node2seg(nodeBName, nodeAName)
+            let segmentIds = segments.map { $0.id }
+            let storedDirection: Int
+            if segmentIds.contains(segId) {
+                storedDirection = +1
+            } else if segmentIds.contains(revSegId) {
+                storedDirection = -1
+            } else {
+                storedDirection = +1 // fallback
             }
-            return ""
+            let dir = detectDirection(
+                userLocations: locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? []),
+                nodeA: nodeACoord,
+                nodeB: nodeBCoord
+            ) * storedDirection
+            return dir == +1 ? plan[planIndex+1] : plan[planIndex]
         }
     }
 
-    var prevNodeName: String {
+    // Helper for previous node name
+    private func prevNodeName(for closest: ClosestPointResult?, segments: [Segment]) -> String {
         switch navModel.planState {
         case .idle:
             return ""
         case .active, .offRoute:
-            if let userLocation = locationManager.coordinate {
-                let segments = loadSegments()
-                if let closest = closestPointOnPlan(plan: navModel.currentPlan,
-                                                    segments: segments,
-                                                    user: userLocation) {
-                    let plan = navModel.currentPlan
-                    let planIndex = closest.planIndex
-                    guard planIndex >= 0, planIndex + 1 < plan.count else { return "" }
-
-                    let nodes = loadNodes()
-                    let nodeAName = plan[planIndex]
-                    let nodeBName = plan[planIndex+1]
-                    let nodeA = nodes.first(where: { $0.id == nodeAName })
-                    let nodeB = nodes.first(where: { $0.id == nodeBName })
-                    guard let nodeACoord = nodeA.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }),
-                          let nodeBCoord = nodeB.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) else { return "" }
-
-                    // Determine stored segment direction (+1 for nodeA_nodeB, -1 for nodeB_nodeA)
-                    let segId = node2seg(nodeAName, nodeBName)
-                    let revSegId = node2seg(nodeBName, nodeAName)
-                    let segmentIds = segments.map { $0.id }
-                    let storedDirection: Int
-                    if segmentIds.contains(segId) {
-                        storedDirection = +1
-                    } else if segmentIds.contains(revSegId) {
-                        storedDirection = -1
-                    } else {
-                        storedDirection = +1 // fallback
-                    }
-
-                    let dir = detectDirection(
-                        userLocations: locationManager.locationHistory + [userLocation],
-                        nodeA: nodeACoord,
-                        nodeB: nodeBCoord
-                    ) * storedDirection
-
-                    return dir == +1 ? plan[planIndex] : plan[planIndex+1]
-                }
+            guard let closest = closest else { return "" }
+            let plan = navModel.currentPlan
+            let planIndex = closest.planIndex
+            guard planIndex >= 0, planIndex + 1 < plan.count else { return "" }
+            let nodes = loadNodes()
+            let nodeAName = plan[planIndex]
+            let nodeBName = plan[planIndex+1]
+            let nodeA = nodes.first(where: { $0.id == nodeAName })
+            let nodeB = nodes.first(where: { $0.id == nodeBName })
+            guard let nodeACoord = nodeA.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }),
+                  let nodeBCoord = nodeB.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) else { return "" }
+            // Determine stored segment direction (+1 for nodeA_nodeB, -1 for nodeB_nodeA)
+            let segId = node2seg(nodeAName, nodeBName)
+            let revSegId = node2seg(nodeBName, nodeAName)
+            let segmentIds = segments.map { $0.id }
+            let storedDirection: Int
+            if segmentIds.contains(segId) {
+                storedDirection = +1
+            } else if segmentIds.contains(revSegId) {
+                storedDirection = -1
+            } else {
+                storedDirection = +1 // fallback
             }
-            return ""
+            let dir = detectDirection(
+                userLocations: locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? []),
+                nodeA: nodeACoord,
+                nodeB: nodeBCoord
+            ) * storedDirection
+            return dir == +1 ? plan[planIndex] : plan[planIndex+1]
         }
     }
 
-    var distance: String {
+    // Helper for distance string
+    private func distanceString(for closest: ClosestPointResult?, segments: [Segment]) -> String {
         switch navModel.planState {
         case .idle:
             if let userLocation = locationManager.coordinate,
@@ -143,43 +136,24 @@ struct NodeInfoPanel: View {
             }
             return "N/A"
         case .offRoute:
-            if let userLocation = locationManager.coordinate {
-                let segments = loadSegments()
-                if let closest = closestPointOnPlan(plan: navModel.currentPlan,
-                                                    segments: segments,
-                                                    user: userLocation) {
-                    return String(format: "%.0f", closest.distance)
-                }
+            if let closest = closest {
+                return String(format: "%.0f", closest.distance)
             }
             return "0"
         case .active:
-            // New logic for .active
-            guard let userLocation = locationManager.coordinate else {
-                return "0"
-            }
-            let segments = loadSegments()
-            guard let closest = closestPointOnPlan(plan: navModel.currentPlan,
-                                                   segments: segments,
-                                                   user: userLocation) else {
-                return "0"
-            }
+            guard let closest = closest else { return "0" }
             let plan = navModel.currentPlan
-            let nodes = loadNodes()
-            // Get nodeA and nodeB names from plan
             let planIndex = closest.planIndex
-            guard planIndex >= 0, planIndex + 1 < plan.count else {
-                return "0"
-            }
+            guard planIndex >= 0, planIndex + 1 < plan.count else { return "0" }
+            let nodes = loadNodes()
             let nodeAName = plan[planIndex]
             let nodeBName = plan[planIndex + 1]
-            // Find Node objects for nodeA and nodeB
             guard let nodeA = nodes.first(where: { $0.id == nodeAName }),
                   let nodeB = nodes.first(where: { $0.id == nodeBName }) else {
                 return "0"
             }
             let nodeACoord = CLLocationCoordinate2D(latitude: nodeA.latitude, longitude: nodeA.longitude)
             let nodeBCoord = CLLocationCoordinate2D(latitude: nodeB.latitude, longitude: nodeB.longitude)
-            // Determine stored segment direction (+1 for nodeA_nodeB, -1 for nodeB_nodeA)
             let segId = node2seg(nodeAName, nodeBName)
             let revSegId = node2seg(nodeBName, nodeAName)
             let segmentIds = segments.map { $0.id }
@@ -191,30 +165,24 @@ struct NodeInfoPanel: View {
             } else {
                 storedDirection = +1 // fallback
             }
-            // Detect direction, adjusting by stored segment direction
             let direction = detectDirection(
-                userLocations: locationManager.locationHistory + [userLocation],
+                userLocations: locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? []),
                 nodeA: nodeACoord,
                 nodeB: nodeBCoord
             ) * storedDirection
-            // Distance to next node
             let dist = distanceToNextNode(closest: closest, segments: segments, direction: direction)
             return String(format: "%.0f", dist)
         }
     }
 
-    var elevation: String {
+    // Helper for elevation string
+    private func elevationString(for closest: ClosestPointResult?) -> String {
         switch navModel.planState {
         case .idle:
             return "N/A"
         case .active, .offRoute:
-            if let userLocation = locationManager.coordinate {
-                let segments = loadSegments()
-                if let closest = closestPointOnPlan(plan: navModel.currentPlan,
-                                                    segments: segments,
-                                                    user: userLocation) {
-                    return String(format: "%.0f",closest.point.elevation)
-                }
+            if let closest = closest {
+                return String(format: "%.0f", closest.point.elevation)
             }
             return "0"
         }
@@ -222,6 +190,7 @@ struct NodeInfoPanel: View {
 
     var body: some View {
         Group {
+            let closest = computeClosest()
             let segments = loadSegments()
             VStack(spacing: 8) {
                 // Show plan state
@@ -234,7 +203,7 @@ struct NodeInfoPanel: View {
                     Text("Off Route").font(.caption).foregroundColor(.orange)
                 }
                 // Next Node capsule
-                Text(nextNodeName)
+                Text(nextNodeName(for: closest, segments: segments))
                     .font(.caption)
                     .padding(.horizontal, 30)
                     .padding(.vertical, 6)
@@ -251,17 +220,17 @@ struct NodeInfoPanel: View {
 
                     // Distance & Elevation
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("DIST: \(distance) m")
+                        Text("DIST: \(distanceString(for: closest, segments: segments)) m")
                             .font(.caption)
                             .foregroundColor(.white)
-                        Text("ELEV: \(elevation)")
+                        Text("ELEV: \(elevationString(for: closest))")
                             .font(.caption)
                             .foregroundColor(.white)
                     }
                 }
 
                 // Previous Node capsule
-                Text(prevNodeName)
+                Text(prevNodeName(for: closest, segments: segments))
                     .font(.caption)
                     .padding(.horizontal, 30)
                     .padding(.vertical, 6)
@@ -271,24 +240,12 @@ struct NodeInfoPanel: View {
             .padding(.bottom, 20)
             .scaleEffect(1.5)
             .onAppear {
-                if let userLocation = locationManager.coordinate {
-                    let closest = closestPointOnPlan(plan: navModel.currentPlan,
-                                                     segments: segments,
-                                                     user: userLocation)
-                    updatePlanState(distance: closest?.distance, navModel: navModel)
-                } else {
-                    navModel.planState = .idle
-                }
+                let closest = computeClosest()
+                updatePlanState(distance: closest?.distance, navModel: navModel)
             }
             .onReceive(locationManager.$coordinate) { _ in
-                if let userLocation = locationManager.coordinate {
-                    let closest = closestPointOnPlan(plan: navModel.currentPlan,
-                                                     segments: segments,
-                                                     user: userLocation)
-                    updatePlanState(distance: closest?.distance, navModel: navModel)
-                } else {
-                    navModel.planState = .idle
-                }
+                let closest = computeClosest()
+                updatePlanState(distance: closest?.distance, navModel: navModel)
             }
         }
     }
@@ -408,21 +365,34 @@ struct ClosestPointResult {
 }
 
 
-/// Find the closest point on the current plan, returning segment information
-func closestPointOnPlan(plan: [String], segments: [Segment], user: CLLocationCoordinate2D) -> ClosestPointResult? {
+
+/// Find the closest point on the current plan, returning segment information.
+/// This version optionally accepts recent user locations (userLocations). If provided,
+/// after a geometric nearest-point is found it will use the movement history (via
+/// detectDirection) to disambiguate and (when appropriate) switch the returned
+/// planIndex to the matching reversed plan index so the returned planIndex correctly
+/// reflects the user's travel direction.
+func closestPointOnPlan(
+    plan: [String],
+    segments: [Segment],
+    user: CLLocationCoordinate2D,
+    userLocations: [CLLocationCoordinate2D]? = nil
+) -> ClosestPointResult? {
     guard plan.count >= 2 else { return nil }
 
     let segmentDict = Dictionary(uniqueKeysWithValues: segments.map { ($0.id, $0) })
     var bestResult: ClosestPointResult? = nil
     var bestDistance = Double.greatestFiniteMagnitude
 
+    // 1) Geometric search (same as before): check every plan edge (i -> i+1),
+    // first try forward stored segment, then if missing try reversed stored segment.
     for i in 0..<(plan.count - 1) {
         let start = plan[i]
-        let end = plan[i+1]
+        let end = plan[i + 1]
         let segId = node2seg(start, end)
         let revSegId = node2seg(end, start)
 
-        // Try forward direction first
+        // forward stored segment
         if let seg = segmentDict[segId] {
             for j in 0..<(seg.points.count - 1) {
                 let a = CLLocationCoordinate2D(latitude: seg.points[j].latitude,
@@ -433,7 +403,8 @@ func closestPointOnPlan(plan: [String], segments: [Segment], user: CLLocationCoo
                 let d = user.distance(from: candidate)
                 if d < bestDistance {
                     bestDistance = d
-                    // interpolate elevation
+
+                    // interpolate elevation between seg.points[j] and seg.points[j+1]
                     let elevA = seg.points[j].elevation
                     let elevB = seg.points[j+1].elevation
 
@@ -447,32 +418,33 @@ func closestPointOnPlan(plan: [String], segments: [Segment], user: CLLocationCoo
                     let t = max(0, min(1, (ab2 > 0 ? (apx*abx + apy*aby) / ab2 : 0)))
 
                     let interpolatedElevation = elevA + (elevB - elevA) * t
-
                     let bestPoint = Point(latitude: candidate.latitude,
                                           longitude: candidate.longitude,
                                           elevation: interpolatedElevation)
+
                     bestResult = ClosestPointResult(point: bestPoint, segmentId: seg.id, planIndex: i, distance: d)
                 }
             }
-            continue // if found forward, skip reverse
+            // prefer forward if available, continue to next plan index
+            continue
         }
 
-        // Try reverse direction if forward not found
+        // try stored reversed segment (end_start) and treat its points reversed
         if let revSeg = segmentDict[revSegId] {
-            let points = revSeg.points
-            for j in 0..<(points.count - 1) {
-                // Reverse the segment points for calculation so it's consistent with plan direction
-                let a = CLLocationCoordinate2D(latitude: points[points.count - 1 - j].latitude,
-                                               longitude: points[points.count - 1 - j].longitude)
-                let b = CLLocationCoordinate2D(latitude: points[points.count - 2 - j].latitude,
-                                               longitude: points[points.count - 2 - j].longitude)
+            let pts = revSeg.points
+            for j in 0..<(pts.count - 1) {
+                // reverse the index mapping so this calculation is consistent with plan direction
+                let a = CLLocationCoordinate2D(latitude: pts[pts.count - 1 - j].latitude,
+                                               longitude: pts[pts.count - 1 - j].longitude)
+                let b = CLLocationCoordinate2D(latitude: pts[pts.count - 2 - j].latitude,
+                                               longitude: pts[pts.count - 2 - j].longitude)
                 let candidate = closestPointOnSegment(user, a, b)
                 let d = user.distance(from: candidate)
                 if d < bestDistance {
                     bestDistance = d
-                    // interpolate elevation (reverse indices for reverse direction)
-                    let elevA = points[points.count - 1 - j].elevation
-                    let elevB = points[points.count - 2 - j].elevation
+
+                    let elevA = pts[pts.count - 1 - j].elevation
+                    let elevB = pts[pts.count - 2 - j].elevation
 
                     let ax = a.longitude, ay = a.latitude
                     let bx = b.longitude, by = b.latitude
@@ -484,12 +456,80 @@ func closestPointOnPlan(plan: [String], segments: [Segment], user: CLLocationCoo
                     let t = max(0, min(1, (ab2 > 0 ? (apx*abx + apy*aby) / ab2 : 0)))
 
                     let interpolatedElevation = elevA + (elevB - elevA) * t
-
                     let bestPoint = Point(latitude: candidate.latitude,
                                           longitude: candidate.longitude,
                                           elevation: interpolatedElevation)
-                    // Use the original plan index (i) and segmentId as revSeg.id
+
+                    // keep planIndex = i (because plan[i] -> plan[i+1] is the plan direction),
+                    // but mark segmentId as the stored (reversed) id
                     bestResult = ClosestPointResult(point: bestPoint, segmentId: revSeg.id, planIndex: i, distance: d)
+                }
+            }
+        }
+    }
+
+    // 2) If we have movement history, disambiguate the plan index when geometry alone is ambiguous.
+    //    If detectDirection says the user is moving opposite relative to plan[i]->plan[i+1],
+    //    try to find a matching reversed occurrence of that edge in the plan and return that index.
+    if let currentBest = bestResult, let userLocs = userLocations, userLocs.count >= 2 {
+        let idx = currentBest.planIndex
+        if idx >= 0 && idx + 1 < plan.count {
+            let nodeAName = plan[idx]
+            let nodeBName = plan[idx + 1]
+
+            // load node coordinates for direction detection
+            let nodes = loadNodes()
+            if let nodeA = nodes.first(where: { $0.id == nodeAName }),
+               let nodeB = nodes.first(where: { $0.id == nodeBName }) {
+                let nodeACoord = CLLocationCoordinate2D(latitude: nodeA.latitude, longitude: nodeA.longitude)
+                let nodeBCoord = CLLocationCoordinate2D(latitude: nodeB.latitude, longitude: nodeB.longitude)
+
+                let movementDir = detectDirection(userLocations: userLocs, nodeA: nodeACoord, nodeB: nodeBCoord)
+                // movementDir == +1 means user moving from nodeA -> nodeB (plan direction),
+                // movementDir == -1 means user moving from nodeB -> nodeA (opposite)
+                if movementDir == -1 {
+                    // find another index in the plan that represents nodeB -> nodeA (reverse occurrence)
+                    if let revIndex = (0..<(plan.count - 1)).first(where: { plan[$0] == nodeBName && plan[$0 + 1] == nodeAName }) {
+                        // if segment stored as nodeB_nodeA, prefer that segment and recompute a best candidate on it
+                        let revSegId = node2seg(nodeBName, nodeAName)
+                        if let revSeg = segmentDict[revSegId] {
+                            var revBestPoint: Point? = nil
+                            var revBestDistance = Double.greatestFiniteMagnitude
+                            // compute closest point on the stored revSeg (no reversing here; revSeg stores B->A)
+                            for j in 0..<(revSeg.points.count - 1) {
+                                let a = CLLocationCoordinate2D(latitude: revSeg.points[j].latitude,
+                                                               longitude: revSeg.points[j].longitude)
+                                let b = CLLocationCoordinate2D(latitude: revSeg.points[j+1].latitude,
+                                                               longitude: revSeg.points[j+1].longitude)
+                                let candidate = closestPointOnSegment(user, a, b)
+                                let d = user.distance(from: candidate)
+                                if d < revBestDistance {
+                                    revBestDistance = d
+
+                                    let elevA = revSeg.points[j].elevation
+                                    let elevB = revSeg.points[j+1].elevation
+
+                                    let ax = a.longitude, ay = a.latitude
+                                    let bx = b.longitude, by = b.latitude
+                                    let px = candidate.longitude, py = candidate.latitude
+
+                                    let abx = bx - ax, aby = by - ay
+                                    let apx = px - ax, apy = py - ay
+                                    let ab2 = abx*abx + aby*aby
+                                    let t = max(0, min(1, (ab2 > 0 ? (apx*abx + apy*aby) / ab2 : 0)))
+
+                                    let interpolatedElevation = elevA + (elevB - elevA) * t
+                                    revBestPoint = Point(latitude: candidate.latitude,
+                                                         longitude: candidate.longitude,
+                                                         elevation: interpolatedElevation)
+                                }
+                            }
+                            if let rbp = revBestPoint {
+                                // return a ClosestPointResult that points at the reversed plan occurrence
+                                return ClosestPointResult(point: rbp, segmentId: revSeg.id, planIndex: revIndex, distance: revBestDistance)
+                            }
+                        }
+                    }
                 }
             }
         }
