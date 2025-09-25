@@ -17,6 +17,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationHistory: [CLLocationCoordinate2D] = []
 
     private let maxHistoryCount = 5
+    private let updateInterval: TimeInterval = 10 // seconds
+    private var lastHistoryUpdateTime: Date = .distantPast
 
     override init() {
         super.init()
@@ -37,12 +39,16 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         coordinate = latest.coordinate
         elevation = latest.altitude
 
-        if let coordinate = coordinate {
-            locationHistory.append(coordinate)
-            if locationHistory.count > maxHistoryCount {
-                locationHistory.removeFirst(locationHistory.count - maxHistoryCount)
+        let now = Date()
+            if now.timeIntervalSince(lastHistoryUpdateTime) >= updateInterval {
+                lastHistoryUpdateTime = now
+
+                locationHistory.append(latest.coordinate)
+
+                if locationHistory.count > maxHistoryCount {
+                    locationHistory.removeFirst(locationHistory.count - maxHistoryCount)
+                }
             }
-        }
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

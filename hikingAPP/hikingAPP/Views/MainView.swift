@@ -14,6 +14,7 @@ struct MainView: View {
             Color.black.ignoresSafeArea().opacity(0.9)
 
             VStack {
+                //TODO add ETA view
                 Text("ETA : 15 mins")
                     .font(.largeTitle)
                     .foregroundColor(.white)

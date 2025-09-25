@@ -180,11 +180,44 @@ struct NodeInfoPanel: View {
         switch navModel.planState {
         case .idle:
             return "N/A"
-        case .active, .offRoute:
+        case .offRoute:
             if let closest = closest {
                 return String(format: "%.0f", closest.point.elevation)
             }
             return "0"
+        case .active:
+            guard let closest = closest else { return "0" }
+            let plan = navModel.currentPlan
+            let planIndex = closest.planIndex
+            guard planIndex >= 0, planIndex + 1 < plan.count else { return "0" }
+            let nodes = loadNodes()
+            let nodeAName = plan[planIndex]
+            let nodeBName = plan[planIndex + 1]
+            guard let nodeA = nodes.first(where: { $0.id == nodeAName }),
+                  let nodeB = nodes.first(where: { $0.id == nodeBName }) else {
+                return "0"
+            }
+            let nodeACoord = CLLocationCoordinate2D(latitude: nodeA.latitude, longitude: nodeA.longitude)
+            let nodeBCoord = CLLocationCoordinate2D(latitude: nodeB.latitude, longitude: nodeB.longitude)
+            let segId = node2seg(nodeAName, nodeBName)
+            let revSegId = node2seg(nodeBName, nodeAName)
+            let segments = loadSegments()
+            let segmentIds = segments.map { $0.id }
+            let storedDirection: Int
+            if segmentIds.contains(segId) {
+                storedDirection = +1
+            } else if segmentIds.contains(revSegId) {
+                storedDirection = -1
+            } else {
+                storedDirection = +1 // fallback
+            }
+            let direction = detectDirection(
+                userLocations: locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? []),
+                nodeA: nodeACoord,
+                nodeB: nodeBCoord
+            ) * storedDirection
+            let elevChange = elevationChangeToNextNode(closest: closest, segments: segments, direction: direction)
+            return String(format: "%.0f", elevChange)
         }
     }
 
@@ -622,5 +655,64 @@ func distanceToNextNode(closest: ClosestPointResult, segments: [Segment], direct
             .environmentObject(NavigationViewModel())
             .environmentObject(LocationManager())
         
+    }
+}
+
+// Returns the total elevation gain (if positive) or -loss (if negative) to the next node
+func elevationChangeToNextNode(closest: ClosestPointResult, segments: [Segment], direction: Int) -> Double {
+    guard let segment = segments.first(where: { $0.id == closest.segmentId }) else {
+        return 0.0
+    }
+
+    // Find the index in segment.points closest to closest.point
+    var closestIndex = 0
+    var minDist = Double.greatestFiniteMagnitude
+    for (index, point) in segment.points.enumerated() {
+        let ptCoord = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
+        let closestCoord = CLLocationCoordinate2D(latitude: closest.point.latitude,
+                                                  longitude: closest.point.longitude)
+        let dist = ptCoord.distance(from: closestCoord)
+        if dist < minDist {
+            minDist = dist
+            closestIndex = index
+        }
+    }
+
+    var gain: Double = 0.0
+    var loss: Double = 0.0
+
+    if direction == +1 {
+        // Sum elevation differences from closestIndex to end
+        for i in closestIndex..<(segment.points.count - 1) {
+            let elevA = segment.points[i].elevation
+            let elevB = segment.points[i+1].elevation
+            let diff = elevB - elevA
+            if diff > 0 {
+                gain += diff
+            } else {
+                loss += -diff
+            }
+        }
+    } else {
+        // Sum elevation differences from closestIndex down to start
+        if closestIndex > 0 {
+            for i in stride(from: closestIndex, to: 0, by: -1) {
+                let elevA = segment.points[i].elevation
+                let elevB = segment.points[i-1].elevation
+                let diff = elevB - elevA
+                if diff > 0 {
+                    gain += diff
+                } else {
+                    loss += -diff
+                }
+            }
+        }
+    }
+
+    // If loss is greater, return -loss; otherwise return gain
+    if loss > gain {
+        return -loss
+    } else {
+        return gain
     }
 }
