@@ -14,14 +14,7 @@ struct MainView: View {
             Color.black.ignoresSafeArea().opacity(0.9)
 
             VStack {
-                //TODO add ETA view
-                Text("ETA : 15 mins")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .padding(.bottom, 20)
-                    .offset(y: 110)
-                    .fontWeight(.bold)
-
+                ETAView()
                 let displayHeading = compass.heading?.magneticHeading ?? 0
 
                 ZStack {

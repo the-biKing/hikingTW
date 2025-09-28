@@ -13,6 +13,10 @@ struct hikingAPPApp: App {
     @StateObject var locationManager = LocationManager()
     @StateObject var compass = CompassManager()
     
+    init() {
+        ensureUserJSONExists()
+    }
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack
@@ -22,6 +26,26 @@ struct hikingAPPApp: App {
                     .environmentObject(locationManager)
                     .environmentObject(compass)
             }
+        }
+    }
+}
+
+// MARK: - Ensure user.json exists in Documents
+func ensureUserJSONExists() {
+    let fm = FileManager.default
+    guard let docs = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+    let userFileURL = docs.appendingPathComponent("user.json")
+    
+    if !fm.fileExists(atPath: userFileURL.path) {
+        if let bundleURL = Bundle.main.url(forResource: "user", withExtension: "json") {
+            do {
+                try fm.copyItem(at: bundleURL, to: userFileURL)
+                print("✅ Copied default user.json to Documents")
+            } catch {
+                print("❌ Failed to copy user.json to Documents: \(error)")
+            }
+        } else {
+            print("❌ Default user.json not found in bundle")
         }
     }
 }

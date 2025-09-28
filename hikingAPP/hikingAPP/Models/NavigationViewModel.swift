@@ -22,6 +22,6 @@ class NavigationViewModel: ObservableObject {
     init() {
             // preload test plan
             currentPlan = ["ntust_tr", "ntust_ib","ntust_ee"]
-            planState = .active
+            planState = .idle
         }
 }

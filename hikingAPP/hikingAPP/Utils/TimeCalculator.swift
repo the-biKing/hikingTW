@@ -20,7 +20,7 @@ private func closestPointOnSegment(_ p: CLLocationCoordinate2D,
                                   longitude: ax + t*abx)
 }
 
-private extension CLLocationCoordinate2D {
+extension CLLocationCoordinate2D {
     func distance(from other: CLLocationCoordinate2D) -> CLLocationDistance {
         let loc1 = CLLocation(latitude: self.latitude, longitude: self.longitude)
         let loc2 = CLLocation(latitude: other.latitude, longitude: other.longitude)

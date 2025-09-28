@@ -3,6 +3,7 @@
     {
       "id": "ntust_tr_ntust_ib",
       "standardTime": 10,
+      "revStandardTime" : 15,
       "points": [
         { "latitude": 25.01495, "longitude": 121.54294, "elevation": 0 },
         { "latitude": 25.01405, "longitude": 121.54157, "elevation": 2 },
@@ -12,6 +13,7 @@
     {
       "id": "ntust_ib_ntust_ee",
       "standardTime": 20,
+      "revStandardTime" : 15,
       "points": [
         { "latitude": 25.01303, "longitude": 121.54024, "elevation": 3 },
         { "latitude": 25.01264, "longitude": 121.54103, "elevation": 1 },
@@ -21,6 +23,7 @@
     {
       "id": "node1_node2",
       "standardTime": 5,
+      "revStandardTime" : 10,
       "points": [
         { "latitude": 25.091324, "longitude": 121.464402, "elevation": 5 },
         { "latitude": 25.09147, "longitude": 121.46485, "elevation": 6 },
@@ -31,6 +34,7 @@
     {
       "id": "node2_node3",
       "standardTime": 15,
+      "revStandardTime" : 15,
       "points": [
         { "latitude": 25.091796, "longitude": 121.465734, "elevation": 6 },
         { "latitude": 25.092, "longitude": 121.4652, "elevation": 7 },

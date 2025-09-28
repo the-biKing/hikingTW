@@ -4,6 +4,7 @@ import CoreLocation
 struct Segment: Identifiable, Codable {
     let id: String
     let standardTime: Double
+    let revStandardTime: Double
     let points: [Point]
 }
 
