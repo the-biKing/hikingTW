@@ -34,7 +34,6 @@ class ETAViewModel: ObservableObject {
     @Published var isTiming = false
     @Published var elapsedTime: TimeInterval = 0
     @Published var isInsideNode = true
-    @Published var currentNodeID: String? = nil
     var leavingNodeID: String? = nil
     var enteringNodeID: String? = nil
     private var timer: Timer?
@@ -45,14 +44,12 @@ class ETAViewModel: ObservableObject {
         
         if isInsideNode && distance > nodethreshhold {
             // User just left the node
-            leavingNodeID = currentNodeID
-            currentNodeID = nil
+            leavingNodeID = nodeID
             isInsideNode = false
             startTimer()
         } else if !isInsideNode && distance <= nodethreshhold {
             // User entered a node
             enteringNodeID = nodeID
-            currentNodeID = nodeID
             isInsideNode = true
             stopTimer()
         }
@@ -101,17 +98,8 @@ struct ETAView: View {
         
         // Compute etaMinutes outside of ViewBuilder
         let etaMinutes: Double = {
-            guard let fromID = viewModel.currentNodeID, !fromID.isEmpty else { return 0 }
-            let nodes = loadNodes()
-            let userLocations = locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? [])
-            let nextNodeID = nextNodeName(
-                currentNodeID: fromID,
-                plan: navModel.currentPlan,
-                segments: segments,
-                userLocations: userLocations,
-                nodes: nodes
-            )
-            guard !nextNodeID.isEmpty,
+            guard let fromID = navModel.prevNodeID, !fromID.isEmpty else { return 0 }
+            guard let nextNodeID = navModel.nextNodeID, !nextNodeID.isEmpty,
                   let stdTime = standardTimeBetweenNodes(fromNodeID: fromID, toNodeID: nextNodeID, segments: segments)
             else { return 0 }
             return stdTime * user.speedFactor
@@ -131,7 +119,6 @@ struct ETAView: View {
             }
             
             
-            
             if let result = closestNode(from: locationManager.coordinate, nodes: loadNodes()) {
                 VStack {
                     Text("Distance to node: \(Int(result.distance)) m")
@@ -148,19 +135,29 @@ struct ETAView: View {
                        let toID = viewModel.enteringNodeID {
                         let segments = loadSegments()
                         if let stdTime = standardTimeBetweenNodes(fromNodeID: fromID, toNodeID: toID, segments: segments) {
-                            print("Standard time from \(fromID) to \(toID): \(stdTime) minutes")
-                            
-                            // Calculate user's speed factor
                             let userTime = viewModel.elapsedTime / 60.0 // convert seconds to minutes
                             let userSpeedFactor = userTime / stdTime
                             
-                            // Load or create user
-                            var user = loadUser() ?? User(id: UUID(), username: "josh", speedFactor: 1.0)
-                            user.speedFactor = userSpeedFactor
-                            
-                            // Save back to JSON
-                            saveUser(user)
-                            print("User speed factor saved: \(userSpeedFactor)")
+                            if userSpeedFactor >= 0.1 && userSpeedFactor <= 2.0 {
+                                var user = loadUser() ?? User(id: UUID(), username: "josh", speedFactor: 1.0)
+                                
+                                // Maintain recent factors
+                                var recents = user.recentSpeedFactors ?? []
+                                recents.append(userSpeedFactor)
+                                if recents.count > 5 {
+                                    recents.removeFirst(recents.count - 5)
+                                }
+                                user.recentSpeedFactors = recents
+                                
+                                // Update average speed factor
+                                let avg = recents.reduce(0, +) / Double(recents.count)
+                                user.speedFactor = avg
+                                
+                                saveUser(user)
+                                print("User speed factor saved: \(avg)")
+                            } else {
+                                print("❌ Discarded outlier speed factor: \(userSpeedFactor)")
+                            }
                         }
                     }
                 }
@@ -177,51 +174,7 @@ struct ETAView: View {
     }
 }
 
-// MARK: - Next Node Name Helper for ETA
-/// Returns the next node name in the plan based on movement direction, independent of any View or model.
-private func nextNodeName(
-    currentNodeID: String?,
-    plan: [String],
-    segments: [Segment],
-    userLocations: [CLLocationCoordinate2D],
-    nodes: [Node]
-) -> String {
-    guard let currentNodeID = currentNodeID,
-          let currentIndex = plan.firstIndex(of: currentNodeID) else { return plan.first ?? "" }
-    
-    // Determine the next index in the plan
-    var nextIndex: Int
-    if currentIndex + 1 < plan.count {
-        nextIndex = currentIndex + 1
-    } else {
-        nextIndex = currentIndex
-    }
-    
-    let nodeAName = plan[currentIndex]
-    let nodeBName = plan[nextIndex]
-    
-    guard let nodeA = nodes.first(where: { $0.id == nodeAName }),
-          let nodeB = nodes.first(where: { $0.id == nodeBName }) else { return "" }
-    
-    let nodeACoord = CLLocationCoordinate2D(latitude: nodeA.latitude, longitude: nodeA.longitude)
-    let nodeBCoord = CLLocationCoordinate2D(latitude: nodeB.latitude, longitude: nodeB.longitude)
-    
-    // Determine stored segment direction (+1 or -1)
-    let segId = node2seg(nodeAName, nodeBName)
-    let revSegId = node2seg(nodeBName, nodeAName)
-    let segmentIds = segments.map { $0.id }
-    let storedDirection: Int
-    if segmentIds.contains(segId) {
-        storedDirection = +1
-    } else if segmentIds.contains(revSegId) {
-        storedDirection = -1
-    } else {
-        storedDirection = +1
-    }
-    
-    let dir = detectDirection(userLocations: userLocations, nodeA: nodeACoord, nodeB: nodeBCoord) * storedDirection
-    return dir == +1 ? nodeBName : nodeAName
-}
+
 
 // MARK: - File helpers
 func getUserFileURL() -> URL? {
@@ -259,6 +212,8 @@ func loadUser() -> User? {
         return nil
     }
 }
+
+
 
 #Preview {
     ETAView()

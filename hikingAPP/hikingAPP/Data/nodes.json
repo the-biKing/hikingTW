@@ -6,7 +6,7 @@
             "latitude": 25.01495,
             "longitude": 121.54294,
             "elevation": 0,
-            "isCustom": false
+            "nearBy":["ntust_ib"]
         },
         {
             "id": "ntust_ib",
@@ -14,7 +14,7 @@
             "latitude":  25.01303,
             "longitude": 121.54024,
             "elevation": 0,
-            "isCustom": false
+            "nearBy":["ntust_ee", "ntust_tr"]
         },
         {
             "id": "ntust_ee",
@@ -22,7 +22,7 @@
             "latitude": 25.01226,
             "longitude": 121.54163,
             "elevation": 0,
-            "isCustom": false
+            "nearBy":["ntust_ib"]
         }
     ]
 }

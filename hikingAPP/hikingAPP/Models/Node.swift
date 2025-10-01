@@ -7,7 +7,7 @@ struct Node: Identifiable, Codable {
     let latitude: Double
     let longitude: Double
     let elevation: Double?
-    let isCustom: Bool
+    let nearBy: [String]
 
 }
 

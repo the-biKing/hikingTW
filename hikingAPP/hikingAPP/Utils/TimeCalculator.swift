@@ -78,7 +78,14 @@ struct NodeInfoPanel: View {
                 nodeA: nodeACoord,
                 nodeB: nodeBCoord
             ) * storedDirection
-            return dir == +1 ? plan[planIndex+1] : plan[planIndex]
+            // inside nextNodeName
+            let nextId = dir == +1 ? plan[planIndex+1] : plan[planIndex]
+            // navModel.nextNodeID = nextId   // <- removed mutation
+            if let node = nodes.first(where: { $0.id == nextId }) {
+                return node.name   // ✅ return the display name
+            } else {
+                return nextId      // fallback to ID if name not found
+            }
         }
     }
 
@@ -110,6 +117,86 @@ struct NodeInfoPanel: View {
                 storedDirection = -1
             } else {
                 storedDirection = +1 // fallback
+            }
+            let dir = detectDirection(
+                userLocations: locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? []),
+                nodeA: nodeACoord,
+                nodeB: nodeBCoord
+            ) * storedDirection
+            let prevId = dir == +1 ? plan[planIndex] : plan[planIndex+1]
+            // navModel.prevNodeID = prevId   // <- removed mutation
+            if let node = nodes.first(where: { $0.id == prevId }) {
+                return node.name
+            } else {
+                return prevId
+            }
+        }
+    }
+
+    // Pure function to compute next node ID
+    private func computeNextNodeID(for closest: ClosestPointResult?, segments: [Segment]) -> String {
+        switch navModel.planState {
+        case .idle:
+            return navModel.currentPlan.first ?? ""
+        case .active, .offRoute:
+            guard let closest = closest else { return "" }
+            let plan = navModel.currentPlan
+            let planIndex = closest.planIndex
+            guard planIndex >= 0, planIndex + 1 < plan.count else { return "" }
+            let nodes = loadNodes()
+            let nodeAName = plan[planIndex]
+            let nodeBName = plan[planIndex+1]
+            let nodeA = nodes.first(where: { $0.id == nodeAName })
+            let nodeB = nodes.first(where: { $0.id == nodeBName })
+            guard let nodeACoord = nodeA.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }),
+                  let nodeBCoord = nodeB.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) else { return "" }
+            let segId = node2seg(nodeAName, nodeBName)
+            let revSegId = node2seg(nodeBName, nodeAName)
+            let segmentIds = segments.map { $0.id }
+            let storedDirection: Int
+            if segmentIds.contains(segId) {
+                storedDirection = +1
+            } else if segmentIds.contains(revSegId) {
+                storedDirection = -1
+            } else {
+                storedDirection = +1
+            }
+            let dir = detectDirection(
+                userLocations: locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? []),
+                nodeA: nodeACoord,
+                nodeB: nodeBCoord
+            ) * storedDirection
+            return dir == +1 ? plan[planIndex+1] : plan[planIndex]
+        }
+    }
+
+    // Pure function to compute previous node ID
+    private func computePrevNodeID(for closest: ClosestPointResult?, segments: [Segment]) -> String {
+        switch navModel.planState {
+        case .idle:
+            return ""
+        case .active, .offRoute:
+            guard let closest = closest else { return "" }
+            let plan = navModel.currentPlan
+            let planIndex = closest.planIndex
+            guard planIndex >= 0, planIndex + 1 < plan.count else { return "" }
+            let nodes = loadNodes()
+            let nodeAName = plan[planIndex]
+            let nodeBName = plan[planIndex+1]
+            let nodeA = nodes.first(where: { $0.id == nodeAName })
+            let nodeB = nodes.first(where: { $0.id == nodeBName })
+            guard let nodeACoord = nodeA.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }),
+                  let nodeBCoord = nodeB.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) else { return "" }
+            let segId = node2seg(nodeAName, nodeBName)
+            let revSegId = node2seg(nodeBName, nodeAName)
+            let segmentIds = segments.map { $0.id }
+            let storedDirection: Int
+            if segmentIds.contains(segId) {
+                storedDirection = +1
+            } else if segmentIds.contains(revSegId) {
+                storedDirection = -1
+            } else {
+                storedDirection = +1
             }
             let dir = detectDirection(
                 userLocations: locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? []),
@@ -274,11 +361,17 @@ struct NodeInfoPanel: View {
             .scaleEffect(1.5)
             .onAppear {
                 let closest = computeClosest()
+                let segments = loadSegments()
                 updatePlanState(distance: closest?.distance, navModel: navModel)
+                navModel.nextNodeID = computeNextNodeID(for: closest, segments: segments)
+                navModel.prevNodeID = computePrevNodeID(for: closest, segments: segments)
             }
             .onReceive(locationManager.$coordinate) { _ in
                 let closest = computeClosest()
+                let segments = loadSegments()
                 updatePlanState(distance: closest?.distance, navModel: navModel)
+                navModel.nextNodeID = computeNextNodeID(for: closest, segments: segments)
+                navModel.prevNodeID = computePrevNodeID(for: closest, segments: segments)
             }
         }
     }

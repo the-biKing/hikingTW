@@ -18,6 +18,8 @@ enum PlanState {
 class NavigationViewModel: ObservableObject {
     @Published var planState: PlanState = .idle
     @Published var currentPlan: [String] = []
+    @Published var prevNodeID: String? = nil
+    @Published var nextNodeID: String? = nil
     
     init() {
             // preload test plan
