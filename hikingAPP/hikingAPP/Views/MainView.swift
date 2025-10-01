@@ -8,6 +8,7 @@ import Foundation
 struct MainView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var compass: CompassManager
+    let user = loadUser()
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -22,7 +23,7 @@ struct MainView: View {
                     RadarView()
                         .offset(y: 150)
                         .frame(width: 200, height: 200)
-                    WheelScalePreview()
+                    WheelScalePreview(speedFactor: user?.speedFactor ?? 1.00)
                         .offset(y: 150)
                 }
                 .frame(width: 600, height: 300)
@@ -292,7 +293,7 @@ struct WheelScalePreview: View {
     let maxValue: Double = 2.0
 
     /// Controls the current value on the wheel
-    var speedFactor: Double = 1
+    var speedFactor: Double
 
     var body: some View {
         

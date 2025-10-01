@@ -48,7 +48,13 @@ struct NodeInfoPanel: View {
     private func nextNodeName(for closest: ClosestPointResult?, segments: [Segment]) -> String {
         switch navModel.planState {
         case .idle:
-            return navModel.currentPlan.first ?? ""
+            let nodes = loadNodes()
+            if let node = nodes.first(
+                where: { $0.id == navModel.currentPlan.first}){
+                return node.name
+            } else {
+                return navModel.currentPlan.first ?? ""
+            }
         case .active, .offRoute:
             guard let closest = closest else { return "" }
             let plan = navModel.currentPlan
