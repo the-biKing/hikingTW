@@ -4,7 +4,6 @@
 //
 //  Created by 謝喆宇 on 2025/9/28.
 //
-//TODO test
 import SwiftUI
 import CoreLocation
 import Combine

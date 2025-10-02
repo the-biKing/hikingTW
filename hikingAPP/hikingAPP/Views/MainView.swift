@@ -32,7 +32,7 @@ struct MainView: View {
 
                 NodeInfoPanel()
             }
-
+            //TODO
             // ✅ Place NavigationLink here — top-left overlay position
             NavigationLink(destination: PlanView()) {
                 Image(systemName: "plus")
