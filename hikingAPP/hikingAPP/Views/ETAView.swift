@@ -1,9 +1,3 @@
-//
-//  ETAView.swift
-//  hikingAPP
-//
-//  Created by 謝喆宇 on 2025/9/28.
-//
 import SwiftUI
 import CoreLocation
 import Combine
@@ -15,27 +9,15 @@ struct ClosestNodeResult {
     let distance: Double
 }
 
-func closestNode(from userCoord: CLLocationCoordinate2D?, nodes: [Node]) -> ClosestNodeResult? {
-    guard let userCoord = userCoord else { return nil }
-    var best: ClosestNodeResult? = nil
-    
-    for node in nodes {
-        let nodeCoord = CLLocationCoordinate2D(latitude: node.latitude, longitude: node.longitude)
-        let d = userCoord.distance(from: nodeCoord)
-        if best == nil || d < best!.distance {
-            best = ClosestNodeResult(node: node, distance: d)
-        }
-    }
-    return best
-}
+
 
 class ETAViewModel: ObservableObject {
     @Published var isTiming = false
-    @Published var elapsedTime: TimeInterval = 0
     @Published var isInsideNode = true
     var leavingNodeID: String? = nil
     var enteringNodeID: String? = nil
-    private var timer: Timer?
+    private var startTime: Date? = nil
+    private var accumulatedTime: TimeInterval = 0
     
     func updateTiming(closestNode: ClosestNodeResult) {
         let distance = closestNode.distance
@@ -46,6 +28,7 @@ class ETAViewModel: ObservableObject {
             leavingNodeID = nodeID
             isInsideNode = false
             startTimer()
+            startTime = Date()
         } else if !isInsideNode && distance <= nodethreshhold {
             // User entered a node
             enteringNodeID = nodeID
@@ -58,31 +41,27 @@ class ETAViewModel: ObservableObject {
     func startTimer() {
         guard !isTiming else { return }
         isTiming = true
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            self.elapsedTime += 1
-        }
+        startTime = Date()
     }
     
     func stopTimer() {
         isTiming = false
-        timer?.invalidate()
-        timer = nil
+        if let start = startTime {
+            accumulatedTime += Date().timeIntervalSince(start)
+        }
+        startTime = nil
+    }
+    
+    var elapsedTime: TimeInterval {
+        if let start = startTime {
+            return accumulatedTime + Date().timeIntervalSince(start)
+        } else {
+            return accumulatedTime
+        }
     }
 }
 
-// Helper to get standard time between two nodes based on segment direction
-func standardTimeBetweenNodes(fromNodeID: String, toNodeID: String, segments: [Segment]) -> Double? {
-    let forwardID = "\(fromNodeID)_\(toNodeID)"
-    let reverseID = "\(toNodeID)_\(fromNodeID)"
-    
-    if let seg = segments.first(where: { $0.id == forwardID }) {
-        return seg.standardTime
-    } else if let seg = segments.first(where: { $0.id == reverseID }) {
-        return seg.revStandardTime
-    } else {
-        return nil
-    }
-}
+
 
 struct ETAView: View {
     @EnvironmentObject var locationManager: LocationManager
@@ -170,45 +149,6 @@ struct ETAView: View {
                     .foregroundColor(.gray)
             }
         }
-    }
-}
-
-
-
-// MARK: - File helpers
-func getUserFileURL() -> URL? {
-    let fm = FileManager.default
-    guard let docs = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
-        return nil
-    }
-    return docs.appendingPathComponent("user.json")
-}
-
-// MARK: - Save User
-func saveUser(_ user: User) {
-    guard let url = getUserFileURL() else { return }
-    do {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        let data = try encoder.encode(user)
-        try data.write(to: url)
-        print("✅ User saved to JSON: \(url)")
-    } catch {
-        print("❌ Failed to save user: \(error)")
-    }
-}
-
-// MARK: - Load User
-func loadUser() -> User? {
-    guard let url = getUserFileURL() else { return nil }
-    do {
-        let data = try Data(contentsOf: url)
-        let decoder = JSONDecoder()
-        let user = try decoder.decode(User.self, from: data)
-        return user
-    } catch {
-        print("❌ Failed to load user: \(error)")
-        return nil
     }
 }
 
