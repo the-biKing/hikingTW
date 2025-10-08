@@ -14,6 +14,7 @@ struct ClosestNodeResult {
 class ETAViewModel: ObservableObject {
     @Published var isTiming = false
     @Published var isInsideNode = true
+    var onSegmentCompleted: ((String, String, TimeInterval) -> Void)?
     var leavingNodeID: String? = nil
     var enteringNodeID: String? = nil
     private var startTime: Date? = nil
@@ -34,6 +35,9 @@ class ETAViewModel: ObservableObject {
             enteringNodeID = nodeID
             isInsideNode = true
             stopTimer()
+            if let fromID = leavingNodeID, let toID = enteringNodeID {
+                    onSegmentCompleted?(fromID, toID, elapsedTime)
+                }
         }
         // otherwise do nothing, keep timer running
     }
@@ -71,6 +75,7 @@ struct ETAView: View {
 
     
     var body: some View {
+
         let segments = loadSegments()
         let user = loadUser() ?? User(id: UUID(), username: "josh", speedFactor: 1.0)
         
@@ -98,48 +103,37 @@ struct ETAView: View {
             
             
             if let result = closestNode(from: locationManager.coordinate, nodes: loadNodes()) {
+                
                 VStack {
+                    /*
                     Text("Distance to node: \(Int(result.distance)) m")
                         .foregroundColor(.white)
                     Text("Timer: \(Int(viewModel.elapsedTime)) s")
-                        .foregroundColor(.white)
+                        .foregroundColor(.white)*/
                 }
                 .onAppear {
-                    if navModel.planState == .active {
-                        viewModel.updateTiming(closestNode: result)
-                    }
-                    // Example usage: compare actual and standard segment time
-                    if let fromID = viewModel.leavingNodeID,
-                       let toID = viewModel.enteringNodeID {
+                    viewModel.onSegmentCompleted = { fromID, toID, elapsed in
                         let segments = loadSegments()
                         if let stdTime = standardTimeBetweenNodes(fromNodeID: fromID, toNodeID: toID, segments: segments) {
-                            let userTime = viewModel.elapsedTime / 60.0 // convert seconds to minutes
+                            let userTime = elapsed / 60.0 // seconds → minutes
                             let userSpeedFactor = userTime / stdTime
-                            
+
                             if userSpeedFactor >= 0.1 && userSpeedFactor <= 2.0 {
                                 var user = loadUser() ?? User(id: UUID(), username: "josh", speedFactor: 1.0)
-                                
-                                // Maintain recent factors
                                 var recents = user.recentSpeedFactors ?? []
                                 recents.append(userSpeedFactor)
-                                if recents.count > 5 {
-                                    recents.removeFirst(recents.count - 5)
-                                }
+                                if recents.count > 5 { recents.removeFirst(recents.count - 5) }
                                 user.recentSpeedFactors = recents
-                                
-                                // Update average speed factor
-                                let avg = recents.reduce(0, +) / Double(recents.count)
-                                user.speedFactor = avg
-                                
+                                user.speedFactor = recents.reduce(0, +) / Double(recents.count)
                                 saveUser(user)
-                                print("User speed factor saved: \(avg)")
+                                print("✅ User speed factor updated: \(user.speedFactor)")
                             } else {
                                 print("❌ Discarded outlier speed factor: \(userSpeedFactor)")
                             }
                         }
                     }
                 }
-                .onReceive(Just(result.distance)) { _ in
+                .onReceive(locationManager.$coordinate.compactMap { $0 }) { _ in
                     if navModel.planState == .active {
                         viewModel.updateTiming(closestNode: result)
                     }

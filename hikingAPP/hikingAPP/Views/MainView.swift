@@ -32,7 +32,6 @@ struct MainView: View {
 
                 NodeInfoPanel()
             }
-            //TODO
             // ✅ Place NavigationLink here — top-left overlay position
             NavigationLink(destination: PlanView()) {
                 Image(systemName: "plus")
@@ -56,6 +55,11 @@ struct MainView: View {
                     .shadow(radius: 5)
             }
             .offset(x:140)
+            .simultaneousGesture(TapGesture().onEnded {
+                let generator = UIImpactFeedbackGenerator(style: .medium)
+                generator.impactOccurred()
+
+            })
         }
     }
 }

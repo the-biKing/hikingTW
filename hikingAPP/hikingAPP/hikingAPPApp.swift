@@ -6,15 +6,22 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 @main
 struct hikingAPPApp: App {
     @StateObject var navigationViewModel = NavigationViewModel()
     @StateObject var locationManager = LocationManager()
     @StateObject var compass = CompassManager()
+
     
     init() {
         ensureUserJSONExists()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                 if let error = error {
+                     print("Notification permission error: \(error)")
+                 }
+             }
     }
     
     var body: some Scene {

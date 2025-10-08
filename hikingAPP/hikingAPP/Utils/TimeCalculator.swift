@@ -1,6 +1,7 @@
 import Foundation
 import CoreLocation
 import SwiftUI
+import UserNotifications
 
 /// Result of finding closest point along a plan
 struct ClosestPointResult {
@@ -52,8 +53,9 @@ func updatePlanState(distance: Double?, navModel: NavigationViewModel) {
             navModel.planState = .idle
         }
     case .active:
-        if d > 200 {
+        if d > 50 {//testing
             navModel.planState = .offRoute
+            sendOffRouteNotification()
         } else {
             navModel.planState = .active
         }
@@ -95,6 +97,26 @@ func extractRoutePoints(from segments: [Segment], plan: [String]) -> [Point] {
     }
 
     return routePoints
+}
+
+func sendOffRouteNotification() {
+    let content = UNMutableNotificationContent()
+    content.title = "Warning"
+    content.body = "You have gone off route!"
+    content.sound = .default
+    
+    // Trigger immediately
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+    
+    let request = UNNotificationRequest(identifier: UUID().uuidString,
+                                        content: content,
+                                        trigger: trigger)
+    
+    UNUserNotificationCenter.current().add(request) { error in
+        if let error = error {
+            print("Notification error: \(error)")
+        }
+    }
 }
 
 func loadSegments() -> [Segment] {

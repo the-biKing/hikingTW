@@ -70,6 +70,12 @@ func MountainButton(imageName: String, title: String, leftMark: Bool) -> some Vi
             .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
         }
         .padding(.horizontal)
+        .simultaneousGesture(TapGesture().onEnded {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        })
+
+        
     }
     .frame(height: 320) // Keep enough space for GeometryReader
 }
@@ -94,7 +100,10 @@ struct PlanView: View {
                                 .foregroundColor(.blue)
                                 .padding(.leading)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                        }
+                        } .simultaneousGesture(TapGesture().onEnded {
+                            let generator = UIImpactFeedbackGenerator(style: .medium)
+                            generator.impactOccurred()
+                        })
 
                         Button(action:{
                             print("history")
