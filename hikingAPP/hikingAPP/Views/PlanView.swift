@@ -25,6 +25,7 @@ func MountainButton(imageName: String, title: String, leftMark: Bool) -> some Vi
         let buttonWidth = geometry.size.width * 0.9 // 90% of screen width
 
         NavigationLink(destination: DetailView(title: title)) {
+            
             ZStack(alignment: .topLeading) {
                 // Background
                 RoundedRectangle(cornerRadius: 16)
@@ -71,10 +72,9 @@ func MountainButton(imageName: String, title: String, leftMark: Bool) -> some Vi
         }
         .padding(.horizontal)
         .simultaneousGesture(TapGesture().onEnded {
-            let generator = UIImpactFeedbackGenerator(style: .medium)
-            generator.impactOccurred()
-        })
-
+                   let generator = UIImpactFeedbackGenerator(style: .medium)
+                   generator.impactOccurred()
+               })
         
     }
     .frame(height: 320) // Keep enough space for GeometryReader
@@ -92,6 +92,8 @@ struct PlanView: View {
                     Spacer()
                     HStack(){
                         Button(action: {
+                            let generator = UIImpactFeedbackGenerator(style: .heavy)
+                                generator.impactOccurred()
                             dismiss()
                         }) {
                             Image(systemName: "arrow.uturn.backward.circle")
@@ -100,11 +102,7 @@ struct PlanView: View {
                                 .foregroundColor(.blue)
                                 .padding(.leading)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                        } .simultaneousGesture(TapGesture().onEnded {
-                            let generator = UIImpactFeedbackGenerator(style: .medium)
-                            generator.impactOccurred()
-                        })
-
+                        }
                         Button(action:{
                             print("history")
                         }){

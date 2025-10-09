@@ -80,27 +80,32 @@ struct ETAView: View {
         let user = loadUser() ?? User(id: UUID(), username: "josh", speedFactor: 1.0)
         
         // Compute etaMinutes outside of ViewBuilder
+        // Compute etaMinutes outside of ViewBuilder
         let etaMinutes: Double = {
             guard let fromID = navModel.prevNodeID, !fromID.isEmpty else { return 0 }
             guard let nextNodeID = navModel.nextNodeID, !nextNodeID.isEmpty,
                   let stdTime = standardTimeBetweenNodes(fromNodeID: fromID, toNodeID: nextNodeID, segments: segments)
             else { return 0 }
-            return stdTime * user.speedFactor
+
+            // total distance of the current segment (in meters)
+            let totalDistance = totalSegmentDistance(from: fromID, to: nextNodeID, segments: segments)
+            // remaining distance dynamically updated by NodeView
+            let remainingDistance = navModel.segmentDistanceLeft
+            // ratio of how much of the segment remains (clamped 0–1)
+            let fractionRemaining = max(0, min(1, remainingDistance / totalDistance))
+
+            // scale ETA by remaining distance
+            return stdTime * user.speedFactor * fractionRemaining
         }()
         
         VStack {
-            if navModel.planState != .idle {
-                Text("ETA : \(Int(etaMinutes)) mins")
+            Text("ETA : \(Int(etaMinutes)) mins")
                     .font(.largeTitle)
                     .foregroundColor(.white)
                     .padding(.bottom, 20)
                     .offset(y: 110)
                     .fontWeight(.bold)
-            }
-            else{
-                
-            }
-            
+                    .opacity(navModel.planState != .idle ? 1 : 0) // Reserve space, hide when idle
             
             if let result = closestNode(from: locationManager.coordinate, nodes: loadNodes()) {
                 
@@ -145,7 +150,20 @@ struct ETAView: View {
         }
     }
 }
-
+func totalSegmentDistance(from fromID: String, to toID: String, segments: [Segment]) -> Double {
+    let segId = node2seg(fromID, toID)
+    let revSegId = node2seg(toID, fromID)
+    if let seg = segments.first(where: { $0.id == segId || $0.id == revSegId }) {
+        var total = 0.0
+        for i in 0..<(seg.points.count - 1) {
+            let a = CLLocationCoordinate2D(latitude: seg.points[i].latitude, longitude: seg.points[i].longitude)
+            let b = CLLocationCoordinate2D(latitude: seg.points[i+1].latitude, longitude: seg.points[i+1].longitude)
+            total += a.distance(from: b)
+        }
+        return total
+    }
+    return 1.0 // prevent divide-by-zero
+}
 
 
 #Preview {

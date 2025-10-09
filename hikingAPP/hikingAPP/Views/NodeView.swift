@@ -190,7 +190,7 @@ struct NodeInfoPanel: View {
                         Text("DIST: \(distanceString(for: closest, segments: segments)) m")
                             .font(.caption)
                             .foregroundColor(.white)
-                        Text("ELEV: \(elevationString(for: closest, segments: segments))")
+                        Text("ELEV: \(elevationString(for: closest, segments: segments)) m")
                             .font(.caption)
                             .foregroundColor(.white)
                     }
@@ -210,11 +210,33 @@ struct NodeInfoPanel: View {
                 updatePlanState(distance: closest?.distance, navModel: navModel)
                 navModel.nextNodeID = computeNextNodeID(for: closest, segments: segments)
                 navModel.prevNodeID = computePrevNodeID(for: closest, segments: segments)
+                if navModel.planState == .active, let closest = closest {
+                        let plan = navModel.currentPlan
+                        let planIndex = closest.planIndex
+                        if planIndex >= 0, planIndex + 1 < plan.count {
+                            let nodeAName = plan[planIndex]
+                            let nodeBName = plan[planIndex + 1]
+                            let direction = computeSegmentDirection(nodeAName: nodeAName, nodeBName: nodeBName, segments: segments)
+                            let remaining = distanceToNextNode(closest: closest, segments: segments, direction: direction)
+                            navModel.segmentDistanceLeft = remaining
+                        }
+                    }
             }
             .onReceive(locationManager.$coordinate) { _ in
                 updatePlanState(distance: closest?.distance, navModel: navModel)
                 navModel.nextNodeID = computeNextNodeID(for: closest, segments: segments)
                 navModel.prevNodeID = computePrevNodeID(for: closest, segments: segments)
+                if navModel.planState == .active, let closest = closest {
+                        let plan = navModel.currentPlan
+                        let planIndex = closest.planIndex
+                        if planIndex >= 0, planIndex + 1 < plan.count {
+                            let nodeAName = plan[planIndex]
+                            let nodeBName = plan[planIndex + 1]
+                            let direction = computeSegmentDirection(nodeAName: nodeAName, nodeBName: nodeBName, segments: segments)
+                            let remaining = distanceToNextNode(closest: closest, segments: segments, direction: direction)
+                            navModel.segmentDistanceLeft = remaining
+                        }
+                    }
             }
         }
     }

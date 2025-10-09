@@ -20,6 +20,7 @@ class NavigationViewModel: ObservableObject {
     @Published var currentPlan: [String] = []
     @Published var prevNodeID: String? = nil
     @Published var nextNodeID: String? = nil
+    @Published var segmentDistanceLeft: Double = 0.0
     
     init() {
             // preload test plan

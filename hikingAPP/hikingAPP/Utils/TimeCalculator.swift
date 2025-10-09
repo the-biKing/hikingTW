@@ -60,7 +60,9 @@ func updatePlanState(distance: Double?, navModel: NavigationViewModel) {
             navModel.planState = .active
         }
     case .offRoute:
-        if d > 1000 {
+        if d < 50{
+            navModel.planState = .active
+        } else if d > 1000 {
             navModel.planState = .idle
         } else {
             navModel.planState = .offRoute
