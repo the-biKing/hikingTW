@@ -3,15 +3,39 @@ import CoreLocation
 
 struct MapView: View {
     @EnvironmentObject var navModel: NavigationViewModel
+    @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var compassManager: CompassManager
+    private func bearing(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> Double {
+        let lat1 = from.latitude * .pi / 180
+        let lon1 = from.longitude * .pi / 180
+        let lat2 = to.latitude * .pi / 180
+        let lon2 = to.longitude * .pi / 180
+        
+        let dLon = lon2 - lon1
+        let y = sin(dLon) * cos(lat2)
+        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon)
+        let bearing = atan2(y, x) * 180 / .pi
+        return (bearing + 360).truncatingRemainder(dividingBy: 360)
+    }
     var body: some View {
         
         
             if navModel.planState == .active {
                 routeView()
-                    .environmentObject(LocationManager())
             }
             else{
                 Color.black.opacity(1)
+                if !navModel.currentPlan.isEmpty,
+                                  let user = locationManager.coordinate,
+                                  let firstNode = loadNodes().first(where: { $0.id == navModel.currentPlan.first }) {
+                                   
+                                   let target = CLLocationCoordinate2D(latitude: firstNode.latitude, longitude: firstNode.longitude)
+                                   let bearingToTarget = bearing(from: user, to: target)
+                                   let heading = compassManager.heading?.trueHeading ?? 0
+                                   let relativeAngle = bearingToTarget - heading
+                                   
+                                   DirectionIndicator(angle: relativeAngle)
+                               }
             }
             
         
@@ -22,6 +46,7 @@ struct routeView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var compassManager: CompassManager
     @State private var lastValidHeading: Double = 0
+    
 
     var body: some View {
         let points = extractRoutePoints(from: loadSegments(), plan: navModel.currentPlan)
@@ -29,18 +54,12 @@ struct routeView: View {
        
             GeometryReader { geo in
                 Canvas { context, size in
-                    /*
-                    // Center around first point for now (or later: user coordinate)
-                    guard let first = points.first else { return }
-                    let center = CLLocationCoordinate2D(latitude: first.latitude, longitude: first.longitude)
-                     */
                     
                     
                     guard let center = locationManager.coordinate else{
                         return
                     }
-                    
-
+                
                     
                     let cgPoints = convertPointsToCG(points: points, canvasSize: size, center: center, zoomScale: 80000)
 
@@ -97,6 +116,38 @@ func convertPointsToCG(points: [Point], canvasSize: CGSize, center: CLLocationCo
     }
 }
 
+struct DirectionIndicator: View {
+    var angle: Double // in degrees, relative to top (north)
+    let radius: CGFloat = 150 // same as circle radius in MainView (half of 300)
+    
+    var body: some View {
+        GeometryReader { geo in
+            let center = CGPoint(x: geo.size.width / 2, y: geo.size.height / 2)
+            let r = radius - 10
+            let rad = Angle(degrees: angle).radians
+            
+            let x = center.x + cos(rad - .pi / 2) * r
+            let y = center.y + sin(rad - .pi / 2) * r
+            
+            Triangle()
+                .fill(Color.yellow)
+                .frame(width: 16, height: 16)
+                .rotationEffect(Angle(degrees: angle))
+                .position(x: x, y: y)
+        }
+    }
+}
+
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.closeSubpath()
+        return path
+    }
+}
 
 
 

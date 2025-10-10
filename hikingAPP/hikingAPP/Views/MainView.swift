@@ -8,6 +8,7 @@ import Foundation
 struct MainView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var compass: CompassManager
+    @EnvironmentObject var navModel: NavigationViewModel
     @State private var navigateToPlan = false
     @State private var hasTriggeredHaptic = false
     let user = loadUser()
@@ -36,7 +37,7 @@ struct MainView: View {
             }
             // ✅ Place NavigationLink here — top-left overlay position
             Button(action: {
-                let generator = UIImpactFeedbackGenerator(style: .heavy)
+                let generator = UIImpactFeedbackGenerator(style: .medium)
                     generator.impactOccurred()
                 // Navigate
                 navigateToPlan = true
@@ -65,7 +66,7 @@ struct MainView: View {
             
         }
         .navigationDestination(isPresented: $navigateToPlan) {
-                   PlanView()  // Your destination view here
+            PlanView().environmentObject(navModel)  // Your destination view here
                }
     }
 }
@@ -241,6 +242,7 @@ struct RadarView: View {
                     }
                 )
                 .frame(width: 300, height: 300)
+            
             
             RadarPulse()
             

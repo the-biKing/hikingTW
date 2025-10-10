@@ -23,8 +23,15 @@ class NavigationViewModel: ObservableObject {
     @Published var segmentDistanceLeft: Double = 0.0
     
     init() {
-            // preload test plan
-            currentPlan = ["ntust_tr", "ntust_ib","ntust_ee"]
             planState = .idle
         }
+    //TODO handle multiple day plan
+    func loadPlan(from graphVM: GraphViewModel) {
+        if let firstDayPlan = graphVM.history.first {
+            self.currentPlan = firstDayPlan
+            self.planState = .idle
+        } else {
+            print("⚠️ No plan available in history")
+        }
+    }
 }

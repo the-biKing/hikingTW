@@ -1,5 +1,6 @@
 import Foundation
 import CoreLocation
+import SwiftUI
 
 struct Node: Identifiable, Codable {
     let id: String
@@ -15,4 +16,5 @@ struct Node: Identifiable, Codable {
 struct NodeCollection: Codable {
     let nodes: [Node]
 }
+
 
