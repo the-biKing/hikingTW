@@ -228,7 +228,6 @@ struct PlanView: View {
         .background(Color(.black).opacity(0.9)) // 整個背景深灰
         .ignoresSafeArea()            // 延伸到螢幕邊緣
         .navigationBarHidden(true)
-        
     }
     
 }
@@ -401,7 +400,9 @@ struct PlanningView: View {
                 // 返回鍵
                 HStack {
                     Button {
-                        dismiss()
+                        vm.history.append(vm.path)
+                        navModel.loadPlan(from: vm)
+
                     } label: {
                         Image(systemName: "arrow.uturn.backward.circle")
                             .resizable()

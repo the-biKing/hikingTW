@@ -173,6 +173,7 @@ struct NodeInfoPanel: View {
                 }
                 NavigationLink(destination:
                                 PlanDisplayView(
+                                    navModel: navModel,
                                     title: "目前路線",
                                     route: navModel.currentPlan,
                                     nodes: nodes
@@ -209,6 +210,7 @@ struct NodeInfoPanel: View {
                 }
                 NavigationLink(destination:
                                 PlanDisplayView(
+                                    navModel: navModel,
                                     title: "目前路線",
                                     route: navModel.currentPlan,
                                     nodes: nodes
@@ -265,6 +267,8 @@ struct NodeInfoPanel: View {
     }
 }
 struct PlanDisplayView: View {
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var navModel: NavigationViewModel
     var title: String
     var route: [String]
     var nodes: [Node]
@@ -294,6 +298,22 @@ struct PlanDisplayView: View {
                     }
                 }
             }
+            Button {
+                navModel.currentPlan = []
+                dismiss()
+            } label: {
+                HStack{
+                    Label("重設計劃", systemImage: "arrow.clockwise.circle")
+                        .foregroundStyle(Color.white)
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.red.opacity(0.7))
+                        .cornerRadius(10)
+                }
+            }
+            .padding(.horizontal)
+            .padding(.top)
         }
         .padding()
         .background(Color.white.opacity(0.05))
