@@ -1,10 +1,10 @@
 import SwiftUI
-
-func MountainButton(imageName: String, title: String, code: String, leftMark: Bool,
-                    destination: AnyView? = nil) -> some View {
-    GeometryReader { geometry in
+/*
+func MountainButton(imageName: String, title: String, leftMark: Bool, areaCodes: [String]) -> some View {
+    @EnvironmentObject var navModel: NavigationViewModel
+    return GeometryReader { geometry in
         let buttonWidth = geometry.size.width * 0.9
-        NavigationLink(destination: destination ?? AnyView(Text("這是 \(title) 的頁面"))) {
+        NavigationLink(destination: DetailView(areaCodes: areaCodes, areaName: title).environmentObject(navModel)) {
             ZStack(alignment: .topLeading) {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.black)
@@ -47,6 +47,66 @@ func MountainButton(imageName: String, title: String, code: String, leftMark: Bo
         })
     }
     .frame(height: 320)
+}
+ */
+
+struct MountainButton: View {
+    let imageName: String
+    let title: String
+    let leftMark: Bool
+    let areaCodes: [String]
+    
+    @EnvironmentObject var navModel: NavigationViewModel
+    
+    var body: some View {
+        GeometryReader { geometry in
+            let buttonWidth = geometry.size.width * 0.9
+            NavigationLink(destination:
+                            DetailView(areaCodes: areaCodes, areaName: title).environmentObject(navModel)
+            ) {
+                ZStack(alignment: .topLeading) {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.black)
+                        .frame(width: buttonWidth, height: 300)
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: buttonWidth, height: 300)
+                        .clipped()
+                        .cornerRadius(16)
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.white.opacity(0.4), Color.clear]),
+                                startPoint: .topLeading,
+                                endPoint: .center
+                            )
+                        )
+                        .frame(width: buttonWidth, height: 300)
+                    HStack {
+                        if leftMark { Spacer() }
+                        Text(title)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.top, 50)
+                            .shadow(radius: 3)
+                        if !leftMark { Spacer() }
+                    }
+                    .padding(.horizontal, 24)
+                    .frame(width: buttonWidth)
+                }
+                .frame(width: buttonWidth, height: 300)
+                .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
+            }
+            .padding(.horizontal)
+            .simultaneousGesture(TapGesture().onEnded {
+                let generator = UIImpactFeedbackGenerator(style: .medium)
+                generator.impactOccurred()
+            })
+        }
+        .frame(height: 320)
+    }
 }
 
 struct PlanView: View {
@@ -91,135 +151,116 @@ struct PlanView: View {
                 MountainButton(
                     imageName: "d_Yushan",
                     title: "玉山群峰",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["WM", "PF"]
                 )
                 MountainButton(
                     imageName: "d_DaBa",
                     title: "大霸群峰",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["DB"]
                 )
                 MountainButton(
                     imageName: "d_Xueshan",
                     title: "雪山群峰",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["XS"]
                 )
                 MountainButton(
                     imageName: "d_Nanhu",
                     title: "南湖中央尖",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["NF"]
                 )
                 MountainButton(
                     imageName: "d_Wuming",
                     title: "北二段",
-                    code:"NS",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"NS").environmentObject(navModel))
+                    areaCodes: ["NS"]
                 )
                 MountainButton(
                     imageName: "d_4spicy",
                     title: "中橫四辣",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["WM", "PF", "BG"]
                 )
                 MountainButton(
                     imageName: "d_Hehuan",
                     title: "合歡群峰",
-                    code:"HH",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"HH").environmentObject(navModel))
+                    areaCodes: ["HH"]
                 )
                 MountainButton(
                     imageName: "d_ChER",
                     title: "奇萊東稜",
-                    code:"ER",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"ER").environmentObject(navModel))
+                    areaCodes: ["ER"]
                 )
                 MountainButton(
                     imageName: "d_Tianchi",
                     title: "能高越嶺",
-                    code:"UL",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"UL").environmentObject(navModel))
+                    areaCodes: ["UL"]
                 )
                 MountainButton(
                     imageName: "d_NG",
                     title: "能高安東軍",
-                    code:"NG",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"NG").environmentObject(navModel))
+                    areaCodes: ["NG"]
                 )
                 MountainButton(
                     imageName: "d_Mabo",
                     title: "馬博橫斷",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["1"]
                 )
                 MountainButton(
                     imageName: "d_Gandrowan",
                     title: "干卓萬橫斷",
-                    code:"GC",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"GC").environmentObject(navModel))
+                    areaCodes: ["GC"]
                 )
                 MountainButton(
                     imageName: "d_Xiluan",
                     title: "西巒郡大",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["JD", "WL"]
                 )
                 MountainButton(
                     imageName: "d_S3",
                     title: "南三段",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["1"]
                 )
                 MountainButton(
                     imageName: "d_S2",
                     title: "南二段",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["1"]
                 )
                 MountainButton(
                     imageName: "d_S1",
                     title: "南一段",
-                    code:"ST",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"ST").environmentObject(navModel))
+                    areaCodes: ["SF"]
                 )
                 MountainButton(
                     imageName: "d_Jiaming",
                     title: "嘉明新康",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["1"]
                 )
                 MountainButton(
                     imageName: "d_6shun",
                     title: "六順山",
-                    code:"1",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"1").environmentObject(navModel))
+                    areaCodes: ["1"]
                 )
                 MountainButton(
                     imageName: "d_Taimu",
                     title: "北大武山",
-                    code:"NB",
                     leftMark: false,
-                    destination: AnyView(DetailView(areaCode:"NB").environmentObject(navModel))
+                    areaCodes: ["NB"]
                 )
                 
             }
@@ -235,18 +276,30 @@ struct PlanView: View {
 
 class GraphViewModel: ObservableObject {
     @Published var nodes: [Node] = []
+    @Published var startNodes: [Node] = []
     @Published var current: Node?
     @Published var path: [String] = []
     @Published var history: [[String]] = []
     
     private var lookup: [String: Node] = [:]
+    private var areaCodes: [String]  // ← 支援多代碼
     private var start: Node?
     
-    init(areaCode: String) {
+    init(areaCodes: [String]) {
+        self.areaCodes = areaCodes.map { $0.uppercased() }  // 統一大寫
         let allNodes = loadNodes()
-        // 篩出該山區的節點
-        self.nodes = allNodes.filter { $0.id.contains(areaCode) }
-        self.lookup = Dictionary(uniqueKeysWithValues: nodes.map { ($0.id, $0) })
+        self.nodes = allNodes
+        self.lookup = Dictionary(uniqueKeysWithValues: allNodes.map { ($0.id, $0) })
+        
+        // ✅ 起始點條件：以 S_ 開頭 + 包含任一區域代碼
+        self.startNodes = allNodes.filter { node in
+            let id = node.id.uppercased()
+            guard id.hasPrefix("S_") else { return false }
+            // 任何一個代碼符合即可
+            return areaCodes.contains { code in
+                id.contains("_\(code)_") || id.hasSuffix("_\(code)")
+            }
+        }
     }
     
     func setStart(_ node: Node) {
@@ -254,7 +307,6 @@ class GraphViewModel: ObservableObject {
         self.current = node
         self.path = [node.id]
     }
-    
     
     func move(to nextId: String) {
         if let nextNode = lookup[nextId] {
@@ -265,7 +317,6 @@ class GraphViewModel: ObservableObject {
         }
     }
     
-    // 🔙 返回一步
     func goBack() {
         guard path.count > 1 else { return }
         path.removeLast()
@@ -277,19 +328,18 @@ class GraphViewModel: ObservableObject {
         }
     }
     
-    // 🏕️ 歸零
     func reset() {
         guard let now = current else { return }
         if !path.isEmpty {
-            history.append(path)  // now path stores IDs
+            history.append(path)
         }
-        
         withAnimation(.easeInOut) {
             self.start = now
             self.path = [now.id]
             self.current = now
         }
     }
+    
     func deleteHistory(at index: Int) {
         guard history.indices.contains(index) else { return }
         history.remove(at: index)
@@ -300,7 +350,7 @@ class GraphViewModel: ObservableObject {
             self.current = lastNode
             self.start = lastNode
             self.path = [lastNode.id]
-        } else if let first = nodes.first {
+        } else if let first = startNodes.first {
             self.current = first
             self.start = first
             self.path = [first.id]
@@ -310,15 +360,17 @@ class GraphViewModel: ObservableObject {
 
 struct DetailView: View {
     let areaCode: String
+    let areaName: String
     @StateObject private var vm: GraphViewModel
     @EnvironmentObject var navModel: NavigationViewModel
     @Environment(\.dismiss) var dismiss
     @State private var selectedStart: Node? = nil
     @State private var showHistory = false
     
-    init(areaCode: String) {
-        _vm = StateObject(wrappedValue: GraphViewModel(areaCode: areaCode))
-        self.areaCode = areaCode
+    init(areaCodes: [String], areaName: String) {
+        _vm = StateObject(wrappedValue: GraphViewModel(areaCodes: areaCodes))
+        self.areaCode = areaCodes.joined(separator: ", ")
+        self.areaName = areaName
     }
     
     var body: some View {
@@ -328,13 +380,13 @@ struct DetailView: View {
                     // ===============================
                     // 起始點選擇畫面
                     // ===============================
-                    Text("請選擇 \(areaCode) 的起始點")
+                    Text("請選擇 \(areaName) 的起始點")
                         .font(.title2)
                         .padding(.top, 40)
                     
                     ScrollView {
                         VStack(spacing: 12) {
-                            ForEach(vm.nodes.filter { $0.id.hasPrefix("s_") }) { node in
+                            ForEach(vm.startNodes) { node in
                                 Button {
                                     vm.setStart(node)
                                     selectedStart = node
@@ -402,7 +454,7 @@ struct PlanningView: View {
                     Button {
                         vm.history.append(vm.path)
                         navModel.loadPlan(from: vm)
-
+                        dismiss()
                     } label: {
                         Image(systemName: "arrow.uturn.backward.circle")
                             .resizable()

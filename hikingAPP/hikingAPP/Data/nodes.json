@@ -15,7 +15,7 @@
             "latitude": 24.18171,
             "longitude": 121.16916,
             "nearBy": [
-                "WM_01",
+                "s_WM_01",
                 "WM_03"
             ]
         },
@@ -113,7 +113,7 @@
             "latitude": 24.17146,
             "longitude": 121.32403,
             "nearBy": [
-                "PF_1",
+                "s_PF_1",
                 "PF_3"
             ]
         },
@@ -191,7 +191,7 @@
             "latitude": 24.20442,
             "longitude": 121.3403,
             "nearBy": [
-                "BG_1",
+                "s_BG_1",
                 "BG_3"
             ]
         },
@@ -273,7 +273,7 @@
             "nearBy": [
                 "BG_9",
                 "BG_11",
-                "BG_12"
+                "s_BG_12"
             ]
         },
         {
@@ -309,7 +309,7 @@
             "latitude": 22.62439,
             "longitude": 120.71457,
             "nearBy": [
-                "NB_1",
+                "s_NB_1",
                 "NB_3"
             ]
         },
@@ -427,7 +427,7 @@
             "latitude": 24.29752,
             "longitude": 121.33046,
             "nearBy": [
-                "NS_1",
+                "s_NS_1",
                 "NS_3",
                 "NS_19"
             ]
@@ -619,7 +619,7 @@
             "latitude": 24.14264,
             "longitude": 121.27118,
             "nearBy": [
-                "HH_1"
+                "s_HH_1"
             ]
         },
         {
@@ -637,7 +637,7 @@
             "latitude": 24.15245,
             "longitude": 121.2846,
             "nearBy": [
-                "HH_3"
+                "s_HH_3"
             ]
         },
         {
@@ -655,7 +655,7 @@
             "latitude": 24.13569,
             "longitude": 121.28104,
             "nearBy": [
-                "HH_5"
+                "s_HH_5"
             ]
         },
         {
@@ -673,7 +673,7 @@
             "latitude": 24.17774,
             "longitude": 121.28623,
             "nearBy": [
-                "HH_7",
+                "s_HH_7",
                 "HH_9"
             ]
         },
@@ -734,7 +734,7 @@
             "longitude": 121.25317,
             "nearBy": [
                 "HH_12",
-                "HH_15"
+                "s_HH_15"
             ]
         },
         {
@@ -761,7 +761,7 @@
             "latitude": 23.88177,
             "longitude": 121.0778,
             "nearBy": [
-                "GC_1",
+                "s_GC_1",
                 "GC_3"
             ]
         },
@@ -974,7 +974,7 @@
             "longitude": 121.11569,
             "nearBy": [
                 "GC_22",
-                "GC_24"
+                "s_GC_24"
             ]
         },
         {
@@ -987,377 +987,377 @@
             ]
         },
         {
-            "id": "s_ST_1",
+            "id": "s_SF_1",
             "name": "關山嶺山登山口",
             "latitude": 23.26405,
             "longitude": 120.96099,
             "nearBy": [
-                "ST_2"
+                "SF_2"
             ]
         },
         {
-            "id": "ST_2",
+            "id": "SF_2",
             "name": "關山嶺山",
             "latitude": 23.27098,
             "longitude": 120.95949,
             "nearBy": [
-                "ST_1"
+                "s_SF_1"
             ]
         },
         {
-            "id": "s_ST_3",
+            "id": "s_SF_3",
             "name": "塔關登山口",
             "latitude": 23.26633,
             "longitude": 120.93946,
             "nearBy": [
-                "ST_4"
+                "SF_4"
             ]
         },
         {
-            "id": "ST_4",
+            "id": "SF_4",
             "name": "塔關山",
             "latitude": 23.25196,
             "longitude": 120.94128,
             "nearBy": [
-                "ST_3"
+                "s_SF_3"
             ]
         },
         {
-            "id": "s_ST_5",
+            "id": "s_SF_5",
             "name": "進涇橋",
             "latitude": 23.25788,
             "longitude": 120.91878,
             "nearBy": [
-                "ST_6"
+                "SF_6"
             ]
         },
         {
-            "id": "ST_6",
+            "id": "SF_6",
             "name": "庫哈諾辛山屋",
             "latitude": 23.25523,
             "longitude": 120.91017,
             "nearBy": [
-                "ST_5",
-                "ST_7",
-                "ST_8"
+                "s_SF_5",
+                "SF_7",
+                "SF_8"
             ]
         },
         {
-            "id": "ST_7",
+            "id": "SF_7",
             "name": "庫哈諾辛山",
             "latitude": 23.26275,
             "longitude": 120.90006,
             "nearBy": [
-                "ST_6"
+                "SF_6"
             ]
         },
         {
-            "id": "ST_8",
+            "id": "SF_8",
             "name": "3444主稜",
             "latitude": 23.23644,
             "longitude": 120.91538,
             "nearBy": [
-                "ST_6",
-                "ST_9"
+                "SF_6",
+                "SF_9"
             ]
         },
         {
-            "id": "ST_9",
+            "id": "SF_9",
             "name": "關山",
             "latitude": 23.22807,
             "longitude": 120.91175,
             "nearBy": [
-                "ST_8",
-                "ST_10"
+                "SF_8",
+                "SF_10"
             ]
         },
         {
-            "id": "ST_10",
+            "id": "SF_10",
             "name": "2920營地",
             "latitude": 23.2055,
             "longitude": 120.90703,
             "nearBy": [
-                "ST_9",
-                "ST_11"
+                "SF_9",
+                "SF_11"
             ]
         },
         {
-            "id": "ST_11",
+            "id": "SF_11",
             "name": "海諾南山",
             "latitude": 23.18559,
             "longitude": 120.91137,
             "nearBy": [
-                "ST_10",
-                "ST_12"
+                "SF_10",
+                "SF_12"
             ]
         },
         {
-            "id": "ST_12",
+            "id": "SF_12",
             "name": "小關山北峰",
             "latitude": 23.1617,
             "longitude": 120.89544,
             "nearBy": [
-                "ST_11",
-                "ST_13"
+                "SF_11",
+                "SF_13"
             ]
         },
         {
-            "id": "ST_13",
+            "id": "SF_13",
             "name": "四叉路口",
             "latitude": 23.15126,
             "longitude": 120.87683,
             "nearBy": [
-                "ST_12",
-                "ST_14",
-                "ST_18"
+                "SF_12",
+                "SF_14",
+                "SF_18"
             ]
         },
         {
-            "id": "ST_14",
+            "id": "SF_14",
             "name": "小關山",
             "latitude": 23.15164,
             "longitude": 120.87614,
             "nearBy": [
-                "ST_13",
-                "ST_15"
+                "SF_13",
+                "SF_15"
             ]
         },
         {
-            "id": "ST_15",
+            "id": "SF_15",
             "name": "凹谷營地",
             "latitude": 23.15239,
             "longitude": 120.87091,
             "nearBy": [
-                "ST_14",
-                "ST_16"
+                "SF_14",
+                "SF_16"
             ]
         },
         {
-            "id": "ST_16",
+            "id": "SF_16",
             "name": "登山口",
             "latitude": 23.15873,
             "longitude": 120.84752,
             "nearBy": [
-                "ST_15",
-                "ST_17"
+                "SF_15",
+                "s_SF_17"
             ]
         },
         {
-            "id": "ST_17",
+            "id": "s_SF_17",
             "name": "行車終點",
             "latitude": 23.15788,
             "longitude": 120.84072,
             "nearBy": [
-                "ST_16"
+                "SF_16"
             ]
         },
         {
-            "id": "ST_18",
+            "id": "SF_18",
             "name": "最低鞍部",
             "latitude": 23.14179,
             "longitude": 120.88622,
             "nearBy": [
-                "ST_13",
-                "ST_19"
+                "SF_13",
+                "SF_19"
             ]
         },
         {
-            "id": "ST_19",
+            "id": "SF_19",
             "name": "雲水山",
             "latitude": 23.13692,
             "longitude": 120.88766,
             "nearBy": [
-                "ST_18",
-                "ST_20"
+                "SF_18",
+                "SF_20"
             ]
         },
         {
-            "id": "ST_20",
+            "id": "SF_20",
             "name": "雲馬營地",
             "latitude": 23.11862,
             "longitude": 120.88504,
             "nearBy": [
-                "ST_19",
-                "ST_21"
+                "SF_19",
+                "SF_21"
             ]
         },
         {
-            "id": "ST_21",
+            "id": "SF_21",
             "name": "馬西巴秀山",
             "latitude": 23.11036,
             "longitude": 120.88919,
             "nearBy": [
-                "ST_20",
-                "ST_22"
+                "SF_20",
+                "SF_22"
             ]
         },
         {
-            "id": "ST_22",
+            "id": "SF_22",
             "name": "馬西巴秀石洞營地",
             "latitude": 23.1074,
             "longitude": 120.88917,
             "nearBy": [
-                "ST_21",
-                "ST_23"
+                "SF_21",
+                "SF_23"
             ]
         },
         {
-            "id": "ST_23",
+            "id": "SF_23",
             "name": "3237峰",
             "latitude": 23.06838,
             "longitude": 120.87528,
             "nearBy": [
-                "ST_22",
-                "ST_24"
+                "SF_22",
+                "SF_24"
             ]
         },
         {
-            "id": "ST_24",
+            "id": "SF_24",
             "name": "三岔營地",
             "latitude": 23.05827,
             "longitude": 120.87094,
             "nearBy": [
-                "ST_23",
-                "ST_25",
-                "ST_27"
+                "SF_23",
+                "SF_25",
+                "SF_27"
             ]
         },
         {
-            "id": "ST_25",
+            "id": "SF_25",
             "name": "卑南主山",
             "latitude": 23.05117,
             "longitude": 120.87422,
             "nearBy": [
-                "ST_24",
-                "ST_26"
+                "SF_24",
+                "SF_26"
             ]
         },
         {
-            "id": "ST_26",
+            "id": "SF_26",
             "name": "人間天堂營地",
             "latitude": 23.04816,
             "longitude": 120.86978,
             "nearBy": [
-                "ST_25"
+                "SF_25"
             ]
         },
         {
-            "id": "ST_27",
+            "id": "SF_27",
             "name": "新舊路線岔路口",
             "latitude": 23.0745,
             "longitude": 120.85876,
             "nearBy": [
-                "ST_24",
-                "ST_28"
+                "SF_24",
+                "SF_28"
             ]
         },
         {
-            "id": "ST_28",
+            "id": "SF_28",
             "name": "林道鞍部",
             "latitude": 23.07821,
             "longitude": 120.84248,
             "nearBy": [
-                "ST_27",
-                "ST_29"
+                "SF_27",
+                "SF_29"
             ]
         },
         {
-            "id": "ST_29",
+            "id": "SF_29",
             "name": "碎石坡",
             "latitude": 23.08176,
             "longitude": 120.83682,
             "nearBy": [
-                "ST_28",
-                "ST_30"
+                "SF_28",
+                "SF_30"
             ]
         },
         {
-            "id": "ST_30",
+            "id": "SF_30",
             "name": "石山叉路",
             "latitude": 23.08307,
             "longitude": 120.83235,
             "nearBy": [
-                "ST_29",
-                "ST_31"
+                "SF_29",
+                "SF_31"
             ]
         },
         {
-            "id": "ST_31",
+            "id": "SF_31",
             "name": "石山西鞍",
             "latitude": 23.08494,
             "longitude": 120.82135,
             "nearBy": [
-                "ST_30",
-                "ST_32"
+                "SF_30",
+                "SF_32"
             ]
         },
         {
-            "id": "ST_32",
+            "id": "SF_32",
             "name": "溪南山登山口",
             "latitude": 23.08703,
             "longitude": 120.81513,
             "nearBy": [
-                "ST_31",
-                "ST_33",
-                "ST_34"
+                "SF_31",
+                "SF_33",
+                "SF_34"
             ]
         },
         {
-            "id": "ST_33",
+            "id": "SF_33",
             "name": "石山秀湖",
             "latitude": 23.09065,
             "longitude": 120.81361,
             "nearBy": [
-                "ST_32"
+                "SF_32"
             ]
         },
         {
-            "id": "ST_34",
+            "id": "SF_34",
             "name": "溪南山",
             "latitude": 23.0934,
             "longitude": 120.8051,
             "nearBy": [
-                "ST_32",
-                "ST_35"
+                "SF_32",
+                "SF_35"
             ]
         },
         {
-            "id": "ST_35",
+            "id": "SF_35",
             "name": "貨櫃屋",
             "latitude": 23.09347,
             "longitude": 120.79704,
             "nearBy": [
-                "ST_34",
-                "ST_36"
+                "SF_34",
+                "SF_36"
             ]
         },
         {
-            "id": "ST_36",
+            "id": "SF_36",
             "name": "7K特生中心",
             "latitude": 23.0852,
             "longitude": 120.78843,
             "nearBy": [
-                "ST_35",
-                "ST_37"
+                "SF_35",
+                "SF_37"
             ]
         },
         {
-            "id": "ST_37",
+            "id": "SF_37",
             "name": "出雲山管制站",
             "latitude": 23.06533,
             "longitude": 120.76003,
             "nearBy": [
-                "ST_36",
-                "ST_38"
+                "SF_36",
+                "s_SF_38"
             ]
         },
         {
-            "id": "ST_38",
+            "id": "s_SF_38",
             "name": "18K停車處",
             "latitude": 23.06437,
             "longitude": 120.74532,
             "nearBy": [
-                "ST_37"
+                "SF_37"
             ]
         },
         {
@@ -1749,7 +1749,7 @@
             "longitude": 121.51982,
             "nearBy": [
                 "ER_31",
-                "ER_33"
+                "s_ER_33"
             ]
         },
         {
@@ -1776,7 +1776,7 @@
             "latitude": 24.04664,
             "longitude": 121.2361,
             "nearBy": [
-                "UL_NG_1",
+                "s_UL_NG_1",
                 "UL_NG_3"
             ]
         },
@@ -1820,7 +1820,7 @@
             "longitude": 121.32443,
             "nearBy": [
                 "UL_5",
-                "UL_7"
+                "s_UL_7"
             ]
         },
         {
@@ -2190,7 +2190,7 @@
             "longitude": 121.19133,
             "nearBy": [
                 "NG_35",
-                "NG_37"
+                "s_NG_37"
             ]
         },
         {
@@ -2200,6 +2200,1756 @@
             "longitude": 121.17374,
             "nearBy": [
                 "NG_36"
+            ]
+        },
+        {
+            "id": "s_JD_1",
+            "name": "郡大登山口",
+            "latitude": 23.59607,
+            "longitude": 120.94677,
+            "nearBy": [
+                "JD_2"
+            ]
+        },
+        {
+            "id": "JD_2",
+            "name": "望鄉山",
+            "latitude": 23.5941,
+            "longitude": 120.94432,
+            "nearBy": [
+                "s_JD_1",
+                "JD_3"
+            ]
+        },
+        {
+            "id": "JD_3",
+            "name": "郡大北峰",
+            "latitude": 23.58798,
+            "longitude": 120.95693,
+            "nearBy": [
+                "JD_2",
+                "JD_4"
+            ]
+        },
+        {
+            "id": "JD_4",
+            "name": "郡大山",
+            "latitude": 23.57733,
+            "longitude": 120.96253,
+            "nearBy": [
+                "JD_3"
+            ]
+        },
+        {
+            "id": "s_WL_1",
+            "name": "17K檢查哨",
+            "latitude": 23.71302,
+            "longitude": 120.9082,
+            "nearBy": [
+                "WL_2"
+            ]
+        },
+        {
+            "id": "WL_2",
+            "name": "人倫工作站",
+            "latitude": 23.71327,
+            "longitude": 120.90757,
+            "nearBy": [
+                "s_WL_1",
+                "WL_3"
+            ]
+        },
+        {
+            "id": "WL_3",
+            "name": "西巒大山登山口",
+            "latitude": 23.71197,
+            "longitude": 120.90677,
+            "nearBy": [
+                "WL_2",
+                "WL_4"
+            ]
+        },
+        {
+            "id": "WL_4",
+            "name": "森林營地",
+            "latitude": 23.70354,
+            "longitude": 120.92711,
+            "nearBy": [
+                "WL_3",
+                "WL_5"
+            ]
+        },
+        {
+            "id": "WL_5",
+            "name": "瞭望台",
+            "latitude": 23.70598,
+            "longitude": 120.9351,
+            "nearBy": [
+                "WL_4",
+                "WL_6"
+            ]
+        },
+        {
+            "id": "WL_6",
+            "name": "展望點",
+            "latitude": 23.6944,
+            "longitude": 120.94548,
+            "nearBy": [
+                "WL_5",
+                "WL_7"
+            ]
+        },
+        {
+            "id": "WL_7",
+            "name": "西巒大山",
+            "latitude": 23.69396,
+            "longitude": 120.94741,
+            "nearBy": [
+                "WL_6"
+            ]
+        },
+        {
+            "id": "s_NF_1",
+            "name": "勝光登山口",
+            "latitude": 24.3699,
+            "longitude": 121.34055,
+            "nearBy": [
+                "NF_2"
+            ]
+        },
+        {
+            "id": "NF_2",
+            "name": "大水池",
+            "latitude": 24.37267,
+            "longitude": 121.34456,
+            "nearBy": [
+                "s_NF_1",
+                "NF_3"
+            ]
+        },
+        {
+            "id": "NF_3",
+            "name": "4.8K叉路",
+            "latitude": 24.37492,
+            "longitude": 121.3519,
+            "nearBy": [
+                "NF_2",
+                "NF_4"
+            ]
+        },
+        {
+            "id": "NF_4",
+            "name": "5.2K高繞",
+            "latitude": 24.37313,
+            "longitude": 121.35482,
+            "nearBy": [
+                "NF_3",
+                "NF_5"
+            ]
+        },
+        {
+            "id": "NF_5",
+            "name": "多加屯水利三角點",
+            "latitude": 24.36942,
+            "longitude": 121.37541,
+            "nearBy": [
+                "NF_4",
+                "NF_6"
+            ]
+        },
+        {
+            "id": "NF_6",
+            "name": "木杆鞍部",
+            "latitude": 24.37614,
+            "longitude": 121.39298,
+            "nearBy": [
+                "NF_5",
+                "NF_7",
+                "NF_12"
+            ]
+        },
+        {
+            "id": "NF_7",
+            "name": "南湖溪木屋",
+            "latitude": 24.36979,
+            "longitude": 121.39699,
+            "nearBy": [
+                "NF_6",
+                "NF_8"
+            ]
+        },
+        {
+            "id": "NF_8",
+            "name": "香菇寮營地",
+            "latitude": 24.34379,
+            "longitude": 121.40669,
+            "nearBy": [
+                "NF_7",
+                "NF_9"
+            ]
+        },
+        {
+            "id": "NF_9",
+            "name": "中央尖溪木屋",
+            "latitude": 24.33572,
+            "longitude": 121.41831,
+            "nearBy": [
+                "NF_8",
+                "NF_10",
+                "NF_26"
+            ]
+        },
+        {
+            "id": "NF_10",
+            "name": "中央尖鞍部",
+            "latitude": 24.30862,
+            "longitude": 121.42137,
+            "nearBy": [
+                "NF_9",
+                "NF_11"
+            ]
+        },
+        {
+            "id": "NF_11",
+            "name": "中央尖山",
+            "latitude": 24.31025,
+            "longitude": 121.41621,
+            "nearBy": [
+                "NF_10"
+            ]
+        },
+        {
+            "id": "NF_12",
+            "name": "新雲稜山莊",
+            "latitude": 24.37836,
+            "longitude": 121.39694,
+            "nearBy": [
+                "NF_6",
+                "NF_13"
+            ]
+        },
+        {
+            "id": "NF_13",
+            "name": "審馬陣登山口",
+            "latitude": 24.37966,
+            "longitude": 121.41749,
+            "nearBy": [
+                "NF_12",
+                "NF_14",
+                "NF_15"
+            ]
+        },
+        {
+            "id": "NF_14",
+            "name": "審馬陣山",
+            "latitude": 24.38023,
+            "longitude": 121.41745,
+            "nearBy": [
+                "NF_13"
+            ]
+        },
+        {
+            "id": "NF_15",
+            "name": "審馬陣山屋前叉路",
+            "latitude": 24.38145,
+            "longitude": 121.42272,
+            "nearBy": [
+                "NF_13",
+                "NF_16",
+                "NF_17"
+            ]
+        },
+        {
+            "id": "NF_16",
+            "name": "審馬陣山屋",
+            "latitude": 24.38108,
+            "longitude": 121.42603,
+            "nearBy": [
+                "NF_15",
+                "NF_17"
+            ]
+        },
+        {
+            "id": "NF_17",
+            "name": "審馬陣山屋後叉路",
+            "latitude": 24.38306,
+            "longitude": 121.42679,
+            "nearBy": [
+                "NF_15",
+                "NF_16",
+                "NF_18"
+            ]
+        },
+        {
+            "id": "NF_18",
+            "name": "北山登山口",
+            "latitude": 24.38171,
+            "longitude": 121.43773,
+            "nearBy": [
+                "NF_17",
+                "NF_19",
+                "NF_20"
+            ]
+        },
+        {
+            "id": "NF_19",
+            "name": "南湖北山",
+            "latitude": 24.38368,
+            "longitude": 121.43716,
+            "nearBy": [
+                "NF_18"
+            ]
+        },
+        {
+            "id": "NF_20",
+            "name": "南湖北峰",
+            "latitude": 24.37414,
+            "longitude": 121.4418,
+            "nearBy": [
+                "NF_18",
+                "NF_21"
+            ]
+        },
+        {
+            "id": "NF_21",
+            "name": "南湖山屋",
+            "latitude": 24.36953,
+            "longitude": 121.44346,
+            "nearBy": [
+                "NF_20",
+                "NF_22",
+                "NF_29"
+            ]
+        },
+        {
+            "id": "NF_22",
+            "name": "主東叉路",
+            "latitude": 24.36083,
+            "longitude": 121.44297,
+            "nearBy": [
+                "NF_21",
+                "NF_23",
+                "NF_30"
+            ]
+        },
+        {
+            "id": "NF_23",
+            "name": "主南叉路",
+            "latitude": 24.35868,
+            "longitude": 121.44191,
+            "nearBy": [
+                "NF_22",
+                "NF_24",
+                "NF_25"
+            ]
+        },
+        {
+            "id": "NF_24",
+            "name": "南湖大山",
+            "latitude": 24.36183,
+            "longitude": 121.43937,
+            "nearBy": [
+                "NF_23"
+            ]
+        },
+        {
+            "id": "NF_25",
+            "name": "南湖池山屋遺址",
+            "latitude": 24.35587,
+            "longitude": 121.44076,
+            "nearBy": [
+                "NF_23",
+                "NF_26"
+            ]
+        },
+        {
+            "id": "NF_26",
+            "name": "南峰岔路",
+            "latitude": 24.34864,
+            "longitude": 121.43447,
+            "nearBy": [
+                "NF_9",
+                "NF_25",
+                "NF_27"
+            ]
+        },
+        {
+            "id": "NF_27",
+            "name": "南湖大山南峰",
+            "latitude": 24.34778,
+            "longitude": 121.43458,
+            "nearBy": [
+                "NF_26",
+                "NF_28"
+            ]
+        },
+        {
+            "id": "NF_28",
+            "name": "巴巴山",
+            "latitude": 24.34243,
+            "longitude": 121.43782,
+            "nearBy": [
+                "NF_27"
+            ]
+        },
+        {
+            "id": "NF_29",
+            "name": "上圈谷",
+            "latitude": 24.36628,
+            "longitude": 121.44789,
+            "nearBy": [
+                "NF_21",
+                "NF_30",
+                "NF_35"
+            ]
+        },
+        {
+            "id": "NF_30",
+            "name": "四岔路口",
+            "latitude": 24.36406,
+            "longitude": 121.44867,
+            "nearBy": [
+                "NF_22",
+                "NF_29",
+                "NF_31",
+                "NF_36"
+            ]
+        },
+        {
+            "id": "NF_31",
+            "name": "陶塞山屋遺址",
+            "latitude": 24.35696,
+            "longitude": 121.45407,
+            "nearBy": [
+                "NF_30",
+                "NF_32"
+            ]
+        },
+        {
+            "id": "NF_32",
+            "name": "大濁水南溪叉路",
+            "latitude": 24.35468,
+            "longitude": 121.45867,
+            "nearBy": [
+                "NF_31",
+                "NF_33"
+            ]
+        },
+        {
+            "id": "NF_33",
+            "name": "獵寮叉路",
+            "latitude": 24.35172,
+            "longitude": 121.46339,
+            "nearBy": [
+                "NF_32",
+                "NF_34",
+                "NF_39"
+            ]
+        },
+        {
+            "id": "NF_34",
+            "name": "石洞獵寮",
+            "latitude": 24.35089,
+            "longitude": 121.4633,
+            "nearBy": [
+                "NF_33"
+            ]
+        },
+        {
+            "id": "NF_35",
+            "name": "南湖大山東峰",
+            "latitude": 24.36589,
+            "longitude": 121.45066,
+            "nearBy": [
+                "NF_29",
+                "NF_36"
+            ]
+        },
+        {
+            "id": "NF_36",
+            "name": "東峰叉路",
+            "latitude": 24.36512,
+            "longitude": 121.45174,
+            "nearBy": [
+                "NF_30",
+                "NF_35",
+                "NF_37"
+            ]
+        },
+        {
+            "id": "NF_37",
+            "name": "陶塞峰叉路",
+            "latitude": 24.35869,
+            "longitude": 121.45956,
+            "nearBy": [
+                "NF_36",
+                "NF_38"
+            ]
+        },
+        {
+            "id": "NF_38",
+            "name": "南湖東南峰",
+            "latitude": 24.35579,
+            "longitude": 121.46496,
+            "nearBy": [
+                "NF_37",
+                "NF_39"
+            ]
+        },
+        {
+            "id": "NF_39",
+            "name": "2.2K三叉路",
+            "latitude": 24.35279,
+            "longitude": 121.47234,
+            "nearBy": [
+                "NF_33",
+                "NF_38",
+                "NF_40"
+            ]
+        },
+        {
+            "id": "NF_40",
+            "name": "1.0K指標",
+            "latitude": 24.34932,
+            "longitude": 121.48088,
+            "nearBy": [
+                "NF_39",
+                "NF_41"
+            ]
+        },
+        {
+            "id": "NF_41",
+            "name": "馬比杉山",
+            "latitude": 24.34836,
+            "longitude": 121.48564,
+            "nearBy": [
+                "NF_40"
+            ]
+        },
+        {
+            "id": "s_DB_1",
+            "name": "大鹿林道起點",
+            "latitude": 24.50538,
+            "longitude": 121.11578,
+            "nearBy": [
+                "DB_2"
+            ]
+        },
+        {
+            "id": "DB_2",
+            "name": "大霸管制站",
+            "latitude": 24.50466,
+            "longitude": 121.11896,
+            "nearBy": [
+                "s_DB_1",
+                "DB_3"
+            ]
+        },
+        {
+            "id": "DB_3",
+            "name": "大霸登山口",
+            "latitude": 24.48552,
+            "longitude": 121.19302,
+            "nearBy": [
+                "DB_2",
+                "DB_4"
+            ]
+        },
+        {
+            "id": "DB_4",
+            "name": "九九山莊",
+            "latitude": 24.46885,
+            "longitude": 121.20855,
+            "nearBy": [
+                "DB_3",
+                "DB_5"
+            ]
+        },
+        {
+            "id": "DB_5",
+            "name": "加利山登山口",
+            "latitude": 24.46547,
+            "longitude": 121.22351,
+            "nearBy": [
+                "DB_4",
+                "DB_6",
+                "DB_7"
+            ]
+        },
+        {
+            "id": "DB_6",
+            "name": "加利山",
+            "latitude": 24.45952,
+            "longitude": 121.2162,
+            "nearBy": [
+                "DB_5"
+            ]
+        },
+        {
+            "id": "DB_7",
+            "name": "澤山第2登山口",
+            "latitude": 24.4692,
+            "longitude": 121.24167,
+            "nearBy": [
+                "DB_5",
+                "DB_8",
+                "DB_9"
+            ]
+        },
+        {
+            "id": "DB_8",
+            "name": "伊澤山",
+            "latitude": 24.47001,
+            "longitude": 121.24363,
+            "nearBy": [
+                "DB_7",
+                "DB_9"
+            ]
+        },
+        {
+            "id": "DB_9",
+            "name": "伊澤山登山口",
+            "latitude": 24.46881,
+            "longitude": 121.24559,
+            "nearBy": [
+                "DB_7",
+                "DB_8",
+                "DB_10"
+            ]
+        },
+        {
+            "id": "DB_10",
+            "name": "中壩叉路",
+            "latitude": 24.46345,
+            "longitude": 121.25792,
+            "nearBy": [
+                "DB_9",
+                "DB_11",
+                "DB_25"
+            ]
+        },
+        {
+            "id": "DB_11",
+            "name": "小霸岔路",
+            "latitude": 24.45693,
+            "longitude": 121.25691,
+            "nearBy": [
+                "DB_10",
+                "DB_12",
+                "DB_13"
+            ]
+        },
+        {
+            "id": "DB_12",
+            "name": "小霸尖山",
+            "latitude": 24.45557,
+            "longitude": 121.25205,
+            "nearBy": [
+                "DB_11"
+            ]
+        },
+        {
+            "id": "DB_13",
+            "name": "霸基叉路",
+            "latitude": 24.45721,
+            "longitude": 121.2587,
+            "nearBy": [
+                "DB_11",
+                "DB_14"
+            ]
+        },
+        {
+            "id": "DB_14",
+            "name": "霸南山屋",
+            "latitude": 24.45096,
+            "longitude": 121.26101,
+            "nearBy": [
+                "DB_13",
+                "DB_15"
+            ]
+        },
+        {
+            "id": "DB_15",
+            "name": "巴紗拉雲山屋",
+            "latitude": 24.44407,
+            "longitude": 121.26091,
+            "nearBy": [
+                "DB_14",
+                "DB_16",
+                "XS_26"
+            ]
+        },
+        {
+            "id": "DB_16",
+            "name": "巴紗拉雲山",
+            "latitude": 24.43822,
+            "longitude": 121.25836,
+            "nearBy": [
+                "DB_15",
+                "XS_23"
+            ]
+        },
+        {
+            "id": "s_DB_17",
+            "name": "神木區登山口",
+            "latitude": 24.55384,
+            "longitude": 121.29268,
+            "nearBy": [
+                "DB_18"
+            ]
+        },
+        {
+            "id": "DB_18",
+            "name": "神木叉路",
+            "latitude": 24.54404,
+            "longitude": 121.29094,
+            "nearBy": [
+                "s_DB_17",
+                "DB_19"
+            ]
+        },
+        {
+            "id": "DB_19",
+            "name": "小叉路",
+            "latitude": 24.53935,
+            "longitude": 121.29411,
+            "nearBy": [
+                "DB_18",
+                "DB_20"
+            ]
+        },
+        {
+            "id": "DB_20",
+            "name": "馬洋山岔路",
+            "latitude": 24.53132,
+            "longitude": 121.29873,
+            "nearBy": [
+                "DB_19",
+                "DB_21"
+            ]
+        },
+        {
+            "id": "DB_21",
+            "name": "獵寮營地",
+            "latitude": 24.51646,
+            "longitude": 121.29628,
+            "nearBy": [
+                "DB_20",
+                "DB_22"
+            ]
+        },
+        {
+            "id": "DB_22",
+            "name": "第一營地",
+            "latitude": 24.51381,
+            "longitude": 121.29476,
+            "nearBy": [
+                "DB_21",
+                "DB_23"
+            ]
+        },
+        {
+            "id": "DB_23",
+            "name": "第二營地",
+            "latitude": 24.50171,
+            "longitude": 121.27891,
+            "nearBy": [
+                "DB_22",
+                "DB_24"
+            ]
+        },
+        {
+            "id": "DB_24",
+            "name": "馬洋山",
+            "latitude": 24.50138,
+            "longitude": 121.27749,
+            "nearBy": [
+                "DB_23",
+                "DB_25"
+            ]
+        },
+        {
+            "id": "DB_25",
+            "name": "馬洋池",
+            "latitude": 24.48738,
+            "longitude": 121.26687,
+            "nearBy": [
+                "DB_24",
+                "DB_10"
+            ]
+        },
+        {
+            "id": "s_XS_1",
+            "name": "雪山登山口",
+            "latitude": 24.38579,
+            "longitude": 121.29884,
+            "nearBy": [
+                "XS_2"
+            ]
+        },
+        {
+            "id": "XS_2",
+            "name": "七卡山莊",
+            "latitude": 24.38357,
+            "longitude": 121.28642,
+            "nearBy": [
+                "s_XS_1",
+                "XS_3"
+            ]
+        },
+        {
+            "id": "XS_3",
+            "name": "哭坡觀景台",
+            "latitude": 24.38952,
+            "longitude": 121.28024,
+            "nearBy": [
+                "XS_2",
+                "XS_4"
+            ]
+        },
+        {
+            "id": "XS_4",
+            "name": "雪山東峰",
+            "latitude": 24.38872,
+            "longitude": 121.27208,
+            "nearBy": [
+                "XS_3",
+                "XS_5"
+            ]
+        },
+        {
+            "id": "XS_5",
+            "name": "369山莊",
+            "latitude": 24.39233,
+            "longitude": 121.25473,
+            "nearBy": [
+                "XS_4",
+                "XS_6",
+                "XS_12"
+            ]
+        },
+        {
+            "id": "XS_6",
+            "name": "雪山圈谷",
+            "latitude": 24.38847,
+            "longitude": 121.23643,
+            "nearBy": [
+                "XS_5",
+                "XS_7"
+            ]
+        },
+        {
+            "id": "XS_7",
+            "name": "雪山",
+            "latitude": 24.38343,
+            "longitude": 121.23176,
+            "nearBy": [
+                "XS_6",
+                "XS_8",
+                "XS_49"
+            ]
+        },
+        {
+            "id": "XS_8",
+            "name": "翠池岔路",
+            "latitude": 24.38595,
+            "longitude": 121.23154,
+            "nearBy": [
+                "XS_7",
+                "XS_9",
+                "XS_69"
+            ]
+        },
+        {
+            "id": "XS_9",
+            "name": "北稜角",
+            "latitude": 24.38752,
+            "longitude": 121.23114,
+            "nearBy": [
+                "XS_8",
+                "XS_10"
+            ]
+        },
+        {
+            "id": "XS_10",
+            "name": "凱蘭特崑山",
+            "latitude": 24.39531,
+            "longitude": 121.23414,
+            "nearBy": [
+                "XS_9",
+                "XS_11"
+            ]
+        },
+        {
+            "id": "XS_11",
+            "name": "黑森林水源路叉",
+            "latitude": 24.3976,
+            "longitude": 121.23392,
+            "nearBy": [
+                "XS_10",
+                "XS_12",
+                "XS_13"
+            ]
+        },
+        {
+            "id": "XS_12",
+            "name": "溪水源",
+            "latitude": 24.39436,
+            "longitude": 121.2412,
+            "nearBy": [
+                "XS_5",
+                "XS_11"
+            ]
+        },
+        {
+            "id": "XS_13",
+            "name": "凱蘭特昆山北峰",
+            "latitude": 24.39841,
+            "longitude": 121.23498,
+            "nearBy": [
+                "XS_11",
+                "XS_14"
+            ]
+        },
+        {
+            "id": "XS_14",
+            "name": "雪北山屋",
+            "latitude": 24.4117,
+            "longitude": 121.24286,
+            "nearBy": [
+                "XS_13",
+                "XS_15"
+            ]
+        },
+        {
+            "id": "XS_15",
+            "name": "雪北三岔路",
+            "latitude": 24.41429,
+            "longitude": 121.24175,
+            "nearBy": [
+                "XS_14",
+                "XS_16",
+                "XS_17"
+            ]
+        },
+        {
+            "id": "XS_16",
+            "name": "雪山北峰",
+            "latitude": 24.41474,
+            "longitude": 121.24039,
+            "nearBy": [
+                "XS_15"
+            ]
+        },
+        {
+            "id": "XS_17",
+            "name": "穆南鞍部營",
+            "latitude": 24.42213,
+            "longitude": 121.24481,
+            "nearBy": [
+                "XS_15",
+                "XS_18"
+            ]
+        },
+        {
+            "id": "XS_18",
+            "name": "水源岔路",
+            "latitude": 24.42329,
+            "longitude": 121.24981,
+            "nearBy": [
+                "XS_17",
+                "XS_19",
+                "XS_20"
+            ]
+        },
+        {
+            "id": "XS_19",
+            "name": "活水源",
+            "latitude": 24.42086,
+            "longitude": 121.25029,
+            "nearBy": [
+                "XS_18"
+            ]
+        },
+        {
+            "id": "XS_20",
+            "name": "素密達山屋",
+            "latitude": 24.42339,
+            "longitude": 121.2509,
+            "nearBy": [
+                "XS_18",
+                "XS_21",
+                "XS_22"
+            ]
+        },
+        {
+            "id": "XS_21",
+            "name": "穆特勒布山",
+            "latitude": 24.42499,
+            "longitude": 121.24945,
+            "nearBy": [
+                "XS_20"
+            ]
+        },
+        {
+            "id": "XS_22",
+            "name": "素密達山",
+            "latitude": 24.42503,
+            "longitude": 121.25362,
+            "nearBy": [
+                "XS_20",
+                "XS_23"
+            ]
+        },
+        {
+            "id": "XS_23",
+            "name": "布秀蘭山",
+            "latitude": 24.42894,
+            "longitude": 121.25918,
+            "nearBy": [
+                "XS_22",
+                "XS_24",
+                "DB_16"
+            ]
+        },
+        {
+            "id": "XS_24",
+            "name": "品田山",
+            "latitude": 24.42821,
+            "longitude": 121.26682,
+            "nearBy": [
+                "XS_23",
+                "XS_25"
+            ]
+        },
+        {
+            "id": "XS_25",
+            "name": "新達山屋",
+            "latitude": 24.42999,
+            "longitude": 121.27886,
+            "nearBy": [
+                "XS_24",
+                "XS_26",
+                "XS_27"
+            ]
+        },
+        {
+            "id": "XS_26",
+            "name": "塔克金溪源頭",
+            "latitude": 24.43664,
+            "longitude": 121.27093,
+            "nearBy": [
+                "XS_25",
+                "DB_15"
+            ]
+        },
+        {
+            "id": "XS_27",
+            "name": "池有山登山口",
+            "latitude": 24.4296,
+            "longitude": 121.28829,
+            "nearBy": [
+                "XS_25",
+                "XS_28",
+                "XS_29"
+            ]
+        },
+        {
+            "id": "XS_28",
+            "name": "池有山",
+            "latitude": 24.43113,
+            "longitude": 121.28815,
+            "nearBy": [
+                "XS_27"
+            ]
+        },
+        {
+            "id": "XS_29",
+            "name": "三岔營地",
+            "latitude": 24.42994,
+            "longitude": 121.29084,
+            "nearBy": [
+                "XS_27",
+                "XS_30",
+                "XS_37"
+            ]
+        },
+        {
+            "id": "XS_30",
+            "name": "桃山山屋",
+            "latitude": 24.43317,
+            "longitude": 121.30266,
+            "nearBy": [
+                "XS_29",
+                "XS_31"
+            ]
+        },
+        {
+            "id": "XS_31",
+            "name": "桃山",
+            "latitude": 24.43264,
+            "longitude": 121.3049,
+            "nearBy": [
+                "XS_30",
+                "XS_32",
+                "XS_34"
+            ]
+        },
+        {
+            "id": "XS_32",
+            "name": "詩崙山",
+            "latitude": 24.43959,
+            "longitude": 121.31492,
+            "nearBy": [
+                "XS_31",
+                "XS_33"
+            ]
+        },
+        {
+            "id": "XS_33",
+            "name": "克拉業山",
+            "latitude": 24.44999,
+            "longitude": 121.32129,
+            "nearBy": [
+                "XS_32"
+            ]
+        },
+        {
+            "id": "XS_34",
+            "name": "停機坪",
+            "latitude": 24.42111,
+            "longitude": 121.30539,
+            "nearBy": [
+                "XS_31",
+                "XS_35"
+            ]
+        },
+        {
+            "id": "XS_35",
+            "name": "桃山2K",
+            "latitude": 24.41617,
+            "longitude": 121.30722,
+            "nearBy": [
+                "XS_34",
+                "XS_36"
+            ]
+        },
+        {
+            "id": "XS_36",
+            "name": "桃山登山口",
+            "latitude": 24.40549,
+            "longitude": 121.30853,
+            "nearBy": [
+                "XS_35",
+                "XS_39"
+            ]
+        },
+        {
+            "id": "XS_37",
+            "name": "池有山步道口",
+            "latitude": 24.40803,
+            "longitude": 121.30461,
+            "nearBy": [
+                "XS_29",
+                "XS_38",
+                "XS_39"
+            ]
+        },
+        {
+            "id": "XS_38",
+            "name": "桃山瀑布",
+            "latitude": 24.4133,
+            "longitude": 121.3025,
+            "nearBy": [
+                "XS_37"
+            ]
+        },
+        {
+            "id": "XS_39",
+            "name": "桃山岔路口",
+            "latitude": 24.4052,
+            "longitude": 121.3076,
+            "nearBy": [
+                "XS_36",
+                "XS_37",
+                "s_XS_40"
+            ]
+        },
+        {
+            "id": "s_XS_40",
+            "name": "武陵山莊",
+            "latitude": 24.3972,
+            "longitude": 121.30696,
+            "nearBy": [
+                "XS_39"
+            ]
+        },
+        {
+            "id": "s_XS_41",
+            "name": "環山部落停車處",
+            "latitude": 24.3199,
+            "longitude": 121.28979,
+            "nearBy": [
+                "XS_42"
+            ]
+        },
+        {
+            "id": "XS_42",
+            "name": "松柏農場",
+            "latitude": 24.32373,
+            "longitude": 121.28302,
+            "nearBy": [
+                "s_XS_41",
+                "XS_43"
+            ]
+        },
+        {
+            "id": "XS_43",
+            "name": "登山口",
+            "latitude": 24.3299,
+            "longitude": 121.26886,
+            "nearBy": [
+                "XS_42",
+                "XS_44"
+            ]
+        },
+        {
+            "id": "XS_44",
+            "name": "苗圃工寮舊址",
+            "latitude": 24.33763,
+            "longitude": 121.26425,
+            "nearBy": [
+                "XS_43",
+                "XS_45"
+            ]
+        },
+        {
+            "id": "XS_45",
+            "name": "賽良久營地",
+            "latitude": 24.34949,
+            "longitude": 121.26091,
+            "nearBy": [
+                "XS_44",
+                "XS_46"
+            ]
+        },
+        {
+            "id": "XS_46",
+            "name": "瓢簞山屋",
+            "latitude": 24.35598,
+            "longitude": 121.25542,
+            "nearBy": [
+                "XS_45",
+                "XS_47"
+            ]
+        },
+        {
+            "id": "XS_47",
+            "name": "志佳陽山",
+            "latitude": 24.35779,
+            "longitude": 121.25133,
+            "nearBy": [
+                "XS_46",
+                "XS_48"
+            ]
+        },
+        {
+            "id": "XS_48",
+            "name": "志佳陽大山",
+            "latitude": 24.35997,
+            "longitude": 121.2482,
+            "nearBy": [
+                "XS_47",
+                "XS_49"
+            ]
+        },
+        {
+            "id": "XS_49",
+            "name": "雪山山莊舊址",
+            "latitude": 24.37583,
+            "longitude": 121.23753,
+            "nearBy": [
+                "XS_7",
+                "XS_48",
+                "XS_50"
+            ]
+        },
+        {
+            "id": "XS_50",
+            "name": "雪山南峰",
+            "latitude": 24.37224,
+            "longitude": 121.23735,
+            "nearBy": [
+                "XS_49"
+            ]
+        },
+        {
+            "id": "s_XS_51",
+            "name": "中興路口",
+            "latitude": 24.29485,
+            "longitude": 121.27123,
+            "nearBy": [
+                "XS_52"
+            ]
+        },
+        {
+            "id": "XS_52",
+            "name": "仁壽橋",
+            "latitude": 24.29457,
+            "longitude": 121.2656,
+            "nearBy": [
+                "s_XS_51",
+                "XS_53"
+            ]
+        },
+        {
+            "id": "XS_53",
+            "name": "松茂水文站",
+            "latitude": 24.28447,
+            "longitude": 121.25709,
+            "nearBy": [
+                "XS_52",
+                "XS_54"
+            ]
+        },
+        {
+            "id": "XS_54",
+            "name": "樂山橋",
+            "latitude": 24.28972,
+            "longitude": 121.24984,
+            "nearBy": [
+                "XS_53",
+                "XS_55"
+            ]
+        },
+        {
+            "id": "XS_55",
+            "name": "天梯登山口",
+            "latitude": 24.2795,
+            "longitude": 121.24764,
+            "nearBy": [
+                "XS_54",
+                "XS_56"
+            ]
+        },
+        {
+            "id": "XS_56",
+            "name": "帆布獵寮",
+            "latitude": 24.29321,
+            "longitude": 121.2307,
+            "nearBy": [
+                "XS_55",
+                "XS_57"
+            ]
+        },
+        {
+            "id": "XS_57",
+            "name": "椎論山",
+            "latitude": 24.3097,
+            "longitude": 121.21786,
+            "nearBy": [
+                "XS_56",
+                "XS_58"
+            ]
+        },
+        {
+            "id": "XS_58",
+            "name": "油婆蘭山",
+            "latitude": 24.32215,
+            "longitude": 121.20528,
+            "nearBy": [
+                "XS_57",
+                "XS_59",
+                "XS_63"
+            ]
+        },
+        {
+            "id": "XS_59",
+            "name": "布伕奇寒山",
+            "latitude": 24.31702,
+            "longitude": 121.19813,
+            "nearBy": [
+                "XS_58",
+                "XS_60"
+            ]
+        },
+        {
+            "id": "XS_60",
+            "name": "老伍營地",
+            "latitude": 24.31276,
+            "longitude": 121.19484,
+            "nearBy": [
+                "XS_59",
+                "XS_61"
+            ]
+        },
+        {
+            "id": "XS_61",
+            "name": "佳陽山",
+            "latitude": 24.30663,
+            "longitude": 121.188,
+            "nearBy": [
+                "XS_60",
+                "XS_62"
+            ]
+        },
+        {
+            "id": "XS_62",
+            "name": "小劍山",
+            "latitude": 24.29557,
+            "longitude": 121.1702,
+            "nearBy": [
+                "XS_61"
+            ]
+        },
+        {
+            "id": "XS_63",
+            "name": "油婆蘭營地",
+            "latitude": 24.32354,
+            "longitude": 121.20644,
+            "nearBy": [
+                "XS_58",
+                "XS_64"
+            ]
+        },
+        {
+            "id": "XS_64",
+            "name": "水源岔路",
+            "latitude": 24.33182,
+            "longitude": 121.20655,
+            "nearBy": [
+                "XS_63",
+                "XS_65",
+                "XS_66"
+            ]
+        },
+        {
+            "id": "XS_65",
+            "name": "水源",
+            "latitude": 24.32811,
+            "longitude": 121.20527,
+            "nearBy": [
+                "XS_64"
+            ]
+        },
+        {
+            "id": "XS_66",
+            "name": "大劍山",
+            "latitude": 24.34096,
+            "longitude": 121.2005,
+            "nearBy": [
+                "XS_64",
+                "XS_67"
+            ]
+        },
+        {
+            "id": "XS_67",
+            "name": "雪山西南峰",
+            "latitude": 24.35725,
+            "longitude": 121.20545,
+            "nearBy": [
+                "XS_66",
+                "XS_68"
+            ]
+        },
+        {
+            "id": "XS_68",
+            "name": "完美谷營地",
+            "latitude": 24.36651,
+            "longitude": 121.20823,
+            "nearBy": [
+                "XS_67",
+                "XS_69"
+            ]
+        },
+        {
+            "id": "XS_69",
+            "name": "翠池山屋",
+            "latitude": 24.38546,
+            "longitude": 121.22266,
+            "nearBy": [
+                "XS_8",
+                "XS_68",
+                "XS_97"
+            ]
+        },
+        {
+            "id": "s_XS_70",
+            "name": "大雪山遊客中心",
+            "latitude": 24.27912,
+            "longitude": 121.02579,
+            "nearBy": [
+                "XS_71"
+            ]
+        },
+        {
+            "id": "XS_71",
+            "name": "雪霸公園界碑",
+            "latitude": 24.3071,
+            "longitude": 121.02461,
+            "nearBy": [
+                "s_XS_70",
+                "XS_72"
+            ]
+        },
+        {
+            "id": "XS_72",
+            "name": "雙小溪前營",
+            "latitude": 24.31748,
+            "longitude": 121.05457,
+            "nearBy": [
+                "XS_71",
+                "XS_73"
+            ]
+        },
+        {
+            "id": "XS_73",
+            "name": "26K中雪山登山口",
+            "latitude": 24.34839,
+            "longitude": 121.08149,
+            "nearBy": [
+                "XS_72",
+                "XS_74",
+                "XS_76"
+            ]
+        },
+        {
+            "id": "XS_74",
+            "name": "中雪山",
+            "latitude": 24.3365,
+            "longitude": 121.07807,
+            "nearBy": [
+                "XS_73",
+                "XS_75"
+            ]
+        },
+        {
+            "id": "XS_75",
+            "name": "林文安紀念碑",
+            "latitude": 24.33403,
+            "longitude": 121.07893,
+            "nearBy": [
+                "XS_74"
+            ]
+        },
+        {
+            "id": "XS_76",
+            "name": "28K工寮",
+            "latitude": 24.33695,
+            "longitude": 121.08925,
+            "nearBy": [
+                "XS_73",
+                "XS_77"
+            ]
+        },
+        {
+            "id": "XS_77",
+            "name": "大雪山登山口",
+            "latitude": 24.33425,
+            "longitude": 121.09056,
+            "nearBy": [
+                "XS_76",
+                "XS_78"
+            ]
+        },
+        {
+            "id": "XS_78",
+            "name": "鞍部岔路",
+            "latitude": 24.325,
+            "longitude": 121.10201,
+            "nearBy": [
+                "XS_77",
+                "XS_79"
+            ]
+        },
+        {
+            "id": "XS_79",
+            "name": "匹匹達山",
+            "latitude": 24.32881,
+            "longitude": 121.11413,
+            "nearBy": [
+                "XS_78",
+                "XS_80"
+            ]
+        },
+        {
+            "id": "XS_80",
+            "name": "匹匹達東鞍營地",
+            "latitude": 24.32931,
+            "longitude": 121.11568,
+            "nearBy": [
+                "XS_79",
+                "XS_81",
+                "XS_82"
+            ]
+        },
+        {
+            "id": "XS_81",
+            "name": "溪溝水源",
+            "latitude": 24.32721,
+            "longitude": 121.1196,
+            "nearBy": [
+                "XS_80"
+            ]
+        },
+        {
+            "id": "XS_82",
+            "name": "大雪山叉路",
+            "latitude": 24.33128,
+            "longitude": 121.12083,
+            "nearBy": [
+                "XS_80",
+                "XS_83",
+                "XS_84"
+            ]
+        },
+        {
+            "id": "XS_83",
+            "name": "大雪山",
+            "latitude": 24.33077,
+            "longitude": 121.12118,
+            "nearBy": [
+                "XS_82"
+            ]
+        },
+        {
+            "id": "XS_84",
+            "name": "大雪山北峰",
+            "latitude": 24.34213,
+            "longitude": 121.1247,
+            "nearBy": [
+                "XS_82",
+                "XS_85"
+            ]
+        },
+        {
+            "id": "XS_85",
+            "name": "奇峻流池",
+            "latitude": 24.35146,
+            "longitude": 121.13406,
+            "nearBy": [
+                "XS_84",
+                "XS_86"
+            ]
+        },
+        {
+            "id": "XS_86",
+            "name": "奇峻山",
+            "latitude": 24.35465,
+            "longitude": 121.13733,
+            "nearBy": [
+                "XS_85",
+                "XS_87"
+            ]
+        },
+        {
+            "id": "XS_87",
+            "name": "頭鷹山",
+            "latitude": 24.35962,
+            "longitude": 121.14073,
+            "nearBy": [
+                "XS_86",
+                "XS_88"
+            ]
+        },
+        {
+            "id": "XS_88",
+            "name": "弓水營地",
+            "latitude": 24.35543,
+            "longitude": 121.15822,
+            "nearBy": [
+                "XS_87",
+                "XS_89",
+                "XS_90"
+            ]
+        },
+        {
+            "id": "XS_89",
+            "name": "弓水山",
+            "latitude": 24.35978,
+            "longitude": 121.15691,
+            "nearBy": [
+                "XS_88"
+            ]
+        },
+        {
+            "id": "XS_90",
+            "name": "大南山西鞍營地",
+            "latitude": 24.3612,
+            "longitude": 121.16366,
+            "nearBy": [
+                "XS_88",
+                "XS_91"
+            ]
+        },
+        {
+            "id": "XS_91",
+            "name": "大南山登山口",
+            "latitude": 24.36266,
+            "longitude": 121.1667,
+            "nearBy": [
+                "XS_90",
+                "XS_92",
+                "XS_93"
+            ]
+        },
+        {
+            "id": "XS_92",
+            "name": "大南山",
+            "latitude": 24.36191,
+            "longitude": 121.16854,
+            "nearBy": [
+                "XS_91"
+            ]
+        },
+        {
+            "id": "XS_93",
+            "name": "火石山下營地",
+            "latitude": 24.3802,
+            "longitude": 121.18163,
+            "nearBy": [
+                "XS_91",
+                "XS_94",
+                "XS_95"
+            ]
+        },
+        {
+            "id": "XS_94",
+            "name": "火石山",
+            "latitude": 24.38194,
+            "longitude": 121.17506,
+            "nearBy": [
+                "XS_93"
+            ]
+        },
+        {
+            "id": "XS_95",
+            "name": "博可爾草坡",
+            "latitude": 24.39444,
+            "longitude": 121.20512,
+            "nearBy": [
+                "XS_93",
+                "XS_96",
+                "XS_97"
+            ]
+        },
+        {
+            "id": "XS_96",
+            "name": "雪山西峰",
+            "latitude": 24.39671,
+            "longitude": 121.19573,
+            "nearBy": [
+                "XS_95"
+            ]
+        },
+        {
+            "id": "XS_97",
+            "name": "下翠池",
+            "latitude": 24.38491,
+            "longitude": 121.21499,
+            "nearBy": [
+                "XS_69",
+                "XS_95"
             ]
         }
     ]

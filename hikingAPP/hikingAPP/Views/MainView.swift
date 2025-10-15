@@ -66,7 +66,7 @@ struct MainView: View {
             
         }
         .navigationDestination(isPresented: $navigateToPlan) {
-            PlanView().environmentObject(navModel)  // Your destination view here
+            PlanView().environmentObject(navModel) 
                }
     }
 }
