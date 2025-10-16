@@ -576,7 +576,7 @@ struct HistoryView: View {
                                 }
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 50)
                         .background(Color.white.opacity(0.05))
                         .cornerRadius(8)
                         .overlay(
