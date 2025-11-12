@@ -276,6 +276,8 @@ struct PlanView: View {
 
 class GraphViewModel: ObservableObject {
     @Published var nodes: [Node] = []
+    @Published var segments: [Segment] = []
+    @Published var estimatedTime: Double = 0.0
     @Published var startNodes: [Node] = []
     @Published var current: Node?
     @Published var path: [String] = []
@@ -289,6 +291,7 @@ class GraphViewModel: ObservableObject {
         self.areaCodes = areaCodes.map { $0.uppercased() }  // 統一大寫
         let allNodes = loadNodes()
         self.nodes = allNodes
+        self.segments = loadSegments()
         self.lookup = Dictionary(uniqueKeysWithValues: allNodes.map { ($0.id, $0) })
         
         // ✅ 起始點條件：以 S_ 開頭 + 包含任一區域代碼
@@ -309,21 +312,24 @@ class GraphViewModel: ObservableObject {
     }
     
     func move(to nextId: String) {
-        if let nextNode = lookup[nextId] {
+        if let nextNode = lookup[nextId], let current = current {
             withAnimation(.easeInOut) {
                 self.current = nextNode
                 self.path.append(nextNode.id)
+                self.estimatedTime += timeBetween(current.id, nextNode.id)
             }
         }
     }
     
     func goBack() {
         guard path.count > 1 else { return }
-        path.removeLast()
+        let removedId = path.removeLast()
         if let lastId = path.last,
            let lastNode = lookup[lastId] {
             withAnimation(.easeInOut) {
                 self.current = lastNode
+                let timeToSubtract = timeBetween(lastId, removedId)
+                self.estimatedTime = max(0, self.estimatedTime - timeToSubtract)
             }
         }
     }
@@ -337,6 +343,25 @@ class GraphViewModel: ObservableObject {
             self.start = now
             self.path = [now.id]
             self.current = now
+            self.estimatedTime = 0.0
+        }
+    }
+    
+    func timeBetween(_ from: String, _ to: String) -> Double {
+        var time: Double = 0.0
+        if let seg = segments.first(where: { $0.id == "\(from)_\(to)" }) {
+            time = seg.standardTime
+        } else if let seg = segments.first(where: { $0.id == "\(to)_\(from)" }) {
+            time = seg.revStandardTime
+        } else {
+            print("⚠️ No segment found for \(from) ↔ \(to)")
+            return 0.0
+        }
+
+        if let user = loadUser() {
+            return time * user.speedFactor
+        } else {
+            return time
         }
     }
     
@@ -465,6 +490,16 @@ struct PlanningView: View {
                     Spacer()
                 }
                 
+                Text("預估時間：" +
+                     (vm.estimatedTime < 60
+                      ? "\(String(format: "%.1f", vm.estimatedTime)) 分鐘"
+                      : "\(Int(vm.estimatedTime) / 60) 小時 \(Int(vm.estimatedTime) % 60) 分鐘"))
+                    .font(.headline)
+                    .foregroundColor(.yellow)
+                    .padding(.top, 8)
+
+
+                
                 if let current = vm.current {
                     HStack {
                         VStack(alignment: .leading, spacing: 8) {
@@ -473,6 +508,11 @@ struct PlanningView: View {
                         }
                         .frame(width: 150, alignment: .leading)
                         
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.red)
+                            .font(.title2)
+                            .fontWeight(.bold)
                         Spacer()
                         
                         VStack {

@@ -153,6 +153,8 @@ func loadNodes() -> [Node] {
     }
 }
 
+
+
 func node2seg(_ node1: String, _ node2: String) -> String {
     return "\(node1)_\(node2)"
 }
