@@ -24892,8 +24892,8 @@
     },
     {
       "id": "s_NT_01_s_NT_02",
-      "standardTime": 10,
-      "revStandardTime": 10,
+      "standardTime": 3,
+      "revStandardTime": 5,
       "points": [
         {
           "latitude": 25.01280784398212,
@@ -25009,8 +25009,8 @@
     },
     {
       "id": "s_NT_01_s_NT_03",
-      "standardTime": 20,
-      "revStandardTime": 20,
+      "standardTime": 13,
+      "revStandardTime": 13,
       "points": [
         {
           "latitude": 25.01280784398212,
