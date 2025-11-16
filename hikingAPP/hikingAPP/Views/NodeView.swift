@@ -25,7 +25,7 @@ struct NodeInfoPanel: View {
               let nodeB = nodes.first(where: { $0.id == nodeBName }) else { return storedDirection }
         
         let userLocs = locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? [])
-        return detectDirection(userLocations: userLocs,
+        return computeTravelDirection(plan: navModel.currentPlan, userLocations: userLocs,
                                nodeA: CLLocationCoordinate2D(latitude: nodeA.latitude, longitude: nodeA.longitude),
                                nodeB: CLLocationCoordinate2D(latitude: nodeB.latitude, longitude: nodeB.longitude)) * storedDirection
     }
@@ -298,10 +298,11 @@ struct PlanDisplayView: View {
                     }
                 }
             }
-            Button {
-                navModel.currentPlan = []
-                dismiss()
-            } label: {
+        Button {
+            navModel.currentPlan = []
+            UserDefaults.standard.removeObject(forKey: "SavedPlan")
+            dismiss()
+        } label: {
                 HStack{
                     Label("重設計劃", systemImage: "arrow.clockwise.circle")
                         .foregroundStyle(Color.white)

@@ -337,7 +337,7 @@ func closestPointOnPlan(
                let nodeB = nodes.first(where: { $0.id == nodeBName }) {
                 let nodeACoord = CLLocationCoordinate2D(latitude: nodeA.latitude, longitude: nodeA.longitude)
                 let nodeBCoord = CLLocationCoordinate2D(latitude: nodeB.latitude, longitude: nodeB.longitude)
-                let movementDir = detectDirection(userLocations: userLocs, nodeA: nodeACoord, nodeB: nodeBCoord)
+                let movementDir = computeTravelDirection(plan: plan, userLocations: userLocs, nodeA: nodeACoord, nodeB: nodeBCoord)
                 // movementDir == +1 means user moving from nodeA -> nodeB (plan direction),
                 // movementDir == -1 means user moving from nodeB -> nodeA (opposite)
                 if movementDir == -1 {
@@ -356,6 +356,25 @@ func closestPointOnPlan(
         }
     }
     return bestResult
+}
+
+func computeTravelDirection(
+    plan: [String],
+    userLocations: [CLLocationCoordinate2D],
+    nodeA: CLLocationCoordinate2D,
+    nodeB: CLLocationCoordinate2D
+) -> Int {
+    // If plan has exactly one segment, direction is unambiguous
+    if plan.count == 2 {
+        return +1   // always nodeA -> nodeB
+    }
+
+    // Otherwise use movement-based detection
+    return detectDirection(
+        userLocations: userLocations,
+        nodeA: nodeA,
+        nodeB: nodeB
+    )
 }
 
 /// Detect direction using the last N user locations to estimate movement

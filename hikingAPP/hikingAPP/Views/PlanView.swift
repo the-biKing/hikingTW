@@ -147,7 +147,12 @@ struct PlanView: View {
                         
                     }
                 }
-                
+                MountainButton(
+                    imageName: "d_Yushan",
+                    title: "測試",
+                    leftMark: false,
+                    areaCodes: ["NT"]
+                )
                 MountainButton(
                     imageName: "d_Yushan",
                     title: "玉山群峰",
@@ -281,7 +286,9 @@ class GraphViewModel: ObservableObject {
     @Published var startNodes: [Node] = []
     @Published var current: Node?
     @Published var path: [String] = []
-    @Published var history: [[String]] = []
+    @Published var history: [[String]] = [] {
+        didSet { saveHistory() }
+    }
     
     private var lookup: [String: Node] = [:]
     private var areaCodes: [String]  // ← 支援多代碼
@@ -303,6 +310,7 @@ class GraphViewModel: ObservableObject {
                 id.contains("_\(code)_") || id.hasSuffix("_\(code)")
             }
         }
+        loadHistory()
     }
     
     func setStart(_ node: Node) {
@@ -379,6 +387,15 @@ class GraphViewModel: ObservableObject {
             self.current = first
             self.start = first
             self.path = [first.id]
+        }
+    }
+    func saveHistory() {
+        UserDefaults.standard.set(history, forKey: "PlanHistory")
+    }
+
+    func loadHistory() {
+        if let saved = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]] {
+            history = saved
         }
     }
 }
