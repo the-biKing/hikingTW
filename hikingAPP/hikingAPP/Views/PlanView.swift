@@ -310,7 +310,6 @@ class GraphViewModel: ObservableObject {
                 id.contains("_\(code)_") || id.hasSuffix("_\(code)")
             }
         }
-        loadHistory()
     }
     
     func setStart(_ node: Node) {
@@ -393,11 +392,6 @@ class GraphViewModel: ObservableObject {
         UserDefaults.standard.set(history, forKey: "PlanHistory")
     }
 
-    func loadHistory() {
-        if let saved = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]] {
-            history = saved
-        }
-    }
 }
 
 struct DetailView: View {

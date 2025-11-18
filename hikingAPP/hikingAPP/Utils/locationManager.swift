@@ -66,6 +66,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     @objc private func appDidEnterBackground() {
         manager.distanceFilter = 10
+        //TODO fix?
     }
 
     @objc private func appWillEnterForeground() {

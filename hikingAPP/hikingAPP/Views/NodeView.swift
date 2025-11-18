@@ -301,6 +301,7 @@ struct PlanDisplayView: View {
         Button {
             navModel.currentPlan = []
             UserDefaults.standard.removeObject(forKey: "SavedPlan")
+            UserDefaults.standard.removeObject(forKey: "CurrentDayIndex")
             dismiss()
         } label: {
                 HStack{
