@@ -275,10 +275,15 @@ struct PlanDisplayView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            Text("DAY \(navModel.dayIndex + 1)")
+                .font(.largeTitle.bold())
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.bottom, 8)
+
             Text(title)
                 .font(.title2)
                 .padding(.bottom, 4)
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(route, id: \.self) { id in
@@ -298,12 +303,96 @@ struct PlanDisplayView: View {
                     }
                 }
             }
-        Button {
-            navModel.currentPlan = []
-            UserDefaults.standard.removeObject(forKey: "SavedPlan")
-            UserDefaults.standard.removeObject(forKey: "CurrentDayIndex")
-            dismiss()
-        } label: {
+            .padding(.vertical, 4)
+            .padding(.leading, 10)
+            .scaleEffect(1.15)
+
+            HStack(spacing: 40) {
+                Button {
+                    if navModel.dayIndex > 0 {
+                        navModel.setCurrentDay(navModel.dayIndex - 1)
+                    }
+                } label: {
+                    Text("Prev Day")
+                        .font(.title3.bold())
+                        .padding(.horizontal, 28)
+                        .padding(.vertical, 10)
+                        .background(Color.blue.opacity(0.35))
+                        .cornerRadius(10)
+                }
+
+                Button {
+                    let savedHistory = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]] ?? []
+                    if navModel.dayIndex + 1 < savedHistory.count {
+                        navModel.setCurrentDay(navModel.dayIndex + 1)
+                    }
+                } label: {
+                    Text("Next Day")
+                        .font(.title3.bold())
+                        .padding(.horizontal, 28)
+                        .padding(.vertical, 10)
+                        .background(Color.blue.opacity(0.35))
+                        .cornerRadius(10)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.vertical, 14)
+
+            // Full multi-day plan list (smaller)
+            Text("所有計劃")
+                .font(.headline)
+                .padding(.vertical, 6)
+            let savedHistory = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]] ?? []
+
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(Array(savedHistory.enumerated()), id: \.offset) { (index, dayPlan) in
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack(spacing: 4) {
+                                Text("Day \(index + 1)")
+                                    .font(.footnote)
+                                    .foregroundColor(.yellow)
+                                if index == navModel.dayIndex {
+                                    Image(systemName: "chevron.left")
+                                        .foregroundColor(.red)
+                                        .font(.footnote.bold())
+                                }
+                            }
+
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(dayPlan, id: \.self) { id in
+                                        if let node = nodes.first(where: { $0.id == id }) {
+                                            Text(node.name)
+                                                .font(.caption)
+                                                .padding(.horizontal, 4)
+                                                .padding(.vertical, 2)
+                                                .background(Color.gray.opacity(0.15))
+                                                .cornerRadius(3)
+                                        } else {
+                                            Text(id)
+                                                .font(.caption)
+                                                .padding(.horizontal, 4)
+                                                .padding(.vertical, 2)
+                                                .background(Color.red.opacity(0.15))
+                                                .cornerRadius(3)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.bottom, 6)
+                    }
+                }
+            }
+            .padding(.top, 6)
+
+            Spacer()
+            Button {
+                navModel.currentPlan = []
+                UserDefaults.standard.removeObject(forKey: "CurrentDayIndex")
+                dismiss()
+            } label: {
                 HStack{
                     Label("重設計劃", systemImage: "arrow.clockwise.circle")
                         .foregroundStyle(Color.white)
