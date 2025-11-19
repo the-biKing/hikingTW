@@ -1,53 +1,53 @@
 import SwiftUI
 /*
-func MountainButton(imageName: String, title: String, leftMark: Bool, areaCodes: [String]) -> some View {
-    @EnvironmentObject var navModel: NavigationViewModel
-    return GeometryReader { geometry in
-        let buttonWidth = geometry.size.width * 0.9
-        NavigationLink(destination: DetailView(areaCodes: areaCodes, areaName: title).environmentObject(navModel)) {
-            ZStack(alignment: .topLeading) {
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.black)
-                    .frame(width: buttonWidth, height: 300)
-                Image(imageName)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: buttonWidth, height: 300)
-                    .clipped()
-                    .cornerRadius(16)
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.white.opacity(0.4), Color.clear]),
-                            startPoint: .topLeading,
-                            endPoint: .center
-                        )
-                    )
-                    .frame(width: buttonWidth, height: 300)
-                HStack {
-                    if leftMark { Spacer() }
-                    Text(title)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.top, 50)
-                        .shadow(radius: 3)
-                    if !leftMark { Spacer() }
-                }
-                .padding(.horizontal, 24)
-                .frame(width: buttonWidth)
-            }
-            .frame(width: buttonWidth, height: 300)
-            .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
-        }
-        .padding(.horizontal)
-        .simultaneousGesture(TapGesture().onEnded {
-            let generator = UIImpactFeedbackGenerator(style: .medium)
-            generator.impactOccurred()
-        })
-    }
-    .frame(height: 320)
-}
+ func MountainButton(imageName: String, title: String, leftMark: Bool, areaCodes: [String]) -> some View {
+ @EnvironmentObject var navModel: NavigationViewModel
+ return GeometryReader { geometry in
+ let buttonWidth = geometry.size.width * 0.9
+ NavigationLink(destination: DetailView(areaCodes: areaCodes, areaName: title).environmentObject(navModel)) {
+ ZStack(alignment: .topLeading) {
+ RoundedRectangle(cornerRadius: 16)
+ .fill(Color.black)
+ .frame(width: buttonWidth, height: 300)
+ Image(imageName)
+ .resizable()
+ .scaledToFill()
+ .frame(width: buttonWidth, height: 300)
+ .clipped()
+ .cornerRadius(16)
+ RoundedRectangle(cornerRadius: 16)
+ .fill(
+ LinearGradient(
+ gradient: Gradient(colors: [Color.white.opacity(0.4), Color.clear]),
+ startPoint: .topLeading,
+ endPoint: .center
+ )
+ )
+ .frame(width: buttonWidth, height: 300)
+ HStack {
+ if leftMark { Spacer() }
+ Text(title)
+ .font(.title)
+ .fontWeight(.bold)
+ .foregroundColor(.white)
+ .padding(.top, 50)
+ .shadow(radius: 3)
+ if !leftMark { Spacer() }
+ }
+ .padding(.horizontal, 24)
+ .frame(width: buttonWidth)
+ }
+ .frame(width: buttonWidth, height: 300)
+ .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
+ }
+ .padding(.horizontal)
+ .simultaneousGesture(TapGesture().onEnded {
+ let generator = UIImpactFeedbackGenerator(style: .medium)
+ generator.impactOccurred()
+ })
+ }
+ .frame(height: 320)
+ }
  */
 
 struct MountainButton: View {
@@ -364,7 +364,7 @@ class GraphViewModel: ObservableObject {
             print("⚠️ No segment found for \(from) ↔ \(to)")
             return 0.0
         }
-
+        
         if let user = loadUser() {
             return time * user.speedFactor
         } else {
@@ -391,7 +391,7 @@ class GraphViewModel: ObservableObject {
     func saveHistory() {
         UserDefaults.standard.set(history, forKey: "PlanHistory")
     }
-
+    
 }
 
 struct DetailView: View {
@@ -505,11 +505,11 @@ struct PlanningView: View {
                      (vm.estimatedTime < 60
                       ? "\(String(format: "%.1f", vm.estimatedTime)) 分鐘"
                       : "\(Int(vm.estimatedTime) / 60) 小時 \(Int(vm.estimatedTime) % 60) 分鐘"))
-                    .font(.headline)
-                    .foregroundColor(.yellow)
-                    .padding(.top, 8)
-
-
+                .font(.headline)
+                .foregroundColor(.yellow)
+                .padding(.top, 8)
+                
+                
                 
                 if let current = vm.current {
                     HStack {
@@ -632,7 +632,7 @@ struct HistoryView: View {
                         .cornerRadius(8)
                         .overlay(
                             HStack {
-                                Text("路線 \(index + 1)")
+                                Text("第 \(index + 1) 天")
                                     .font(.caption)
                                     .foregroundColor(.yellow)
                                 Spacer()
@@ -648,6 +648,29 @@ struct HistoryView: View {
                                 .padding(6),
                             alignment: .topLeading
                         )
+                    }
+                    if !vm.path.isEmpty {      //add 規劃中路線
+                        VStack(alignment: .leading) {
+                            Text("正在規劃的路線")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                            
+                            ScrollView(.horizontal) {
+                                HStack {
+                                    ForEach(vm.path, id: \.self) { id in
+                                        if let node = vm.nodes.first(where: { $0.id == id }) {
+                                            Text(node.name)
+                                                .padding(6)
+                                                .background(Color.gray.opacity(0.2))
+                                                .cornerRadius(4)
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.horizontal, 50)
+                            .background(Color.white.opacity(0.05))
+                            .cornerRadius(8)
+                        }
                     }
                 }
                 .padding()

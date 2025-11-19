@@ -23,14 +23,6 @@ class NavigationViewModel: ObservableObject {
     @Published var segmentDistanceLeft: Double = 0.0
     @Published var dayIndex: Int = 0   // default until multi-day logic is ready
     
-    
-    //TODO create multi day helper
-    func setCurrentDay(_ index: Int) {
-        self.dayIndex = index
-        UserDefaults.standard.set(index, forKey: "CurrentDayIndex")
-        loadPlanFromSavedHistory()
-    }
-    
     init() {
             planState = .idle
             loadPlanFromSavedHistory()
@@ -38,6 +30,61 @@ class NavigationViewModel: ObservableObject {
                 self.dayIndex = savedIndex
             }
         }
+    
+    
+    // Returns last node of today's plan
+    func lastNodeOfToday() -> String? {
+        let savedHistory = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]] ?? []
+        guard dayIndex < savedHistory.count else { return nil }
+        return savedHistory[dayIndex].last
+    }
+
+    // Returns last segment of today's plan (direction-aware)
+    func lastSegmentOfToday() -> (from: String, to: String)? {
+        let savedHistory = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]] ?? []
+        guard dayIndex < savedHistory.count else { return nil }
+        let plan = savedHistory[dayIndex]
+        guard plan.count >= 2 else { return nil }
+        return (from: plan[plan.count - 2], to: plan.last!)
+    }
+
+    // Multi-day advancement logic
+    func tryAdvanceDay(reachedNode: String? = nil, completedSegment: (from: String, to: String)? = nil) {
+        let savedHistory = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]] ?? []
+        guard dayIndex < savedHistory.count else { return }
+
+        // Rule 1: reached last node
+        if let node = reachedNode,
+           let lastNode = lastNodeOfToday(),
+           node == lastNode {
+
+            if dayIndex + 1 < savedHistory.count {
+                setCurrentDay(dayIndex + 1)
+                print("📅 Auto-advanced to Day \(dayIndex + 1) by node")
+            }
+            return
+        }
+
+        // Rule 2: completed last segment
+        if let seg = completedSegment,
+           let lastSeg = lastSegmentOfToday(),
+           seg.from == lastSeg.from && seg.to == lastSeg.to {
+
+            if dayIndex + 1 < savedHistory.count {
+                setCurrentDay(dayIndex + 1)
+                print("📅 Auto-advanced to Day \(dayIndex + 1) by segment")
+            }
+            return
+        }
+    }
+    
+    func setCurrentDay(_ index: Int) {
+        self.dayIndex = index
+        UserDefaults.standard.set(index, forKey: "CurrentDayIndex")
+        loadPlanFromSavedHistory()
+    }
+    
+    
     
     func loadPlanFromSavedHistory() {
         if let savedHistory = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]],
@@ -52,7 +99,7 @@ class NavigationViewModel: ObservableObject {
             print("⚠️ No plan available in saved history")
         }
     }
-    //TODO handle multiple day plan
+
     func loadPlan(from graphVM: GraphViewModel) {
         if let firstDayPlan = graphVM.history.first {
             self.currentPlan = firstDayPlan

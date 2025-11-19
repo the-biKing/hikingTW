@@ -135,6 +135,7 @@ struct ETAView: View {
                             } else {
                                 print("❌ Discarded outlier speed factor: \(userSpeedFactor)")
                             }
+                            navModel.tryAdvanceDay(completedSegment: (fromID, toID))
                         }
                     }
                 }
