@@ -24,12 +24,16 @@ class NavigationViewModel: ObservableObject {
     @Published var dayIndex: Int = 0   // default until multi-day logic is ready
     
     init() {
-            planState = .idle
-            loadPlanFromSavedHistory()
-            if let savedIndex = UserDefaults.standard.object(forKey: "CurrentDayIndex") as? Int {
-                self.dayIndex = savedIndex
-            }
+        planState = .idle
+
+        // Restore saved day index *before* loading the plan so loadPlanFromSavedHistory()
+        // picks the correct day from PlanHistory.
+        if let savedIndex = UserDefaults.standard.object(forKey: "CurrentDayIndex") as? Int {
+            self.dayIndex = savedIndex
         }
+
+        loadPlanFromSavedHistory()
+    }
     
     
     // Returns last node of today's plan
