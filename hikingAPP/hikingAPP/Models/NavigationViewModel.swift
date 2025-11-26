@@ -22,16 +22,10 @@ class NavigationViewModel: ObservableObject {
     @Published var nextNodeID: String? = nil
     @Published var segmentDistanceLeft: Double = 0.0
     @Published var dayIndex: Int = 0   // default until multi-day logic is ready
+    @Published var planIndex: Int = 0   // tracks progress within current day's plan
     
     init() {
         planState = .idle
-
-        // Restore saved day index *before* loading the plan so loadPlanFromSavedHistory()
-        // picks the correct day from PlanHistory.
-        if let savedIndex = UserDefaults.standard.object(forKey: "CurrentDayIndex") as? Int {
-            self.dayIndex = savedIndex
-        }
-
         loadPlanFromSavedHistory()
     }
     
@@ -85,12 +79,21 @@ class NavigationViewModel: ObservableObject {
     func setCurrentDay(_ index: Int) {
         self.dayIndex = index
         UserDefaults.standard.set(index, forKey: "CurrentDayIndex")
+        self.planIndex = 0
+        UserDefaults.standard.set(0, forKey: "CurrentPlanIndex")
         loadPlanFromSavedHistory()
     }
     
     
     
     func loadPlanFromSavedHistory() {
+        // Load saved day index
+        if let savedIndex = UserDefaults.standard.object(forKey: "CurrentDayIndex") as? Int {
+            self.dayIndex = savedIndex
+        }
+        if let savedPlanIndex = UserDefaults.standard.object(forKey: "CurrentPlanIndex") as? Int {
+            self.planIndex = savedPlanIndex
+        }
         if let savedHistory = UserDefaults.standard.array(forKey: "PlanHistory") as? [[String]],
            !savedHistory.isEmpty {
             // Use the current day index plan as the current plan

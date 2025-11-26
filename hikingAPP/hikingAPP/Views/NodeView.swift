@@ -19,20 +19,7 @@ struct CurrentSegmentResult {
 struct NodeInfoPanel: View {
     @EnvironmentObject var navModel: NavigationViewModel
     @EnvironmentObject var locationManager: LocationManager
-    /*
-    private func computeSegmentDirection(nodeAName: String, nodeBName: String, segments: [Segment], nodes: [Node]) -> Int {
-        let segId = node2seg(nodeAName, nodeBName)
-        let revSegId = node2seg(nodeBName, nodeAName)
-        let segmentIds = segments.map { $0.id }
-        let storedDirection: Int
-        if segmentIds.contains(segId) { storedDirection = +1 }
-        else if segmentIds.contains(revSegId) { storedDirection = -1 }
-        else { storedDirection = +1 }
 
-        let userLocs = locationManager.locationHistory + (locationManager.coordinate.map { [$0] } ?? [])
-        return detectDirection(nodeAID: nodeAName, nodeBID: nodeBName, userLocations: userLocs, segments: segments) * storedDirection
-    }
-     */
     
     // Helper to compute closest point info for the current state
     private func computeClosest(for segments : [Segment]) -> ClosestPointResult? {
@@ -115,23 +102,35 @@ struct NodeInfoPanel: View {
     
     // Helper for next node name
     private func nextNodeName(for closest: ClosestPointResult?, nodes: [Node]) -> String {
-        guard let closest,
-              closest.planIndex + 1 < navModel.currentPlan.count
-        else { return "" }
+        switch navModel.planState{
+        case .idle:
+            return nodes.first(where: { $0.id == navModel.currentPlan.first})?.name ?? ""
+        case .active, .offRoute:
+            guard let closest,
+                  closest.planIndex + 1 < navModel.currentPlan.count
+            else { return "" }
 
-        let nextID = navModel.currentPlan[closest.planIndex + 1]
-        return nodes.first(where: { $0.id == nextID })?.name ?? nextID
+            let nextID = navModel.currentPlan[closest.planIndex + 1]
+            return nodes.first(where: { $0.id == nextID })?.name ?? nextID
+            
+        }
+        
     }
     
     // Helper for previous node name
     private func prevNodeName(for closest: ClosestPointResult?, nodes: [Node]) -> String {
-        guard let closest,
-              closest.planIndex < navModel.currentPlan.count
-        else { return "" }
+        switch navModel.planState {
+        case .idle: return ""
+        case .active, .offRoute:
+            guard let closest,
+                  closest.planIndex < navModel.currentPlan.count
+            else { return "" }
 
-        let prevID = navModel.currentPlan[closest.planIndex]
-        return nodes.first(where: { $0.id == prevID })?.name ?? prevID
+            let prevID = navModel.currentPlan[closest.planIndex]
+            return nodes.first(where: { $0.id == prevID })?.name ?? prevID
+        }
     }
+        
     
     
     // Helper for distance string
@@ -266,6 +265,9 @@ struct NodeInfoPanel: View {
                    closest.planIndex + 1 < navModel.currentPlan.count {
                     navModel.nextNodeID = navModel.currentPlan[closest.planIndex + 1]
                     navModel.prevNodeID = navModel.currentPlan[closest.planIndex]
+                    // Update and persist planIndex
+                    navModel.planIndex = closest.planIndex
+                    UserDefaults.standard.set(closest.planIndex, forKey: "CurrentPlanIndex")
                 }
                 if navModel.planState == .active, let closest = closest, let current = computeCurrentSegment(for: closest, segments: segments) {
                     let remaining = distChangetoNextNode(current: current)
@@ -278,6 +280,9 @@ struct NodeInfoPanel: View {
                    closest.planIndex + 1 < navModel.currentPlan.count {
                     navModel.nextNodeID = navModel.currentPlan[closest.planIndex + 1]
                     navModel.prevNodeID = navModel.currentPlan[closest.planIndex]
+                    // Update and persist planIndex
+                    navModel.planIndex = closest.planIndex
+                    UserDefaults.standard.set(closest.planIndex, forKey: "CurrentPlanIndex")
                 }
                 if navModel.planState == .active, let closest = closest, let current = computeCurrentSegment(for: closest, segments: segments) {
                     let remaining = distChangetoNextNode(current: current)
