@@ -3,6 +3,8 @@ import CoreLocation
 import SwiftUI
 import UserNotifications
 
+let offrouteThreshold: Double = 50
+
 /// Result of finding closest point along a plan
 struct ClosestPointResult {
     let point: Point
@@ -48,20 +50,20 @@ func updatePlanState(distance: Double?, navModel: NavigationViewModel) {
     }
     switch navModel.planState {
     case .idle:
-        if d <= 50 {
+        if d <= offrouteThreshold {
             navModel.planState = .active
         } else {
             navModel.planState = .idle
         }
     case .active:
-        if d > 50 {//testing
+        if d > offrouteThreshold {//testing
             navModel.planState = .offRoute
             sendOffRouteNotification()
         } else {
             navModel.planState = .active
         }
     case .offRoute:
-        if d < 50{
+        if d < offrouteThreshold{
             navModel.planState = .active
         } else if d > 1000 {
             navModel.planState = .idle

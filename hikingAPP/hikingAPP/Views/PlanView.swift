@@ -529,15 +529,18 @@ struct PlanningView: View {
                         VStack {
                             ForEach(current.nearBy, id: \.self) { nextId in
                                 if let nextNode = vm.nodes.first(where: { $0.id == nextId }) {
-                                    Button(nextNode.name) {
+                                    Button {
                                         vm.move(to: nextId)
                                         let generator = UIImpactFeedbackGenerator(style: .medium)
                                         generator.impactOccurred()
+                                    } label: {
+                                        Text(nextNode.name) // 使用 Text 作為 Label
+                                            .frame(width: 140, height: 44) // 大小設定在 Text 上
+                                            .background(Color.blue.opacity(0.6)) // 背景設定在 Text 上
+                                            .foregroundColor(.white)
+                                            .cornerRadius(8)
                                     }
-                                    .frame(width: 140, height: 44)
-                                    .background(Color.blue.opacity(0.6))
-                                    .foregroundColor(.white)
-                                    .cornerRadius(8)
+
                                 }
                             }
                         }

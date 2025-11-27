@@ -20,74 +20,76 @@ struct MapView: View {
     var body: some View {
         
         
-            if navModel.planState == .active {
-                routeView()
+        if navModel.planState == .idle {
+            Color.black.opacity(1)
+            if !navModel.currentPlan.isEmpty,
+               let user = locationManager.coordinate,
+               let firstNode = loadNodes().first(where: { $0.id == navModel.currentPlan.first }) {
+                
+                let target = CLLocationCoordinate2D(latitude: firstNode.latitude, longitude: firstNode.longitude)
+                let bearingToTarget = bearing(from: user, to: target)
+                let heading = compassManager.heading?.trueHeading ?? 0
+                let relativeAngle = bearingToTarget - heading
+                
+                DirectionIndicator(angle: relativeAngle)
+                
             }
             else{
-                Color.black.opacity(1)
-                if !navModel.currentPlan.isEmpty,
-                                  let user = locationManager.coordinate,
-                                  let firstNode = loadNodes().first(where: { $0.id == navModel.currentPlan.first }) {
-                                   
-                                   let target = CLLocationCoordinate2D(latitude: firstNode.latitude, longitude: firstNode.longitude)
-                                   let bearingToTarget = bearing(from: user, to: target)
-                                   let heading = compassManager.heading?.trueHeading ?? 0
-                                   let relativeAngle = bearingToTarget - heading
-                                   
-                                   DirectionIndicator(angle: relativeAngle)
-                               }
+                routeView()
             }
-            
+        }
+        
         
     }
 }
+
 struct routeView: View {
     @EnvironmentObject var navModel: NavigationViewModel
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var compassManager: CompassManager
     @State private var lastValidHeading: Double = 0
     
-
+    
     var body: some View {
         let points = extractRoutePoints(from: loadSegments(), plan: navModel.currentPlan)
-
-       
-            GeometryReader { geo in
-                Canvas { context, size in
-                    
-                    
-                    guard let center = locationManager.coordinate else{
-                        return
-                    }
+        
+        
+        GeometryReader { geo in
+            Canvas { context, size in
                 
-                    
-                    let cgPoints = convertPointsToCG(points: points, canvasSize: size, center: center, zoomScale: 80000)
-
-                    guard cgPoints.count >= 2 else { return }
-
-                    var path = Path()
-                    path.move(to: cgPoints[0])
-                    for point in cgPoints.dropFirst() {
-                        path.addLine(to: point)
-                    }
-
-                    context.stroke(path, with: .color(.blue), lineWidth: 3)
+                
+                guard let center = locationManager.coordinate else{
+                    return
                 }
-                .rotationEffect(Angle(degrees: {
-                    if let heading = compassManager.heading?.trueHeading, heading >= 0 {
-                        DispatchQueue.main.async {
-                            lastValidHeading = heading
-                        }
-                        return -heading
-                    } else {
-                        return -lastValidHeading
-                    }
-                }()))
-
+                
+                
+                let cgPoints = convertPointsToCG(points: points, canvasSize: size, center: center, zoomScale: 80000)
+                
+                guard cgPoints.count >= 2 else { return }
+                
+                var path = Path()
+                path.move(to: cgPoints[0])
+                for point in cgPoints.dropFirst() {
+                    path.addLine(to: point)
+                }
+                
+                context.stroke(path, with: .color(.blue), lineWidth: 3)
             }
-            .frame(width:300, height: 300)
-            .background(Color.black)
-
+            .rotationEffect(Angle(degrees: {
+                if let heading = compassManager.heading?.trueHeading, heading >= 0 {
+                    DispatchQueue.main.async {
+                        lastValidHeading = heading
+                    }
+                    return -heading
+                } else {
+                    return -lastValidHeading
+                }
+            }()))
+            
+        }
+        .frame(width:300, height: 300)
+        .background(Color.black)
+        
     }
 }
 
