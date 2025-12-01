@@ -1,0 +1,15 @@
+{
+  "WM": "segment_WM.json",
+  "BG": "segment_BG.json",
+  "NB": "segment_NB.json",
+  "JD": "segment_JD.json",
+  "WL": "segment_WL.json",
+  "NT": "segment_NT.json",
+  "PF": "segment_PF.json",
+  "NS": "segment_NS.json",
+  "NF": "segment_NF.json",
+  "CH": "segment_CHERULNG.json",
+  "ER": "segment_CHERULNG.json",
+  "UL": "segment_CHERULNG.json",
+  "NG": "segment_CHERULNG.json"
+}

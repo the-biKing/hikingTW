@@ -1,54 +1,4 @@
 import SwiftUI
-/*
- func MountainButton(imageName: String, title: String, leftMark: Bool, areaCodes: [String]) -> some View {
- @EnvironmentObject var navModel: NavigationViewModel
- return GeometryReader { geometry in
- let buttonWidth = geometry.size.width * 0.9
- NavigationLink(destination: DetailView(areaCodes: areaCodes, areaName: title).environmentObject(navModel)) {
- ZStack(alignment: .topLeading) {
- RoundedRectangle(cornerRadius: 16)
- .fill(Color.black)
- .frame(width: buttonWidth, height: 300)
- Image(imageName)
- .resizable()
- .scaledToFill()
- .frame(width: buttonWidth, height: 300)
- .clipped()
- .cornerRadius(16)
- RoundedRectangle(cornerRadius: 16)
- .fill(
- LinearGradient(
- gradient: Gradient(colors: [Color.white.opacity(0.4), Color.clear]),
- startPoint: .topLeading,
- endPoint: .center
- )
- )
- .frame(width: buttonWidth, height: 300)
- HStack {
- if leftMark { Spacer() }
- Text(title)
- .font(.title)
- .fontWeight(.bold)
- .foregroundColor(.white)
- .padding(.top, 50)
- .shadow(radius: 3)
- if !leftMark { Spacer() }
- }
- .padding(.horizontal, 24)
- .frame(width: buttonWidth)
- }
- .frame(width: buttonWidth, height: 300)
- .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
- }
- .padding(.horizontal)
- .simultaneousGesture(TapGesture().onEnded {
- let generator = UIImpactFeedbackGenerator(style: .medium)
- generator.impactOccurred()
- })
- }
- .frame(height: 320)
- }
- */
 
 struct MountainButton: View {
     let imageName: String
@@ -298,7 +248,9 @@ class GraphViewModel: ObservableObject {
         self.areaCodes = areaCodes.map { $0.uppercased() }  // 統一大寫
         let allNodes = loadNodes()
         self.nodes = allNodes
-        self.segments = loadSegments()
+        // This only loads the JSON files related to the requested areaCodes (e.g., "WM")
+        self.segments = SegmentDataManager.shared.getSegments(forAreaCodes: self.areaCodes)
+        
         self.lookup = Dictionary(uniqueKeysWithValues: allNodes.map { ($0.id, $0) })
         
         // ✅ 起始點條件：以 S_ 開頭 + 包含任一區域代碼

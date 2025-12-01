@@ -1,0 +1,173 @@
+{
+  "segments": [
+    {
+      "id": "s_NT_01_s_NT_02",
+      "standardTime": 10,
+      "revStandardTime": 10,
+      "points": [
+        {
+          "latitude": 25.01280784398212,
+          "longitude": 121.5406858921051,
+          "elevation": 19.0
+        },
+        {
+          "latitude": 25.012804,
+          "longitude": 121.540684,
+          "elevation": 19.0
+        },
+        {
+          "latitude": 25.012745,
+          "longitude": 121.540755,
+          "elevation": 18.8
+        },
+        {
+          "latitude": 25.012921,
+          "longitude": 121.540958,
+          "elevation": 17.7
+        },
+        {
+          "latitude": 25.013326,
+          "longitude": 121.541428,
+          "elevation": 17.7
+        },
+        {
+          "latitude": 25.01398,
+          "longitude": 121.542193,
+          "elevation": 16.1
+        },
+        {
+          "latitude": 25.014418,
+          "longitude": 121.542709,
+          "elevation": 12.7
+        },
+        {
+          "latitude": 25.014402,
+          "longitude": 121.542724,
+          "elevation": 12.7
+        },
+        {
+          "latitude": 25.0146,
+          "longitude": 121.542951,
+          "elevation": 13.0
+        },
+        {
+          "latitude": 25.014694,
+          "longitude": 121.542999,
+          "elevation": 12.0
+        },
+        {
+          "latitude": 25.014733,
+          "longitude": 121.543045,
+          "elevation": 12.3
+        },
+        {
+          "latitude": 25.014694,
+          "longitude": 121.542999,
+          "elevation": 12.0
+        },
+        {
+          "latitude": 25.0146,
+          "longitude": 121.542951,
+          "elevation": 13.0
+        },
+        {
+          "latitude": 25.014402,
+          "longitude": 121.542724,
+          "elevation": 12.7
+        },
+        {
+          "latitude": 25.014418,
+          "longitude": 121.542709,
+          "elevation": 12.7
+        },
+        {
+          "latitude": 25.01398,
+          "longitude": 121.542193,
+          "elevation": 16.1
+        },
+        {
+          "latitude": 25.013636,
+          "longitude": 121.542549,
+          "elevation": 20.0
+        },
+        {
+          "latitude": 25.013346,
+          "longitude": 121.542842,
+          "elevation": 17.7
+        },
+        {
+          "latitude": 25.013036,
+          "longitude": 121.542524,
+          "elevation": 17.8
+        },
+        {
+          "latitude": 25.012663,
+          "longitude": 121.542102,
+          "elevation": 20.1
+        },
+        {
+          "latitude": 25.012258,
+          "longitude": 121.541647,
+          "elevation": 23.4
+        },
+        {
+          "latitude": 25.012196,
+          "longitude": 121.541711,
+          "elevation": 23.6
+        }
+      ]
+    },
+    {
+      "id": "s_NT_01_s_NT_03",
+      "standardTime": 20,
+      "revStandardTime": 20,
+      "points": [
+        {
+          "latitude": 25.01280784398212,
+          "longitude": 121.5406858921051,
+          "elevation": 19.0
+        },
+        {
+          "latitude": 25.012804,
+          "longitude": 121.540684,
+          "elevation": 19.0
+        },
+        {
+          "latitude": 25.012745,
+          "longitude": 121.540755,
+          "elevation": 18.8
+        },
+        {
+          "latitude": 25.012921,
+          "longitude": 121.540958,
+          "elevation": 17.7
+        },
+        {
+          "latitude": 25.013326,
+          "longitude": 121.541428,
+          "elevation": 17.7
+        },
+        {
+          "latitude": 25.01398,
+          "longitude": 121.542193,
+          "elevation": 16.1
+        },
+        {
+          "latitude": 25.014418,
+          "longitude": 121.542709,
+          "elevation": 12.7
+        },
+        {
+          "latitude": 25.014402,
+          "longitude": 121.542724,
+          "elevation": 12.7
+        },
+        {
+          "latitude": 25.0146,
+          "longitude": 121.542951,
+          "elevation": 13.0
+        }
+      ]
+    }
+  ]
+}

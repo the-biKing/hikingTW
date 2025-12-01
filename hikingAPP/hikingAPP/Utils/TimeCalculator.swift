@@ -125,19 +125,8 @@ func sendOffRouteNotification() {
 }
 
 func loadSegments() -> [Segment] {
-    guard let url = Bundle.main.url(forResource: "segments", withExtension: "json") else {
-        print("❌ segments.json not found in bundle.")
-        return []
-    }
-
-    do {
-        let data = try Data(contentsOf: url)
-        let segmentCollection = try JSONDecoder().decode(SegmentCollection.self, from: data)
-        return segmentCollection.segments
-    } catch {
-        print("❌ Failed to decode segments.json: \(error)")
-        return []
-    }
+    // Redirect to manager to return whatever is currently loaded in memory
+    return SegmentDataManager.shared.getAllLoadedSegments()
 }
 
 func loadNodes() -> [Node] {

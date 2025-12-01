@@ -99,6 +99,8 @@ class NavigationViewModel: ObservableObject {
             // Use the current day index plan as the current plan
             let index = min(dayIndex, savedHistory.count - 1)
             self.currentPlan = savedHistory[index]
+            
+            ensureSegmentsForCurrentPlan()
         } else {
             // Fallback if nothing saved
             self.currentPlan = []
@@ -106,6 +108,14 @@ class NavigationViewModel: ObservableObject {
             print("⚠️ No plan available in saved history")
         }
     }
+    
+    private func ensureSegmentsForCurrentPlan() {
+            let manager = SegmentDataManager.shared
+            // Extract unique prefixes from the current plan (e.g. "WM", "PF")
+            let prefixes = Set(currentPlan.map { manager.getPrefix(from: $0) })
+            // Load them
+            _ = manager.getSegments(forAreaCodes: Array(prefixes))
+        }
 
     func loadPlan(from graphVM: GraphViewModel) {
         if let firstDayPlan = graphVM.history.first {
