@@ -1,0 +1,42 @@
+# Blank lines or lines starting with '#' are ignored.
+#
+# Example: ignore all .log files
+*.log
+
+# Example: ignore specific file
+my_secret_file.txt
+
+# Example: ignore all files in a directory named 'temp'
+# The slash at the end indicates a directory
+temp/
+
+# Example: ignore a specific file in the root directory only
+# Use a leading slash to anchor the pattern to the .gitignore file's directory
+/debug.log
+
+# Example: ignore all files ending with .bak in any subdirectory
+**/*.bak
+
+# Example: ignore .DS_Store files anywhere in the repository
+.DS_Store
+
+# Example: ignore build directories at any level
+build/
+**/build/
+
+# Example: ignore a certain file type in a specific directory (but not its subdirectories)
+docs/*.md
+
+# Example: exclude a file that was previously included by a broader pattern
+# For example, ignore all .txt files except important.txt
+*.txt
+!important.txt
+
+# Example: ignore node_modules and bower_components directories
+node_modules/
+bower_components/
+
+# Example: ignore editor swap files
+*~
+*.swp
+Userinterfacestate.xcuserstate
