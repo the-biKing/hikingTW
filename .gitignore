@@ -39,4 +39,4 @@ bower_components/
 # Example: ignore editor swap files
 *~
 *.swp
-Userinterfacestate.xcuserstate
+UserInterfaceState.xcuserstate
