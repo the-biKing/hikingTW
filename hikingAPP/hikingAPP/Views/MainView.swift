@@ -4,6 +4,13 @@ import Combine
 import Foundation
 
 
+extension UIScreen{
+   static let screenWidth = UIScreen.main.bounds.size.width
+   static let screenHeight = UIScreen.main.bounds.size.height
+   static let screenSize = UIScreen.main.bounds.size
+}
+
+
 
 struct MainView: View {
     @EnvironmentObject var locationManager: LocationManager
@@ -45,15 +52,48 @@ struct MainView: View {
                     .font(.title)
                     .foregroundColor(AppColors.text)
                     .frame(width: 40, height: 40)
-                    .standardGlassBackground()
-                    .frame(width: 60, height: 16)
+                    .background(
+                        Capsule()
+                            .stroke(
+                                AngularGradient(
+                                    gradient: AppColors.Gradients.glass,
+                                    center: .center
+                                ),
+                                lineWidth: 20
+                            )
+                            .frame(width: 60, height: 16)
+                    )
                     .shadow(radius: 5)
             }
             .offset(x: 140)
             
+            Button(action: {
+                let generator = UIImpactFeedbackGenerator(style: .light)
+                generator.impactOccurred()
+                // TODO: navigate to settings
+            }) {
+                Image(systemName: "gearshape")
+                    .font(.title)
+                    .foregroundColor(AppColors.text)
+                    .frame(width: 40, height: 40)
+                    .background(
+                        Capsule()
+                            .stroke(
+                                AngularGradient(
+                                    gradient: AppColors.Gradients.glass,
+                                    center: .center
+                                ),
+                                lineWidth: 20
+                            )
+                            .frame(width: 60, height: 16)
+                    )
+                    .shadow(radius: 5)
+            }
+            .offset(x: 420)
+            
         }
         .navigationDestination(isPresented: $navigateToPlan) {
-            PlanView().environmentObject(navModel) 
+            PlanView().environmentObject(navModel)
         }
     }
 }
