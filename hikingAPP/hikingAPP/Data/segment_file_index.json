@@ -8,8 +8,12 @@
   "PF": "segment_PF.json",
   "NS": "segment_NS.json",
   "NF": "segment_NF.json",
-  "CH": "segment_CHERULNG.json",
-  "ER": "segment_CHERULNG.json",
-  "UL": "segment_CHERULNG.json",
-  "NG": "segment_CHERULNG.json"
+  "CH": "segment_CH_ER_UL_NG.json",
+  "ER": "segment_CH_ER_UL_NG.json",
+  "UL": "segment_CH_ER_UL_NG.json",
+  "NG": "segment_CH_ER_UL_NG.json",
+  "XS": "segment_XS_DB.json",
+  "DB": "segment_XS_DB.json",
+  "HH": "segment_HH.json"
 }
+
